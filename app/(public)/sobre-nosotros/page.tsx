@@ -23,7 +23,7 @@ export const metadata : Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <h2 className="text-7xl">Sobre Mí</h2>
+      <h2 className="text-7xl text-center">Nosotros</h2>
     </>
   );
 }

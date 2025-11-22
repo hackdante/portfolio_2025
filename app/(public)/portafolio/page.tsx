@@ -25,7 +25,7 @@ export const metadata : Metadata = {
 export default function PortfolioPage() {
   return (
     <>
-      <h2 className="text-7xl">Portafolio</h2>
+      <h2 className="text-7xl text-center">Portafolio</h2>
     </>
   );
 }

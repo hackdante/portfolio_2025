@@ -1,4 +1,6 @@
-import { Navbar } from "@/components/base";
+
+import Link from 'next/link'
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,9 +38,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-    <Navbar />
     <main className="flex flex-col items-center">
-      <span>BIENVENIDOS</span>
+      <span className="text-center text-5xl">BIENVENIDOS</span>
+      <Link href={`/sobre-nosotros`}>Nosotros</Link>
     </main>
     </>
   );

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <h2 className="text-7xl">Escríbenos</h2>
+      <h2 className="text-7xl text-center">Escríbenos</h2>
     </>
   );
 }

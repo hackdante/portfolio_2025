@@ -1,1 +1,1 @@
-export * from '@/components/base/navbar/Navbar'
+export * from '@/components/base/active-link/ActiveLink'

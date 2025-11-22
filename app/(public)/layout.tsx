@@ -3,7 +3,7 @@ export default function PublicLayout({
 }: {children:React.ReactNode }){
     return (
         <>
-        <p>ESTE ES EL CHILDREN GENERAL</p>
+        <p className="text-center">ESTE ES EL CHILDREN GENERAL</p>
         {children}
         </>
     )
