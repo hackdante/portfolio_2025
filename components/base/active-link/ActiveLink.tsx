@@ -10,8 +10,6 @@ interface PropsActionLink {
 
 export const ActiveLink = ({ route, label, children }: PropsActionLink) => {
   const pathName = usePathname();
-  console.log(pathName);
-
   return (
     <Link
       href={route}

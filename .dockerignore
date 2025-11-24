@@ -1,0 +1,24 @@
+# Node
+node_modules
+npm-debug.log
+yarn-debug.log
+pnpm-debug.log
+
+# Next.js build output
+.next
+dist
+out
+
+# Dependencies
+package-lock.json
+
+# Git
+.git
+.gitignore
+
+# Docker
+dockerfile
+.dockerignore
+
+# System
+.DS_Store

@@ -1,7 +1,5 @@
-import Link from "next/link";
-
-import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { Counter } from "@/components/base";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Rukkosoft | Desarrollo de Software, Web Apps y Soluciones Digitales",
@@ -35,11 +33,14 @@ export const metadata: Metadata = {
   robots: "index, follow",
 };
 
-export default function HomePage() {
-  redirect('/dashboard/inicio')
+
+export default function CounterPage() {
+
   return (
-    <>
-      <main className="flex flex-col items-center"></main>
-    </>
+    <div className="flex flex-col items-center justify-center w-full h-full">
+      <span>Proyectos subidos</span>
+      <Counter />
+    
+    </div>
   );
 }

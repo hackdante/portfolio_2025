@@ -50,7 +50,7 @@ export const Navbar = async () => {
   return (
     <nav className="flex text-black/80 bg-blue-900/30 p-2 m-2 shadow-lg rounded">
       <div className="flex-none">
-        <Link className="flex items-center" href="/">
+        <Link className="flex items-center" href="/inicio">
           <MdHome className="mr-2" />
           <span className="font-bold">Inicio</span>
         </Link>

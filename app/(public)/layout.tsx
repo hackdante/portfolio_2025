@@ -1,9 +1,12 @@
+import { Navbar } from "@/components/composite";
+
 export default function PublicLayout({
     children
 }: {children:React.ReactNode }){
     return (
         <>
-        <p className="text-center">ESTE ES EL CHILDREN GENERAL</p>
+         <Navbar />
+        <p className="text-center">Bienvenidos a</p>
         {children}
         </>
     )
