@@ -4,6 +4,7 @@ import {
   MdCalculate,
   MdPeopleAlt,
   MdHomeFilled,
+  MdWork 
 } from "react-icons/md";
 import { SideMenuItem, TitleSidebar } from "@/components/base";
 import { SideMenuItemUI } from "@/components/base/side-menu-item/interface";
@@ -36,6 +37,12 @@ const sideMenuItems: SideMenuItemUI[] = [
     description: "Suma y reste",
     route: "/dashboard/contador",
     icon: <MdCalculate size={defaultIconSize} />,
+  },
+    {
+    title: "Proyectos",
+    description: "Suma y reste",
+    route: "/dashboard/proyectos",
+    icon: <MdWork  size={defaultIconSize} />,
   },
 ];
 

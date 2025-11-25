@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rukkosoft",
+  title: "KENSAI",
   description: "Desarrollo web y de software",
 };
 

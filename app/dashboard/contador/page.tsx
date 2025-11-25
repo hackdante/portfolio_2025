@@ -2,9 +2,9 @@ import { Counter } from "@/components/base";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rukkosoft | Desarrollo de Software, Web Apps y Soluciones Digitales",
+  title: "KENSAI | Desarrollo de Software, Web Apps y Soluciones Digitales",
   description:
-    "Rukkosoft es un estudio de desarrollo de software liderado por Leandro González. Creamos aplicaciones web, SaaS, plataformas empresariales, UX/UI, frontend avanzado y experiencias 3D con Vue, React, Next.js y TypeScript.",
+    "KENSAI es un estudio de desarrollo de software liderado por Leandro González. Creamos aplicaciones web, SaaS, plataformas empresariales, UX/UI, frontend avanzado y experiencias 3D con Vue, React, Next.js y TypeScript.",
   keywords: [
     "desarrollo de software",
     "software a medida",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     "ERP",
     "productos digitales",
   ],
-  authors: [{ name: "Rukkosoft | Leandro González" }],
-  creator: "Rukkosoft",
-  publisher: "Rukkosoft",
+  authors: [{ name: "KENSAI | Leandro González" }],
+  creator: "KENSAI",
+  publisher: "KENSAI",
   robots: "index, follow",
 };
 

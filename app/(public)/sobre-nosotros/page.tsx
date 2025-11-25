@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata : Metadata = {
-  title: "Sobre Nosotros | Rukkosoft — Empresa de Desarrollo de Software",
+  title: "Sobre Nosotros | KENSAI — Empresa de Desarrollo de Software",
   description:
-    "Rukkosoft es una empresa de desarrollo de software especializada en soluciones web, UX/UI, frontend avanzado, plataformas SaaS, productos digitales y experiencias interactivas. Dirigida por Leandro González, con más de 6 años de experiencia.",
+    "KENSAI es una empresa de desarrollo de software especializada en soluciones web, UX/UI, frontend avanzado, plataformas SaaS, productos digitales y experiencias interactivas. Dirigida por Leandro González, con más de 6 años de experiencia.",
   keywords: [
     "empresa de software",
     "desarrollo de software",
@@ -16,7 +16,7 @@ export const metadata : Metadata = {
     "experiencias 3D",
     "transformación digital"
   ],
-  authors: [{ name: "Rukkosoft" }],
+  authors: [{ name: "KENSAI" }],
   robots: "index, follow",
 };
 

@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata : Metadata = {
-  title: "Portafolio | Proyectos de Software, Web Apps y UX/UI — Rukkosoft",
+  title: "Portafolio | Proyectos de Software, Web Apps y UX/UI — KENSAI",
   description:
-    "Explora el portafolio de Rukkosoft: aplicaciones web, telemedicina, plataformas SaaS, ERP, multimedia interactiva, experiencias 3D, sistemas de agendamiento y soluciones corporativas construidas con Vue, React y Next.js.",
+    "Explora el portafolio de KENSAI: aplicaciones web, telemedicina, plataformas SaaS, ERP, multimedia interactiva, experiencias 3D, sistemas de agendamiento y soluciones corporativas construidas con Vue, React y Next.js.",
   keywords: [
     "portafolio de software",
     "proyectos web",
@@ -18,7 +18,7 @@ export const metadata : Metadata = {
     "UX/UI",
     "Three.js",
   ],
-  authors: [{ name: "Rukkosoft" }],
+  authors: [{ name: "KENSAI" }],
   robots: "index, follow",
 };
 
