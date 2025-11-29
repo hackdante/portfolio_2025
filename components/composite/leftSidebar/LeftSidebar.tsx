@@ -61,6 +61,7 @@ export const LeftSidebar = () => {
               height={iconsSize}
               alt="Perfil de usuario"
               className="rounded-full w-8 h-8"
+                 style={{ width: '100%', height: 'auto' }}
               src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
             />
           </span>

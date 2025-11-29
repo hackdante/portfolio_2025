@@ -17,7 +17,7 @@ export const TitleSidebar = ({
         width={235}
         height={91}
         loading="eager"
-        className="h-auto w-full max-w-[235px]"
+        style={{ width: "100%", height: "auto" }}
       />
       <div className="my-4 pl-6 pr-4">
         <Link
