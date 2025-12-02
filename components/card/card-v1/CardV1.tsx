@@ -15,15 +15,17 @@ export const CardV1 = ({ cardInfoV1 }: Cardv1UI) => {
                 width={100}
                 height={100}
                 alt={`${title} | ${description}`}
+                style={{ width: "auto", height: "100px" }}
                 priority={false}
               />
             </div>
-            <p className="pt-2 text-lg font-semibold text-gray-50 uppercase">{title}</p>
+            <p className="pt-2 text-lg font-semibold text-gray-50 uppercase">
+              {title}
+            </p>
             <p className="text-sm text-gray-100">{description}</p>
             <div className="mt-5">
               <div className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
                 <Link href={goToURL}> {btnLabel}</Link>
-               
               </div>
             </div>
           </div>

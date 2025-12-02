@@ -40,9 +40,6 @@ const getPortfolioList = async ({
     btnLabel: "Visitar",
     goToURL: getLinkUrl(getIdFromId(item.url)),
   }));
-
-  // throw new Error('UPS.... Ha sucedido un error!!!')
-
   return portfolioCard;
 };
 

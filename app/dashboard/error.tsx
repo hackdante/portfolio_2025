@@ -22,6 +22,7 @@ export default function Error({
         </p>
         <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-600 mt-2">
           Server Error
+           {JSON.stringify(error)}
         </p>
         <p className="md:text-lg xl:text-xl text-gray-500 mt-4">
           Whoops, something went wrong on our servers.
