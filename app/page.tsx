@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { Hero3D } from "@/components/portfolio/base";
+
 
 export const metadata: Metadata = {
   title: "KENSAI | Desarrollo de Software, Web Apps y Soluciones Digitales",
@@ -36,10 +37,11 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  redirect('/dashboard/inicio')
   return (
     <>
-      <main className="flex flex-col items-center"></main>
+  <main className="w-full h-screen overflow-hidden">
+        <Hero3D />
+      </main>
     </>
   );
 }

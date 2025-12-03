@@ -1,12 +1,29 @@
-import Link from "next/link";
+"use client";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { LoadGBLModel } from "@/components/portfolio/base";
 
 export default function HomePage() {
   return (
-    <>
-      <main className="flex flex-col items-center">
-        <span className="text-center text-7xl">KENSAI</span>
-        <Link href={`/sobre-nosotros`}>Nos encanta el software y la innovación</Link>
-      </main>
-    </>
+    <main className="flex flex-col items-center">
+      <div className="w-full flex justify-center">
+        <Canvas
+          className="w-full h-full"
+          camera={{ position: [0, 1.5, 2], fov: 45 }}
+          shadows
+        >
+          <ambientLight intensity={0.6} />
+
+          <directionalLight position={[5, 5, 5]} intensity={15} castShadow />
+
+          <pointLight position={[-4, 2, -2]} intensity={2} />
+
+          <OrbitControls enableZoom={true} />
+
+          <LoadGBLModel objPath="/portfolio/models/kensai_icon_3d/model.glb" />
+        </Canvas>
+      </div>
+    </main>
   );
 }
+
