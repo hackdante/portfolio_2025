@@ -1,7 +1,7 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { LoadGBLModel } from "@/components/portfolio/base";
+
 
 export default function HomePage() {
   return (
@@ -20,7 +20,7 @@ export default function HomePage() {
 
           <OrbitControls enableZoom={true} />
 
-          <LoadGBLModel objPath="/portfolio/models/kensai_icon_3d/model.glb" />
+      
         </Canvas>
       </div>
     </main>

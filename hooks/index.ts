@@ -1,1 +1,2 @@
-import {useFetch } from '@/hooks/fetch/useFetch'
+export {useFetch } from '@/hooks/fetch/useFetch'
+export {useLoopAudio } from '@/hooks/audio/useLoopAudio'

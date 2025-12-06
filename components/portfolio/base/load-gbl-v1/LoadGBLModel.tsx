@@ -2,32 +2,34 @@
 
 import { useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
-import { useEffect } from "react";
+import { useLayoutEffect, useMemo } from "react";
 
 type ModelProps = Omit<ThreeElements["primitive"], "object"> & {
   objPath: string;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: number | [number, number, number];
 };
 
 export function LoadGBLModel({ objPath, ...props }: ModelProps) {
   const { scene } = useGLTF(objPath);
 
-  useEffect(() => {
-    scene.traverse((obj: any) => {
+  const clonedScene = useMemo(() => scene.clone(), [scene]);
+
+  useLayoutEffect(() => {
+    clonedScene.traverse((obj: any) => {
       if (obj.isMesh) {
         obj.castShadow = true;
         obj.receiveShadow = true;
 
         if (obj.material) {
-          // 1. Asegurar que el material no esté marcado como estático (para reflejos dinámicos)
-          obj.material.isMeshStandardMaterial = true; // Forzar tipo común // 2. Solucionar el problema de renderizado del reflejo
-
           obj.material.depthTest = true;
-          obj.material.transparent = true; // A menudo ayuda con los reflejos
+          obj.material.transparent = true;
           obj.material.needsUpdate = true;
         }
       }
     });
-  }, [scene]);
+  }, [clonedScene]);
 
-  return <primitive object={scene} {...props} />;
+  return <primitive object={clonedScene} {...props} />;
 }

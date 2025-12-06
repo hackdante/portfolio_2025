@@ -1,0 +1,1 @@
+export * from "@/components/portfolio/composite/hero-3d/Hero3D";
