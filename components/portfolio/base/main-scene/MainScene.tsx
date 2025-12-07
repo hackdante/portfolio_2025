@@ -13,6 +13,7 @@ import {
   LoadGBLModel,
   Particles3dV1,
 } from "@/components/portfolio/base";
+import { useIsMobile } from "@/hooks";
 
 const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
 const URL_FLOOR_TEXTURE = "/portfolio/models/hero-3d-scene/vector_grid.jpg";
@@ -27,6 +28,7 @@ interface MainScenePropsUI {
 }
 
 export function MainScene({ sceneReady = false }: MainScenePropsUI) {
+  const isMobile = useIsMobile();
   const dirLight = useRef<THREE.DirectionalLight>(null!);
   const pointLight = useRef<THREE.PointLight>(null!);
 
@@ -49,11 +51,11 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
       <CameraRig
         active={sceneReady}
         startPosition={{
-          camera: { x: 10, y: 0, z: 60 },
+          camera: isMobile ? { x: 5, y: 1, z: 40 } : { x: 10, y: 0, z: 60 },
           target: { x: 0, y: 0, z: 0 },
         }}
         endPosition={{
-          camera: { x: 2, y: 0, z: 15 },
+          camera: isMobile ? { x: 2, y: 1, z: 17 } : { x: 2, y: 0, z: 15 },
           target: { x: 0, y: 0, z: 0 },
         }}
         duration={20}
@@ -63,14 +65,22 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
 
       <directionalLight
         ref={dirLight}
-        position={[5, 20, 5]}
-        intensity={4}
+        position={[5, 10, 5]}
+        intensity={3.5}
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={4096}
+        shadow-mapSize-height={4096}
+        shadow-camera-near={1}
+        shadow-camera-far={50}
+        shadow-camera-top={10}
+        shadow-camera-bottom={-10}
+        shadow-camera-left={-10}
+        shadow-camera-right={10}
       />
 
       <pointLight ref={pointLight} position={[0, 20, -2]} intensity={2} />
+
+      <ambientLight intensity={0.35} />
 
       <OrbitControls
         enabled={!sceneReady}
@@ -82,7 +92,7 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
       />
 
       <Environment preset="city" />
-      <fog attach="fog" args={["#f5f5f5", 20, 50]} />
+      <fog attach="fog" args={["#ffffff", 8, 27]} />
 
       <LoadGBLModel objPath={URL_KENSAI_MODEL} position={[-3, 0, 0]} />
       <LoadGBLModel
@@ -100,18 +110,23 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
         Bienvenidos a
       </Text>
 
-      <Particles3dV1 count={400} area={100} fallSpeed={0.005} />
+      <Particles3dV1
+        count={isMobile ? 150 : 400}
+        area={isMobile ? 50 : 100}
+        fallSpeed={0.005}
+      />
 
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -0.93, 0]}
+        castShadow
         receiveShadow
       >
         <planeGeometry args={[100, 100]} />
 
         <meshStandardMaterial
           map={gridTexture}
-          color="#ffffff"
+          color="#eeeeee"
           roughness={1}
           metalness={0}
         />
