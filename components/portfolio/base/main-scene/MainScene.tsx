@@ -64,7 +64,7 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
       <directionalLight
         ref={dirLight}
         position={[5, 20, 5]}
-        intensity={15}
+        intensity={4}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -81,8 +81,8 @@ export function MainScene({ sceneReady = false }: MainScenePropsUI) {
         target={[3, 0, 0]}
       />
 
-      <Environment preset="sunset" />
-      <fog attach="fog" args={["#ffffff", 13, 20]} />
+      <Environment preset="city" />
+      <fog attach="fog" args={["#f5f5f5", 20, 50]} />
 
       <LoadGBLModel objPath={URL_KENSAI_MODEL} position={[-3, 0, 0]} />
       <LoadGBLModel

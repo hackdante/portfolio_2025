@@ -11,18 +11,17 @@ const AUDIO_LOOP_SRC = "/portfolio/music/kensai_intro.mp3";
 export function Hero3D() {
   const sceneVolume = 0.1;
   const { progress, loaded } = useProgress();
-  
+
   const [isReady, setIsReady] = useState(false);
   const [sceneVisible, setSceneVisible] = useState(false);
 
   useLoopAudio(AUDIO_LOOP_SRC, sceneVolume);
 
-  // Determina cuándo está lista la escena
   useEffect(() => {
     if (loaded > 0 && progress === 100) {
       const t = setTimeout(() => {
         setIsReady(true);
-        setTimeout(() => setSceneVisible(true), 100); // activa el fade in
+        setTimeout(() => setSceneVisible(true), 100);
       }, 300);
 
       return () => clearTimeout(t);
@@ -49,7 +48,9 @@ export function Hero3D() {
         <Canvas
           shadows
           camera={{ position: [0, 0, 100], fov: 35 }}
+          gl={{ antialias: true }}
         >
+          <color attach="background" args={["#ffffff"]} />
           <MainScene sceneReady={sceneVisible} />
         </Canvas>
       </div>
