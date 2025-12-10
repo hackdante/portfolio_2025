@@ -16,7 +16,7 @@ export function useLoopAudio(src: string, volume = 0.4) {
       audio
         .play()
         .catch(() => {
-          console.log("El navegador requiere interacción del usuario para reproducir audio.");
+          console.error("El navegador requiere interacción del usuario para reproducir audio.");
         });
     };
 

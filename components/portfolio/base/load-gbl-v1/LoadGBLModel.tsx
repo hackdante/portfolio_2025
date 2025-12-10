@@ -23,8 +23,9 @@ export function LoadGBLModel({ objPath, ...props }: ModelProps) {
         obj.receiveShadow = true;
 
         if (obj.material) {
-          obj.material.depthTest = true;
-          obj.material.transparent = true;
+          obj.material.depthWrite = true;
+          obj.material.transparent = false; 
+          obj.material.alphaTest = 0;        
           obj.material.needsUpdate = true;
         }
       }

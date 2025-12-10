@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 import { useEffect, useState } from "react";
-import { MainScene, Loader3d, CameraRig } from "@/components/portfolio/base";
+import { MainScene, Loader3d } from "@/components/portfolio/base";
 import { useLoopAudio } from "@/hooks";
 
 const AUDIO_LOOP_SRC = "/portfolio/music/kensai_intro.mp3";
@@ -30,14 +30,12 @@ export function Hero3D() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Loader */}
       {!sceneVisible && (
         <div className="absolute inset-0 z-20">
           <Loader3d progress={progress} />
         </div>
       )}
 
-      {/* Escena con fade-in */}
       <div
         className={`
           w-full h-full 
