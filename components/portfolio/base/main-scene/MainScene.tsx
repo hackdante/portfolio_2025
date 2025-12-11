@@ -18,6 +18,8 @@ const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
 const URL_FLOOR_TEXTURE = "/portfolio/models/hero-3d-scene/vector_grid.jpg";
 const URL_KENSAI_LOGO = "/portfolio/models/kensai-logo/logo_v1.glb";
 const URL_SAKURA_TREE = "/portfolio/models/sakura-tree/sakura_tree.glb";
+const URL_PAGODA = "/portfolio/models/pagoda/pagoda.glb";
+const URL_GATE_MODEL = "/portfolio/models/gate/gate.glb";
 
 const degToRad = (d: number) => (d * Math.PI) / 180;
 
@@ -42,12 +44,12 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <CameraRig
         active={sceneReady}
         startPosition={{
-          camera: isMobile ? { x: 5, y: 1, z: 40 } : { x: 0, y: 1, z: 60 },
+          camera: isMobile ? { x: 0, y: 1, z: 40 } : { x: 0, y: 1, z: 60 },
           target: { x: 0, y: 0, z: 0 },
         }}
         endPosition={{
-          camera: isMobile ? { x: 2, y: 1, z: 17 } : { x: 0, y: 6, z: 15 },
-          target: { x: 0, y: 0, z: 0 },
+          camera: isMobile ? { x: 0, y: 0, z: 16 } : { x: 0, y: 0, z: 15 },
+          target: isMobile ? { x: 0, y: 3.5, z: 0 } : { x: 0, y: 2, z: 0 },
         }}
         duration={10}
         ease="circ.out"
@@ -67,28 +69,45 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
 
       <Environment preset="city" />
 
-      <fog attach="fog" args={["#ffffff", 7, 35]} />
-
-      <LoadGBLModel
-        objPath={URL_KENSAI_MODEL}
-        position={[-3, 0, 0]}
-        castShadow
-        receiveShadow
-      />
+      <fog attach="fog" args={["#ffffff", 8, 35]} />
 
       <InstancedModel src={URL_SAKURA_TREE} meshes={sakuraTreeAPI} />
 
       <LoadGBLModel
+        scale={1}
+        objPath={URL_GATE_MODEL}
+        position={[0, -0.96, 20]}
+        castShadow
+        receiveShadow
+      />
+
+      <LoadGBLModel
+        scale={0.8}
+        objPath={URL_KENSAI_MODEL}
+        position={isMobile ? [0, -0.18, -2] : [3, -0.186, 5]}
+        castShadow
+        receiveShadow
+      />
+
+      <LoadGBLModel
         objPath={URL_KENSAI_LOGO}
-        scale={0.008}
-        position={[2, -0.75, 0]}
+        scale={isMobile ? 0.005 : 0.009}
+        position={isMobile ? [0.4, 7.5, -2] : [1, -0.75, 0]}
+        castShadow
+        receiveShadow
+      />
+
+      <LoadGBLModel
+        objPath={URL_PAGODA}
+        scale={0.3}
+        position={[0, -1.4, -16]}
         castShadow
         receiveShadow
       />
 
       <Text
-        position={[-0.5, 1.2, 0]}
-        fontSize={0.5}
+        position={isMobile ? [0, 8, 0] : [-2, 1.4, 0]}
+        fontSize={isMobile ? 0.35 : 0.5}
         color="black"
         anchorX="center"
         anchorY="middle"
@@ -105,10 +124,10 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <Font3D
         reference="portfolio-title"
         font="helvetiker_regular.typeface.json"
-        position={[-4, -0.89, 4]}
-        rotation={[degToRad(-90), degToRad(0), degToRad(0)]}
-        size={0.5}
-        extrude={0.02}
+        position={isMobile ? [-0.8, 4, 0] : [-4, 3, 0]}
+        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
+        size={isMobile ? 0.25 : 0.3}
+        extrude={0.01}
         text="Portafolio"
         material={
           <meshPhysicalMaterial
@@ -124,9 +143,9 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <Font3D
         reference="contacto-title"
         font="helvetiker_regular.typeface.json"
-        position={[0, -0.89, 4]}
-        rotation={[degToRad(-90), degToRad(0), degToRad(0)]}
-        size={0.5}
+        position={isMobile ? [-0.8, 3, 0] : [0, 3, 0]}
+        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
+        size={isMobile ? 0.25 : 0.3}
         extrude={0.02}
         text="Contacto"
         material={
@@ -143,9 +162,9 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <Font3D
         reference="contacto-title"
         font="helvetiker_regular.typeface.json"
-        position={[4, -0.89, 4]}
-        rotation={[degToRad(-90), degToRad(0), degToRad(0)]}
-        size={0.5}
+        position={isMobile ? [-0.8, 2, 0] : [4, 3, 0]}
+        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
+        size={isMobile ? 0.25 : 0.3}
         extrude={0.02}
         text="Biografia"
         material={

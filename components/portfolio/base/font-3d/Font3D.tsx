@@ -96,8 +96,9 @@ export function Font3D({
       height={extrude ?? 0.04}
       rotation={rotation}
       bevelEnabled
-      bevelSize={0.02}
-      bevelThickness={0.03}
+      bevelSize={0.01}
+      bevelThickness={0.02}
+      letterSpacing={0.02}
     >
       {text}
       {ref.current && <axesHelper args={[size * 1.5]} />}
