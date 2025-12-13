@@ -1,10 +1,10 @@
 "use client";
 
-import { Environment, Text, useTexture, useFont } from "@react-three/drei";
-import { useRef, Suspense, useMemo } from "react";
-import * as THREE from "three";
+import { Text, useTexture } from "@react-three/drei";
+import { useMemo } from "react";
+import { RepeatWrapping } from "three";
+
 import {
-  CameraRig,
   InstancedModel,
   LoadGBLModel,
   Particles3dV1,
@@ -23,52 +23,19 @@ const URL_GATE_MODEL = "/portfolio/models/gate/gate.glb";
 
 const degToRad = (d: number) => (d * Math.PI) / 180;
 
-interface MainScenePropsUI {
-  sceneReady: boolean;
-}
-
-export function MainScene({ sceneReady }: MainScenePropsUI) {
+export function MainScene() {
   const isMobile = useIsMobile();
-  const dirLight = useRef<THREE.DirectionalLight>(null);
 
   const gridTexture = useTexture(URL_FLOOR_TEXTURE);
   useMemo(() => {
-    gridTexture.wrapS = gridTexture.wrapT = THREE.RepeatWrapping;
+    gridTexture.wrapS = gridTexture.wrapT = RepeatWrapping;
     gridTexture.repeat.set(60, 60);
     gridTexture.anisotropy = 8;
     gridTexture.needsUpdate = true;
   }, [gridTexture]);
 
   return (
-    <Suspense fallback={null}>
-      <CameraRig
-        active={sceneReady}
-        startPosition={{
-          camera: isMobile ? { x: 0, y: 1, z: 40 } : { x: 0, y: 1, z: 60 },
-          target: { x: 0, y: 0, z: 0 },
-        }}
-        endPosition={{
-          camera: isMobile ? { x: 0, y: 0, z: 16 } : { x: 0, y: 0, z: 15 },
-          target: isMobile ? { x: 0, y: 3.5, z: 0 } : { x: 0, y: 2, z: 0 },
-        }}
-        duration={10}
-        ease="circ.out"
-      />
-
-      <ambientLight intensity={0.45} />
-
-      <directionalLight
-        position={[3, 8, -5]}
-        intensity={10}
-        castShadow
-        shadow-mapSize={[512, 512]}
-        shadow-bias={-0.0005}
-      />
-
-      <pointLight position={[0, 18, 0]} intensity={1.2} />
-
-      <Environment preset="city" />
-
+    <>
       <fog attach="fog" args={["#ffffff", 8, 35]} />
 
       <InstancedModel src={URL_SAKURA_TREE} meshes={sakuraTreeAPI} />
@@ -84,15 +51,26 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <LoadGBLModel
         scale={0.8}
         objPath={URL_KENSAI_MODEL}
-        position={isMobile ? [0, -0.18, -2] : [3, -0.186, 5]}
+        position={isMobile ? [0, -0.18, -2] : [0, -0.186, 0]}
         castShadow
         receiveShadow
       />
 
+      <Text
+        position={isMobile ? [0, 8.8, -2] : [-0.5, 7.2, 0]}
+        fontSize={isMobile ? 0.35 : 0.3}
+        color="black"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Bienvenidos a
+      </Text>
+
       <LoadGBLModel
         objPath={URL_KENSAI_LOGO}
-        scale={isMobile ? 0.005 : 0.009}
-        position={isMobile ? [0.4, 7.5, -2] : [1, -0.75, 0]}
+        scale={isMobile ? 0.005 : 0.0035}
+        position={isMobile ? [0.3, 7.5, -2] : [0, 6.2, 0]}
+        rotation={[0.3, 0, 0]}
         castShadow
         receiveShadow
       />
@@ -100,20 +78,10 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <LoadGBLModel
         objPath={URL_PAGODA}
         scale={0.3}
-        position={[0, -1.4, -16]}
+        position={[0, -1.4, -14]}
         castShadow
         receiveShadow
       />
-
-      <Text
-        position={isMobile ? [0, 8, 0] : [-2, 1.4, 0]}
-        fontSize={isMobile ? 0.35 : 0.5}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Bienvenidos a
-      </Text>
 
       <Particles3dV1
         count={isMobile ? 150 : 350}
@@ -124,9 +92,13 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <Font3D
         reference="portfolio-title"
         font="helvetiker_regular.typeface.json"
-        position={isMobile ? [-0.8, 4, 0] : [-4, 3, 0]}
-        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
-        size={isMobile ? 0.25 : 0.3}
+        position={isMobile ? [-0.7, 3.3, 0] : [1.5, -0.8, 0]}
+        rotation={
+          isMobile
+            ? [degToRad(0), degToRad(0), degToRad(0)]
+            : [degToRad(0), degToRad(-30), degToRad(0)]
+        }
+        size={isMobile ? 0.25 : 0.27}
         extrude={0.01}
         text="Portafolio"
         material={
@@ -143,29 +115,14 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
       <Font3D
         reference="contacto-title"
         font="helvetiker_regular.typeface.json"
-        position={isMobile ? [-0.8, 3, 0] : [0, 3, 0]}
-        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
-        size={isMobile ? 0.25 : 0.3}
-        extrude={0.02}
-        text="Contacto"
-        material={
-          <meshPhysicalMaterial
-            color="#222222"
-            roughness={1}
-            metalness={0.7}
-            clearcoat={1}
-          />
+        position={isMobile ? [-0.7, 4, 0] : [-1.5, -0.8, 0.5]}
+        rotation={
+          isMobile
+            ? [degToRad(0), degToRad(0), degToRad(0)]
+            : [0, degToRad(30), 0]
         }
-        pivot="bottom"
-      />
-
-      <Font3D
-        reference="contacto-title"
-        font="helvetiker_regular.typeface.json"
-        position={isMobile ? [-0.8, 2, 0] : [4, 3, 0]}
-        rotation={[degToRad(0), degToRad(0), degToRad(0)]}
-        size={isMobile ? 0.25 : 0.3}
-        extrude={0.02}
+        size={isMobile ? 0.25 : 0.27}
+        extrude={0.01}
         text="Biografia"
         material={
           <meshPhysicalMaterial
@@ -177,6 +134,7 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
         }
         pivot="bottom"
       />
+
       <mesh
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -0.93, 0]}
@@ -193,6 +151,6 @@ export function MainScene({ sceneReady }: MainScenePropsUI) {
           envMapIntensity={0.15}
         />
       </mesh>
-    </Suspense>
+    </>
   );
 }

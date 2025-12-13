@@ -3,11 +3,12 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 import gsap from "gsap";
+import { Vector3UI } from "@/types/global";
 
-interface Vector3UI {
-  x: number;
-  y: number;
-  z: number;
+
+export interface CameraRigFinishPayloadUI {
+  camera: Vector3UI;
+  target: Vector3UI;
 }
 
 interface CameraRigPropsUI {
@@ -15,8 +16,8 @@ interface CameraRigPropsUI {
   startPosition: { camera: Vector3UI; target: Vector3UI };
   endPosition: { camera: Vector3UI; target: Vector3UI };
   duration?: number;
-  ease?: gsap.TweenVars["ease"];  
-  onFinish?: () => void;
+  ease?: gsap.TweenVars["ease"];
+  onFinish?: (payload: CameraRigFinishPayloadUI) => void;
 }
 
 export function CameraRig({
@@ -32,14 +33,12 @@ export function CameraRig({
   useEffect(() => {
     if (!active) return;
 
-    // Set start camera
     camera.position.set(
       startPosition.camera.x,
       startPosition.camera.y,
       startPosition.camera.z
     );
 
-    // gsap tween for camera
     gsap.to(camera.position, {
       duration,
       x: endPosition.camera.x,
@@ -47,14 +46,25 @@ export function CameraRig({
       z: endPosition.camera.z,
       ease,
       onUpdate: () => {
-        // Smooth lookAt interpolation
         camera.lookAt(
           endPosition.target.x,
           endPosition.target.y,
           endPosition.target.z
         );
       },
-      onComplete: () => onFinish?.(),
+      onComplete: () =>
+        onFinish?.({
+          camera: {
+            x: endPosition.camera.x,
+            y: endPosition.camera.y,
+            z: endPosition.camera.z,
+          },
+          target: {
+            x: endPosition.target.x,
+            y: endPosition.target.y,
+            z: endPosition.target.z,
+          },
+        }),
     });
   }, [active]);
 
