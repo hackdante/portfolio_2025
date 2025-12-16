@@ -8,11 +8,14 @@ import {
   InstancedModel,
   LoadGBLModel,
   Particles3dV1,
-  Font3D,
+  SceneFloor,
 } from "@/components/portfolio/base";
+
+import { PillarButton } from "@/components/portfolio/composite";
 
 import { useIsMobile } from "@/hooks";
 import { sakuraTreeAPI } from "@/apis/local/main-scene";
+import { degToRad } from "@/utils";
 
 const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
 const URL_FLOOR_TEXTURE = "/portfolio/models/hero-3d-scene/vector_grid.jpg";
@@ -21,10 +24,24 @@ const URL_SAKURA_TREE = "/portfolio/models/sakura-tree/sakura_tree.glb";
 const URL_PAGODA = "/portfolio/models/pagoda/pagoda.glb";
 const URL_GATE_MODEL = "/portfolio/models/gate/gate.glb";
 
-const degToRad = (d: number) => (d * Math.PI) / 180;
+interface MainSceneUI {
+  activeActions: boolean;
+}
 
-export function MainScene() {
+export function MainScene({ activeActions = true }: MainSceneUI) {
   const isMobile = useIsMobile();
+
+  function handlerBio() {
+    console.log("Handler Bio");
+  }
+
+  function handlerPortfolio() {
+    console.log("Handler Portfolio");
+  }
+
+  function handlerContact() {
+    console.log("Handler Contact");
+  }
 
   const gridTexture = useTexture(URL_FLOOR_TEXTURE);
   useMemo(() => {
@@ -36,8 +53,6 @@ export function MainScene() {
 
   return (
     <>
-      <fog attach="fog" args={["#ffffff", 8, 35]} />
-
       <InstancedModel src={URL_SAKURA_TREE} meshes={sakuraTreeAPI} />
 
       <LoadGBLModel
@@ -49,9 +64,9 @@ export function MainScene() {
       />
 
       <LoadGBLModel
-        scale={0.8}
+        scale={0.9}
         objPath={URL_KENSAI_MODEL}
-        position={isMobile ? [0, -0.18, -2] : [0, -0.186, 0]}
+        position={[-1.53, -0.1, 0.5]}
         castShadow
         receiveShadow
       />
@@ -89,68 +104,30 @@ export function MainScene() {
         fallSpeed={0.004}
       />
 
-      <Font3D
-        reference="portfolio-title"
-        font="helvetiker_regular.typeface.json"
-        position={isMobile ? [-0.7, 3.3, 0] : [1.5, -0.8, 0]}
-        rotation={
-          isMobile
-            ? [degToRad(0), degToRad(0), degToRad(0)]
-            : [degToRad(0), degToRad(-30), degToRad(0)]
-        }
-        size={isMobile ? 0.25 : 0.27}
-        extrude={0.01}
-        text="Portafolio"
-        material={
-          <meshPhysicalMaterial
-            color="#222222"
-            roughness={1}
-            metalness={0.7}
-            clearcoat={1}
-          />
-        }
-        pivot="bottom"
+      <PillarButton
+        label="Biografia"
+        isDisable={activeActions}
+        positionXYZ={[-0.7, 0, 0]}
+        rotationX={degToRad(0)}
+        onAction={handlerBio}
+      />
+      <PillarButton
+        label="Portafolio"
+        isDisable={activeActions}
+        positionXYZ={[0.5, 0, -2]}
+        rotationX={degToRad(0)}
+        onAction={handlerPortfolio}
       />
 
-      <Font3D
-        reference="contacto-title"
-        font="helvetiker_regular.typeface.json"
-        position={isMobile ? [-0.7, 4, 0] : [-1.5, -0.8, 0.5]}
-        rotation={
-          isMobile
-            ? [degToRad(0), degToRad(0), degToRad(0)]
-            : [0, degToRad(30), 0]
-        }
-        size={isMobile ? 0.25 : 0.27}
-        extrude={0.01}
-        text="Biografia"
-        material={
-          <meshPhysicalMaterial
-            color="#222222"
-            roughness={1}
-            metalness={0.7}
-            clearcoat={1}
-          />
-        }
-        pivot="bottom"
+      <PillarButton
+        label="Contacto"
+        isDisable={activeActions}
+        positionXYZ={[1.7, 0, -4]}
+        rotationX={degToRad(0)}
+        onAction={handlerContact}
       />
 
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -0.93, 0]}
-        receiveShadow
-      >
-        <planeGeometry args={[100, 100]} />
-
-        <meshPhysicalMaterial
-          map={gridTexture}
-          roughness={0.1}
-          metalness={0}
-          clearcoat={0.1}
-          clearcoatRoughness={1}
-          envMapIntensity={0.15}
-        />
-      </mesh>
+      <SceneFloor size={[110, 110]} position={[0, -0.93, 0]} />
     </>
   );
 }

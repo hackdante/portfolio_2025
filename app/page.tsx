@@ -1,7 +1,5 @@
-import Link from "next/link";
-
 import type { Metadata } from "next";
-import { Hero3D } from "@/components/portfolio/composite";
+import { HomePageClient } from "@/components/portfolio/composite";
 
 export const metadata: Metadata = {
   title: "KENSAI | Desarrollo de Software, Web Apps y Soluciones Digitales",
@@ -36,11 +34,10 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+
   return (
-    <>
-      <main className="w-full h-screen overflow-hidden">
-        <Hero3D />
-      </main>
-    </>
+    <div className="w-full h-screen overflow-hidden">
+      <HomePageClient />
+    </div>
   );
 }

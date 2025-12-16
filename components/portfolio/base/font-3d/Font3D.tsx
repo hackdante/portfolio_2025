@@ -17,6 +17,7 @@ interface Font3DPropsUI {
   material?: React.ReactNode;
   extrude?: number;
   pivot?: PivoteUI;
+  showPivot?: boolean;
 }
 
 export function Font3D({
@@ -29,6 +30,7 @@ export function Font3D({
   material,
   extrude,
   pivot,
+  showPivot = false,
 }: Font3DPropsUI) {
   const ref = useRef<Mesh>(null);
 
@@ -51,25 +53,21 @@ export function Font3D({
       switch (pivot) {
         case "bottom": {
           tx = -centerX;
-
           ty = -bbox.min.y;
           break;
         }
         case "top": {
           tx = -centerX;
-
           ty = -bbox.max.y;
           break;
         }
         case "left": {
           tx = -bbox.min.x;
-
           ty = -centerY;
           break;
         }
         case "right": {
           tx = -bbox.max.x;
-
           ty = -centerY;
           break;
         }
@@ -101,7 +99,7 @@ export function Font3D({
       letterSpacing={0.02}
     >
       {text}
-      {ref.current && <axesHelper args={[size * 1.5]} />}
+      {showPivot && ref.current && <axesHelper args={[size * 4]} />}
       {material ?? <meshStandardMaterial color="black" />}
     </Text3D>
   );

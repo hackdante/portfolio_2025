@@ -6,3 +6,6 @@ export * from "@/components/portfolio/base/main-scene/MainScene";
 export * from "@/components/portfolio/base/camera-rig/CameraRig";
 export * from "@/components/portfolio/base/instance-model/InstanceModel";
 export * from "@/components/portfolio/base/font-3d/Font3D";
+export * from "@/components/portfolio/base/scene-floor/SceneFloor";
+export * from "@/components/portfolio/base/native-models/BasePillar3D";
+export * from "@/components/portfolio/base/native-models/PillarsColumns3D";

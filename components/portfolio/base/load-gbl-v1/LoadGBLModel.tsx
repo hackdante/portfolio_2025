@@ -3,6 +3,7 @@
 import { useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
 import { useLayoutEffect, useMemo } from "react";
+import { Object3D, Mesh } from "three"; 
 
 type ModelProps = Omit<ThreeElements["primitive"], "object"> & {
   objPath: string;
@@ -17,17 +18,10 @@ export function LoadGBLModel({ objPath, ...props }: ModelProps) {
   const clonedScene = useMemo(() => scene.clone(), [scene]);
 
   useLayoutEffect(() => {
-    clonedScene.traverse((obj: any) => {
-      if (obj.isMesh) {
+    clonedScene.traverse((obj: Object3D) => {
+      if (obj instanceof Mesh) {
         obj.castShadow = true;
         obj.receiveShadow = true;
-
-        if (obj.material) {
-          obj.material.depthWrite = true;
-          obj.material.transparent = false; 
-          obj.material.alphaTest = 0;        
-          obj.material.needsUpdate = true;
-        }
       }
     });
   }, [clonedScene]);
