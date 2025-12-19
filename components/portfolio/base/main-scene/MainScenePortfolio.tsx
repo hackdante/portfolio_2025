@@ -1,21 +1,20 @@
 import { Text } from "@react-three/drei";
-import { LoadFBXModel } from "@/components/portfolio/base";
 import { Vector3TypeUI } from "@/types/global";
-import { BioCharacterController } from "../../composite";
+import { BioCharacterController } from "@/components/portfolio/composite";
 
 const currentInitialPosition: Vector3TypeUI = [35, 18, -10];
 
 export function MainScenePortfolio() {
   return (
     <>
-          <Text
-        position={[35, 24, -20]}
-        fontSize={1.3}
+      <Text
+        position={[32, 21.5, -20]}
+        fontSize={0.7}
         color="black"
         anchorX="center"
         anchorY="middle"
       >
-       Contácto: 3136211448
+        Contácto: 3136211448
       </Text>
       <Text
         position={[35, 20, -20]}
