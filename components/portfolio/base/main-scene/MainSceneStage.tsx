@@ -1,7 +1,9 @@
 "use client";
 
-import { Text, useTexture } from "@react-three/drei";
+import { sakuraTreeAPI } from "@/apis/local/main-scene";
 import { useMemo } from "react";
+
+import { Text, useTexture } from "@react-three/drei";
 import { RepeatWrapping } from "three";
 
 import {
@@ -10,12 +12,11 @@ import {
   Particles3dV1,
   SceneFloor,
 } from "@/components/portfolio/base";
-
 import { PillarButton } from "@/components/portfolio/composite";
 
-import { useIsMobile } from "@/hooks";
-import { sakuraTreeAPI } from "@/apis/local/main-scene";
 import { degToRad } from "@/utils";
+import { useIsMobile } from "@/hooks";
+import { CameraMotionToScenesUI } from "@/types/global";
 
 const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
 const URL_FLOOR_TEXTURE = "/portfolio/models/hero-3d-scene/vector_grid.jpg";
@@ -26,22 +27,11 @@ const URL_GATE_MODEL = "/portfolio/models/gate/gate.glb";
 
 interface MainSceneUI {
   activeActions: boolean;
+  onNavigate: (section: CameraMotionToScenesUI) => void;
 }
 
-export function MainScene({ activeActions = true }: MainSceneUI) {
+export function MainSceneStage({ activeActions = true, onNavigate }: MainSceneUI) {
   const isMobile = useIsMobile();
-
-  function handlerBio() {
-    console.log("Handler Bio");
-  }
-
-  function handlerPortfolio() {
-    console.log("Handler Portfolio");
-  }
-
-  function handlerContact() {
-    console.log("Handler Contact");
-  }
 
   const gridTexture = useTexture(URL_FLOOR_TEXTURE);
   useMemo(() => {
@@ -109,22 +99,22 @@ export function MainScene({ activeActions = true }: MainSceneUI) {
         isDisable={activeActions}
         positionXYZ={[-0.7, 0, 0]}
         rotationX={degToRad(0)}
-        onAction={handlerBio}
+        onAction={() => onNavigate("camera-scene/bio")}
       />
       <PillarButton
         label="Portafolio"
         isDisable={activeActions}
-        positionXYZ={[0.5, 0, -2]}
+        positionXYZ={[0.5, 0, 0]}
         rotationX={degToRad(0)}
-        onAction={handlerPortfolio}
+        onAction={() => onNavigate("camera-scene/portfolio")}
       />
 
       <PillarButton
         label="Contacto"
         isDisable={activeActions}
-        positionXYZ={[1.7, 0, -4]}
+        positionXYZ={[1.7, 0, 0]}
         rotationX={degToRad(0)}
-        onAction={handlerContact}
+        onAction={() => onNavigate("camera-scene/contact")}
       />
 
       <SceneFloor size={[110, 110]} position={[0, -0.93, 0]} />

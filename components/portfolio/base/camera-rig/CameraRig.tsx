@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { Vector3UI } from "@/types/global";
 
-
 export interface CameraRigFinishPayloadUI {
   camera: Vector3UI;
   target: Vector3UI;
@@ -25,13 +24,16 @@ export function CameraRig({
   startPosition,
   endPosition,
   duration = 3,
-  ease = "power3.out",
+  ease = "power1.out",
   onFinish,
 }: CameraRigPropsUI) {
   const { camera } = useThree();
 
   useEffect(() => {
+      console.log('startPosition.camera.x ==>  ', startPosition.camera.x)
     if (!active) return;
+
+  
 
     camera.position.set(
       startPosition.camera.x,
@@ -39,34 +41,47 @@ export function CameraRig({
       startPosition.camera.z
     );
 
-    gsap.to(camera.position, {
-      duration,
-      x: endPosition.camera.x,
-      y: endPosition.camera.y,
-      z: endPosition.camera.z,
-      ease,
-      onUpdate: () => {
-        camera.lookAt(
-          endPosition.target.x,
-          endPosition.target.y,
-          endPosition.target.z
-        );
-      },
-      onComplete: () =>
-        onFinish?.({
-          camera: {
-            x: endPosition.camera.x,
-            y: endPosition.camera.y,
-            z: endPosition.camera.z,
-          },
-          target: {
-            x: endPosition.target.x,
-            y: endPosition.target.y,
-            z: endPosition.target.z,
-          },
-        }),
+    const lookTarget = {
+      x: startPosition.target.x,
+      y: startPosition.target.y,
+      z: startPosition.target.z,
+    };
+
+    const tl = gsap.timeline({
+      onComplete: () => onFinish?.(endPosition),
     });
-  }, [active]);
+
+    tl.to(
+      camera.position,
+      {
+        duration,
+        x: endPosition.camera.x,
+        y: endPosition.camera.y,
+        z: endPosition.camera.z,
+        ease,
+        onUpdate: () => {
+          camera.lookAt(lookTarget.x, lookTarget.y, lookTarget.z);
+        },
+      },
+      0
+    );
+
+    tl.to(
+      lookTarget,
+      {
+        duration,
+        x: endPosition.target.x,
+        y: endPosition.target.y,
+        z: endPosition.target.z,
+        ease,
+      },
+      0
+    );
+
+    return () => {
+      tl.kill();
+    };
+  }, [active, camera, startPosition, endPosition, duration, ease, onFinish]);
 
   return null;
 }

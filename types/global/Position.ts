@@ -4,4 +4,11 @@ export interface Vector3UI {
   z: number;
 }
 
+export interface PositionCameraUI {
+  camera: Vector3UI;
+  target: Vector3UI;
+}
+
 export type Vector3TypeUI = [number, number, number]
+
+
