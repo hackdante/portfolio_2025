@@ -1,9 +1,12 @@
-'use client'
+"use client";
+import { LoadOBJModel } from "@/components/portfolio/base";
 import { Text } from "@react-three/drei";
-import { BioCharacterController } from "@/components/portfolio/composite";
-import { Vector3TypeUI } from "@/types/global";
+// import { LoadFBXModel } from "@/components/portfolio/base";
 
-const currentInitialPosition: Vector3TypeUI = [2.5, 30, -10];
+//const URL_KENSAI_ROM = "/portfolio/models/roms/rom_fbx.fbx";
+const URL_KENSAI_ROM = "/portfolio/models/roms/room.obj";
+const URL_KENSAI_MAT = "/portfolio/models/roms/room.mtl";
+
 
 export function MainSceneBio() {
   return (
@@ -26,11 +29,10 @@ export function MainSceneBio() {
       >
         Biografía
       </Text>
-      <BioCharacterController
-        activePose={1}
-        position={currentInitialPosition}
-        scale={0.035}
-      />
+
+      <LoadOBJModel  objPath={URL_KENSAI_ROM} mtlPath={URL_KENSAI_MAT} position={[15, 33, 8]} scale={0.017} rotation={[0,90,0]} />
+
+      {/* <LoadFBXModel path={URL_KENSAI_ROM} scale={0.005} position={[2.5, 30, -15]}  /> */}
     </>
   );
 }

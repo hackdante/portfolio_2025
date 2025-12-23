@@ -1,21 +1,46 @@
 "use client";
 
-import { useLoader } from "@react-three/fiber";
-import { OBJLoader } from "three-stdlib";
-import { MTLLoader } from "three-stdlib";
+import { useLoader, type ThreeElements } from "@react-three/fiber";
+import { OBJLoader, MTLLoader } from "three-stdlib";
+import { useLayoutEffect, useMemo } from "react";
+import { Mesh, Object3D } from "three";
 
-interface OBJModelProps {
+
+type OBJModelProps = Omit<ThreeElements["primitive"], "object"> & {
   objPath: string;
   mtlPath: string;
-}
+};
 
-export function LoadOBJModel({ objPath, mtlPath }: OBJModelProps) {
+export function LoadOBJModel({ objPath, mtlPath, ...props }: OBJModelProps) {
+
   const materials = useLoader(MTLLoader, mtlPath);
-  materials.preload();
+  
+  useMemo(() => {
+    materials.preload();
+  }, [materials]);
+
 
   const obj = useLoader(OBJLoader, objPath, (loader) => {
     loader.setMaterials(materials);
   });
 
-  return <primitive object={obj} />;
+
+  const clonedObj = useMemo(() => obj.clone(), [obj]);
+
+
+  useLayoutEffect(() => {
+    clonedObj.traverse((child: Object3D) => {
+      if (child instanceof Mesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      
+        if (child.material) {
+          child.material.needsUpdate = true;
+        }
+      }
+    });
+  }, [clonedObj]);
+
+  // 5. Retornamos la primitiva pasando el resto de props (position, rotation, scale)
+  return <primitive object={clonedObj} {...props} />;
 }

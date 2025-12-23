@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#docs
+CURRENT_PROJECT_CONFIG_UPDATED.txt

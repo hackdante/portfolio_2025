@@ -35,3 +35,37 @@ body {
 .active-link {
   @apply text-blue-500;
 }
+
+
+@theme {
+  --color-ui-background: var(--background);
+  --color-ui-foreground: var(--foreground);
+  --color-ui-border: var(--border);
+
+  --color-semantic-success: var(--success);
+  --color-semantic-error: var(--error);
+  --color-semantic-warning: var(--warning);
+  --color-semantic-info: var(--info);
+  --color-semantic-disabled: var(--disabled);
+  --radius-button: 9999px;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --border: #e2e8f0;
+  --success: #10b981;
+  --error: #f43f5e;
+  --warning: #f59e0b;
+  --info: #0ea5e9;
+  --disabled: #f4f4f5;
+}
+
+[data-theme='dark'] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --border: #27272a;
+  --success: #059669;
+  --error: #e11d48;
+  --disabled: #18181b;
+}
