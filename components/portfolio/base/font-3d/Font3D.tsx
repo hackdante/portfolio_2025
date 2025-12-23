@@ -2,26 +2,12 @@
 import { Text3D } from "@react-three/drei";
 import { useLayoutEffect, useRef } from "react";
 import { Mesh } from "three";
+import { Font3DPropsUI } from "./interface";
 
 const URL_FONTS_BASE = "/fonts";
 
-type PivoteUI = "center" | "top" | "bottom" | "left" | "right";
-
-interface Font3DPropsUI {
-  reference: string;
-  text: string;
-  font: string;
-  size: number;
-  position: [number, number, number];
-  rotation?: [number, number, number];
-  material?: React.ReactNode;
-  extrude?: number;
-  pivot?: PivoteUI;
-  showPivot?: boolean;
-}
-
 export function Font3D({
-  reference,
+  innerRef,
   text,
   font,
   size,
@@ -30,62 +16,37 @@ export function Font3D({
   material,
   extrude,
   pivot,
-  showPivot = false,
+  children,
 }: Font3DPropsUI) {
-  const ref = useRef<Mesh>(null);
+  const localRef = useRef<Mesh>(null);
+  const activeRef = innerRef || localRef;
 
   useLayoutEffect(() => {
-    const refCurrent = ref.current;
+    const mesh = activeRef.current;
+    if (!mesh) return;
 
-    if (refCurrent) {
-      refCurrent.geometry.computeBoundingBox();
+    mesh.geometry.computeBoundingBox();
+    const bbox = mesh.geometry.boundingBox;
+    if (!bbox) return;
 
-      const bbox = refCurrent.geometry.boundingBox;
+    const centerX = (bbox.min.x + bbox.max.x) / 2;
+    const centerY = (bbox.min.y + bbox.max.y) / 2;
 
-      if (!bbox) return;
-
-      const centerX = (bbox.min.x + bbox.max.x) / 2;
-      const centerY = (bbox.min.y + bbox.max.y) / 2;
-
-      let tx = 0;
-      let ty = 0;
-
-      switch (pivot) {
-        case "bottom": {
-          tx = -centerX;
-          ty = -bbox.min.y;
-          break;
-        }
-        case "top": {
-          tx = -centerX;
-          ty = -bbox.max.y;
-          break;
-        }
-        case "left": {
-          tx = -bbox.min.x;
-          ty = -centerY;
-          break;
-        }
-        case "right": {
-          tx = -bbox.max.x;
-          ty = -centerY;
-          break;
-        }
-        case "center":
-        default: {
-          tx = -centerX;
-          ty = -centerY;
-          break;
-        }
-      }
-
-      refCurrent.geometry.translate(tx, ty, 0);
+    let tx = 0, ty = 0;
+    switch (pivot) {
+      case "bottom": tx = -centerX; ty = -bbox.min.y; break;
+      case "top": tx = -centerX; ty = -bbox.max.y; break;
+      case "left": tx = -bbox.min.x; ty = -centerY; break;
+      case "right": tx = -bbox.max.x; ty = -centerY; break;
+      default: tx = -centerX; ty = -centerY; break;
     }
-  }, [font, text, pivot]);
+
+    mesh.geometry.translate(tx, ty, 0);
+  }, [font, text, pivot, activeRef]);
 
   return (
     <Text3D
-      ref={reference ? ref : null}
+      ref={activeRef}
       position={position}
       font={`${URL_FONTS_BASE}/${font}`}
       castShadow
@@ -99,8 +60,8 @@ export function Font3D({
       letterSpacing={0.02}
     >
       {text}
-      {showPivot && ref.current && <axesHelper args={[size * 4]} />}
       {material ?? <meshStandardMaterial color="black" />}
+      {children}
     </Text3D>
   );
 }

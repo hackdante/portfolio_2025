@@ -4,5 +4,7 @@ export * from "@/components/portfolio/composite/home-page-client/HomePageClient"
 export * from "@/components/portfolio/composite/camera-controller/CameraControllerMain";
 export * from "@/components/portfolio/composite/main-environment/MainEnvironment"
 export * from "@/components/portfolio/composite/bio-character-controller/BioCharacterController"
+export * from "@/components/portfolio/composite/text"
+export * from "@/components/portfolio/composite/scenes"
 
 

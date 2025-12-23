@@ -1,14 +1,6 @@
 "use client";
 import { useConfiguredTexture } from "@/hooks";
-
-type PlaneMeshArgsUI = [number, number];
-type PlanarMeshPositionUI = [number, number, number];
-
-interface SceneFloorUI {
-  size?: PlaneMeshArgsUI;
-  position?: PlanarMeshPositionUI;
-  textureURL?: string;
-}
+import { SceneFloorUI } from "./interface";
 
 const URL_FLOOR_DEFAULT_TEXTURE =
   "/portfolio/models/hero-3d-scene/vector_grid.jpg";

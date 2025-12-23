@@ -1,10 +1,7 @@
 "use client";
 
 import { sakuraTreeAPI } from "@/apis/local/main-scene";
-import { useMemo } from "react";
-
-import { Text, useTexture } from "@react-three/drei";
-import { RepeatWrapping } from "three";
+import { Text } from "@react-three/drei";
 
 import {
   InstancedModel,
@@ -16,30 +13,19 @@ import { PillarButton } from "@/components/portfolio/composite";
 
 import { degToRad } from "@/utils";
 import { useIsMobile } from "@/hooks";
-import { CameraMotionToScenesUI } from "@/types/global";
+import { MainSceneUI } from "./interface";
 
 const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
-const URL_FLOOR_TEXTURE = "/portfolio/models/hero-3d-scene/vector_grid.jpg";
 const URL_KENSAI_LOGO = "/portfolio/models/kensai-logo/logo_v1.glb";
 const URL_SAKURA_TREE = "/portfolio/models/sakura-tree/sakura_tree.glb";
 const URL_PAGODA = "/portfolio/models/pagoda/pagoda.glb";
 const URL_GATE_MODEL = "/portfolio/models/gate/gate.glb";
 
-interface MainSceneUI {
-  activeActions: boolean;
-  onNavigate: (section: CameraMotionToScenesUI) => void;
-}
-
-export function MainSceneStage({ activeActions = true, onNavigate }: MainSceneUI) {
+export function MainSceneStage({
+  activeActions = true,
+  onNavigate,
+}: MainSceneUI) {
   const isMobile = useIsMobile();
-
-  const gridTexture = useTexture(URL_FLOOR_TEXTURE);
-  useMemo(() => {
-    gridTexture.wrapS = gridTexture.wrapT = RepeatWrapping;
-    gridTexture.repeat.set(60, 60);
-    gridTexture.anisotropy = 8;
-    gridTexture.needsUpdate = true;
-  }, [gridTexture]);
 
   return (
     <>
@@ -108,7 +94,6 @@ export function MainSceneStage({ activeActions = true, onNavigate }: MainSceneUI
         rotationX={degToRad(0)}
         onAction={() => onNavigate("camera-scene/portfolio")}
       />
-
       <PillarButton
         label="Contacto"
         isDisable={activeActions}

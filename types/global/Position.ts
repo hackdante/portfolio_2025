@@ -10,5 +10,6 @@ export interface PositionCameraUI {
 }
 
 export type Vector3TypeUI = [number, number, number]
+export type Vector2TypeUI = [number, number]
 
 

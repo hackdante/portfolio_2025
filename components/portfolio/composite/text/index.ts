@@ -1,0 +1,1 @@
+export * from "@/components/portfolio/composite/text/font-3d/Font3DComposite"

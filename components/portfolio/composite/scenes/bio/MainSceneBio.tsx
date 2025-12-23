@@ -1,14 +1,15 @@
+'use client'
 import { Text } from "@react-three/drei";
-import { Vector3TypeUI } from "@/types/global";
 import { BioCharacterController } from "@/components/portfolio/composite";
+import { Vector3TypeUI } from "@/types/global";
 
-const currentInitialPosition: Vector3TypeUI = [35, 18, -10];
+const currentInitialPosition: Vector3TypeUI = [2.5, 30, -10];
 
-export function MainScenePortfolio() {
+export function MainSceneBio() {
   return (
     <>
       <Text
-        position={[32, 21.5, -20]}
+        position={[-2.4, 36.7, -20]}
         fontSize={0.7}
         color="black"
         anchorX="center"
@@ -17,19 +18,18 @@ export function MainScenePortfolio() {
         Contácto: 3136211448
       </Text>
       <Text
-        position={[35, 20, -20]}
+        position={[0, 35, -20]}
         fontSize={3}
         color="black"
         anchorX="center"
         anchorY="middle"
       >
-        Portafolio
+        Biografía
       </Text>
-
       <BioCharacterController
         activePose={1}
         position={currentInitialPosition}
-        scale={0.025}
+        scale={0.035}
       />
     </>
   );

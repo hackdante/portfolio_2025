@@ -1,0 +1,5 @@
+export * from "@/components/portfolio/composite/scenes/bio/MainSceneBio"
+export * from "@/components/portfolio/composite/scenes/contact/MainSceneContact"
+export * from "@/components/portfolio/composite/scenes/portfolio/MainScenePortfolio"
+export * from "@/components/portfolio/composite/scenes/main/MainSceneStage"
+export * from "@/components/portfolio/composite/hero-3d"

@@ -1,35 +1,55 @@
 "use client";
 
-import { Hero3D } from "../hero-3d/Hero3D";
-import { useLayoutEffect, useState } from "react";
-import { AudioController, StaticPageLoader } from "@/components/base";
+import { useSyncExternalStore } from "react";
 
-type ClientScreenSize = { screenX: number; screenY: number } | null;
+import { AudioController, StaticPageLoader } from "@/components/base";
+import { ClientScreenSizeUI } from "@/types/global";
+import { Hero3D } from "@/components/portfolio/composite";
+
+let currentSize: ClientScreenSizeUI = null;
+
+if (typeof window !== "undefined") {
+  currentSize = {
+    screenX: window.innerWidth,
+    screenY: window.innerHeight,
+  };
+}
+
+function subscribe(callback: () => void) {
+  const onResize = () => {
+    if (
+      currentSize?.screenX !== window.innerWidth ||
+      currentSize?.screenY !== window.innerHeight
+    ) {
+      currentSize = {
+        screenX: window.innerWidth,
+        screenY: window.innerHeight,
+      };
+      callback();
+    }
+  };
+
+  window.addEventListener("resize", onResize);
+  return () => window.removeEventListener("resize", onResize);
+}
+
+function getSnapshot() {
+  return currentSize;
+}
+
+function getServerSnapshot() {
+  return null;
+}
 
 export function HomePageClient() {
   const AUDIO_LOOP_SRC = "/portfolio/music/kensai_intro.mp3";
   const SCENE_VOLUME = 0.1;
 
-  const [screenSize, setScreenSize] = useState<ClientScreenSize>(null);
-
-  const detectScreenSize = () => {
-    if (typeof window !== "undefined") {
-      setScreenSize({
-        screenX: window.innerWidth,
-        screenY: window.innerHeight,
-      });
-    }
-  };
-
-  useLayoutEffect(() => {
-    detectScreenSize();
-
-    window.addEventListener("resize", detectScreenSize);
-
-    return () => {
-      window.removeEventListener("resize", detectScreenSize);
-    };
-  }, []);
+  const screenSize = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
   return (
     <>

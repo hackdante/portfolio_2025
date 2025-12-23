@@ -11,7 +11,5 @@ export * from "@/components/portfolio/base/scene-floor/SceneFloor";
 export * from "@/components/portfolio/base/native-models/BasePillar3D";
 export * from "@/components/portfolio/base/native-models/PillarsColumns3D";
 export * from "@/components/portfolio/base/post-processing-effects/PostProcessingEffects"
-export * from "@/components/portfolio/base/main-scene/MainSceneStage";
-export * from "@/components/portfolio/base/main-scene/MainScenePortfolio"
-export * from "@/components/portfolio/base/main-scene/MainSceneBio"
-export * from "@/components/portfolio/base/main-scene//MainSceneContact"
+export * from "@/components/portfolio/base/pivot-debuger"
+export * from "@/components/portfolio/base/scene-floor"

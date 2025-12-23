@@ -1,3 +1,4 @@
+'use client'
 import { Text } from "@react-three/drei";
 import { BioCharacterController } from "@/components/portfolio/composite";
 import { Vector3TypeUI } from "@/types/global";

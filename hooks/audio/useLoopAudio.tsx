@@ -13,9 +13,6 @@ export function useLoopAudio(src: string, volume = 0.4) {
     const audio = audioRef.current;
     if (!audio) return;
 
-    window.removeEventListener("click", startPlaybackOnInteraction);
-    window.removeEventListener("keydown", startPlaybackOnInteraction);
-
     audio
       .play()
       .then(() => {
@@ -23,44 +20,40 @@ export function useLoopAudio(src: string, volume = 0.4) {
         setError(undefined);
       })
       .catch((e: DOMException) => {
-        console.warn(
-          "Reproducción automática bloqueada. Esperando interacción.",
-          e
-        );
+        console.warn("Autoplay bloqueado, esperando interacción.");
         setError(e);
         setIsPlaying(false);
       });
   }, []);
 
-  const startPlaybackOnInteraction = useCallback(() => {
-    startPlayback();
-  }, [startPlayback]);
-
   useEffect(() => {
     const audio = new Audio(src);
-    audioRef.current = audio;
-
     audio.loop = true;
     audio.volume = volume;
+    audioRef.current = audio;
+
+    const handleInteraction = () => {
+      startPlayback();
+      cleanup(); 
+    };
+
+    const cleanup = () => {
+      window.removeEventListener("click", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
 
     startPlayback();
 
-    if (audioRef.current && !isPlaying) {
-      window.addEventListener("click", startPlaybackOnInteraction, {
-        once: true,
-      });
-      window.addEventListener("keydown", startPlaybackOnInteraction, {
-        once: true,
-      });
-    }
+    window.addEventListener("click", handleInteraction);
+    window.addEventListener("keydown", handleInteraction);
 
     return () => {
       audio.pause();
+      audio.src = "";
       audioRef.current = null;
-      window.removeEventListener("click", startPlaybackOnInteraction);
-      window.removeEventListener("keydown", startPlaybackOnInteraction);
+      cleanup();
     };
-  }, [src, volume, startPlaybackOnInteraction, startPlayback]);
+  }, [src, volume, startPlayback]);
 
   const togglePlayback = useCallback(() => {
     const audio = audioRef.current;

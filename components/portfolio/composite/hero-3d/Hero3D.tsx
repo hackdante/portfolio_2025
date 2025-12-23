@@ -6,22 +6,23 @@ import { Canvas } from "@react-three/fiber";
 import { useProgress } from "@react-three/drei";
 
 import {
-  Loader3d,
-  PostProcessingEffects,
   MainSceneStage,
   MainScenePortfolio,
   MainSceneBio,
   MainSceneContact,
-} from "@/components/portfolio/base";
+} from "@/components/portfolio/composite";
+
+import { Loader3d, PostProcessingEffects } from "@/components/portfolio/base";
+
 import {
   CameraControllerMain,
   MainEnvironment,
 } from "@/components/portfolio/composite";
-import { CameraMotionToScenesUI } from "@/types/global";
+import { CameraMotionToScenesUI, ClientScreenSizeUI } from "@/types/global";
 
 type CameraMotionTypeUI = "camera/in-motion" | "camera/out-motion";
 
-export function Hero3D({ currentScreen }: { currentScreen: any }) {
+export function Hero3D({ currentScreen }: { currentScreen: ClientScreenSizeUI }) {
   const isMobile = useIsMobile();
   const { progress, loaded } = useProgress();
 

@@ -56,6 +56,22 @@ Un portafolio interactivo y dinámico desarrollado por KENSAI, liderado por Lean
 - `pnpm start`: Inicia servidor de producción.
 - `pnpm lint`: Ejecuta ESLint para verificar código.
 
+## 🐳 Docker
+
+El proyecto incluye soporte para Docker para facilitar el despliegue y desarrollo consistente.
+
+### Construir Imagen Docker
+```bash
+docker build -t kensai-portfolio .
+```
+
+### Ejecutar Contenedor
+```bash
+docker run -p 3000:3000 kensai-portfolio
+```
+
+El Dockerfile utiliza Node.js 20 con Alpine, instala pnpm globalmente, y optimiza la construcción para producción.
+
 ## 🏗️ Arquitectura del Proyecto
 
 ```

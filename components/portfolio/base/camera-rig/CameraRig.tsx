@@ -30,11 +30,7 @@ export function CameraRig({
   const { camera } = useThree();
 
   useEffect(() => {
-      console.log('startPosition.camera.x ==>  ', startPosition.camera.x)
     if (!active) return;
-
-  
-
     camera.position.set(
       startPosition.camera.x,
       startPosition.camera.y,

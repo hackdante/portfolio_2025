@@ -65,6 +65,16 @@ Antes de contribuir, asegúrate de tener instalados:
 - `pnpm start`: Servidor de producción local.
 - `pnpm lint`: Verificación de código con ESLint.
 
+### Pre-commit Hooks
+El proyecto utiliza Husky para automatizar verificaciones antes de commits:
+- **TypeScript Check**: `pnpm tsc --noEmit` para verificar tipos.
+- **Linting**: `pnpm lint` para asegurar calidad de código.
+
+Los hooks se configuran automáticamente con `pnpm prepare` tras instalar dependencias.
+
+### Lint-staged
+Se usa lint-staged para ejecutar linters solo en archivos modificados durante el commit, optimizando el proceso de desarrollo.
+
 ## Estructura del Proyecto Detallada
 
 ### Arquitectura de Componentes

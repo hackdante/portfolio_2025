@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
+import { Group, Color, Mesh } from "three";
 import { degToRad } from "@/utils";
 import { useIsMobile } from "@/hooks";
-import gsap from "gsap";
-import { Group, Color } from "three";
+
 import {
   PillarColumns3D,
   BasePillar3D,
   Font3D,
 } from "@/components/portfolio/base";
-import { Vector3TypeUI } from "@/types/global";
 
-type PillarActionFnUI = () => void;
+import { Vector3TypeUI } from "@/types/global";
 
 const RAISE_HEIGHT = 0.2;
 const ANIMATION_DURATION = 0.8;
@@ -20,10 +20,8 @@ const COLOR_ANIMATION_DURATION = 2;
 
 const INACTIVE_COLOR_HEX = "#FFFFFF";
 const ACTIVE_COLOR_HEX = "#000000";
-
 const ACTIVE_TEXT_COLOR = "#FFFFFF";
 const INACTIVE_TEXT_COLOR = "#000000";
-
 const DISABLED_COLOR_HEX = "#AAAAAA";
 const DISABLED_TEXT_COLOR = "#555555";
 
@@ -32,7 +30,7 @@ interface PillarButtonUI {
   positionXYZ?: Vector3TypeUI;
   rotationX?: number;
   isDisable: boolean;
-  onAction?: PillarActionFnUI | null;
+  onAction?: () => void;
 }
 
 export function PillarButton({
@@ -50,10 +48,11 @@ export function PillarButton({
   );
 
   const animatedGroupRef = useRef<Group>(null!);
+  const textMeshRef = useRef<Mesh>(null);
 
   const handlerAction = () => {
-    if (!isDisable) {
-      onAction?.();
+    if (!isDisable && onAction) {
+      onAction();
     }
   };
 
@@ -61,19 +60,23 @@ export function PillarButton({
     if (isDisable || isMobile) return;
     setIsActive(true);
   };
+
   const handlePointerOut = () => {
     if (isDisable || isMobile) return;
     setIsActive(false);
   };
+
   const handlePointerDown = () => {
     if (isDisable || !isMobile) return;
     setIsActive(true);
   };
+
   const handlePointerUp = () => {
     if (isDisable || !isMobile) return;
     setIsActive(false);
     handlerAction();
   };
+
   const handleClick = () => {
     if (isDisable || isMobile) return;
     handlerAction();
@@ -82,42 +85,45 @@ export function PillarButton({
   useEffect(() => {
     if (!animatedGroupRef.current) return;
 
-    if (isDisable) {
-      gsap.set(animatedGroupRef.current.position, { y: 0 });
+    const ctx = gsap.context(() => {
+      if (isDisable) {
+        gsap.set(animatedGroupRef.current.position, { y: 0 });
+        setBoxColor(DISABLED_COLOR_HEX);
+        return;
+      }
 
-      setBoxColor(DISABLED_COLOR_HEX);
+      gsap.to(animatedGroupRef.current.position, {
+        y: isActive ? RAISE_HEIGHT : 0,
+        duration: ANIMATION_DURATION,
+        ease: "bounce.out",
+      });
 
-      if (isActive) setIsActive(false);
+      const targetColor = isActive ? ACTIVE_COLOR_HEX : INACTIVE_COLOR_HEX;
+      const dummyColor = new Color(boxColor);
 
-      return;
-    }
+      gsap.to(dummyColor, {
+        duration: COLOR_ANIMATION_DURATION,
+        ease: "power2.out",
+        r: new Color(targetColor).r,
+        g: new Color(targetColor).g,
+        b: new Color(targetColor).b,
+        onUpdate: () => {
+          setBoxColor("#" + dummyColor.getHexString());
+        },
+      });
+    }, animatedGroupRef);
 
-    gsap.to(animatedGroupRef.current.position, {
-      y: isActive ? RAISE_HEIGHT : 0,
-      duration: ANIMATION_DURATION,
-      ease: "bounce.out",
-    });
+    return () => ctx.revert();
+  }, [isActive, isDisable, boxColor]);
 
-    const targetColor = isActive ? ACTIVE_COLOR_HEX : INACTIVE_COLOR_HEX;
-    const dummyColor = new Color(boxColor);
-
-    gsap.to(dummyColor, {
-      duration: COLOR_ANIMATION_DURATION,
-      ease: "power2.out",
-      r: new Color(targetColor).r,
-      g: new Color(targetColor).g,
-      b: new Color(targetColor).b,
-      onUpdate: () => {
-        setBoxColor("#" + dummyColor.getHexString());
-      },
-    });
-  }, [isActive, isDisable]);
+  if (isDisable && isActive) {
+    setIsActive(false);
+  }
 
   return (
-    <group position={positionXYZ} rotation={[0,rotationX,0]}>
+    <group position={positionXYZ} rotation={[0, rotationX, 0]}>
       <group
         ref={animatedGroupRef}
-        position={[0, 0, 0]}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
         onPointerDown={handlePointerDown}
@@ -125,13 +131,14 @@ export function PillarButton({
         onClick={handleClick}
       >
         <Font3D
-          reference="contacto-title"
+          innerRef={textMeshRef}
           font="helvetiker_regular.typeface.json"
           position={[0, 0.18, 0.2]}
           rotation={[0, 0, degToRad(90)]}
           size={0.2}
           extrude={0.02}
           text={label}
+          pivot="center"
           material={
             <meshPhysicalMaterial
               color={
@@ -146,11 +153,11 @@ export function PillarButton({
               clearcoat={1}
             />
           }
-          pivot="center"
         />
 
         <PillarColumns3D positionXYZ={[0, 0, 0]} colorBox={boxColor} />
       </group>
+
       <BasePillar3D positionXYZ={[0, -0.85, 0]} />
     </group>
   );

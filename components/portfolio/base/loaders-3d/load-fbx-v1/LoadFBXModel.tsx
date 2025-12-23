@@ -2,31 +2,25 @@
 
 import { useEffect, useMemo } from "react";
 import { useFBX } from "@react-three/drei";
-import { Mesh } from "three";
+import { Mesh, Group } from "three"; 
 import { SkeletonUtils } from "three-stdlib";
+import { LoadFBXModelUI } from "./interface";
 
-interface LoadFBXModelUI {
-  path: string;
-  position?: [number, number, number];
-  scale?: number;
-  onLoad?: (object: any) => void;
-}
-
-export function LoadFBXModel({ 
-  path, 
-  position = [0, 0, 0], 
+export function LoadFBXModel({
+  path,
+  position = [0, 0, 0],
   scale = 1,
-  onLoad
+  onLoad,
 }: LoadFBXModelUI) {
   const fbx = useFBX(path);
-  
+
   const clone = useMemo(() => {
-    return SkeletonUtils.clone(fbx);
+    return SkeletonUtils.clone(fbx) as Group;
   }, [fbx]);
 
   useEffect(() => {
     if (onLoad) onLoad(clone);
-    
+
     return () => {
       clone.traverse((child) => {
         if (child instanceof Mesh) {
@@ -42,10 +36,10 @@ export function LoadFBXModel({
   }, [clone, onLoad]);
 
   return (
-    <primitive 
-      object={clone} 
-      position={position} 
-      scale={[scale, scale, scale]} 
+    <primitive
+      object={clone}
+      position={position}
+      scale={[scale, scale, scale]}
     />
   );
 }
