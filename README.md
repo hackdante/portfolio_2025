@@ -19,6 +19,7 @@ Un portafolio interactivo y dinámico desarrollado por KENSAI, liderado por Lean
 - **TypeScript 5**: Tipado estático para mayor robustez.
 - **Three.js 0.181.2**: Motor de gráficos 3D con React Three Fiber y Drei.
 - **GSAP 3.13.0**: Librería de animaciones para transiciones fluidas.
+- **@gsap/react 2.1.2**: Hook useGSAP para integrar GSAP con React.
 - **Tailwind CSS 4**: Framework de estilos con PostCSS.
 - **React Three Postprocessing**: Efectos visuales avanzados (bloom, depth of field, etc.).
 - **React Three Rapier**: Física para interacciones 3D.

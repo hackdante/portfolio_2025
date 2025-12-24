@@ -19,6 +19,7 @@ El proyecto utiliza tecnologías de vanguardia como Next.js 16, React 19, TypeSc
 - **TypeScript 5**: Tipado estático completo.
 - **Three.js 0.181.2**: Gráficos 3D con React Three Fiber, Drei, y Postprocessing.
 - **GSAP 3.13.0**: Animaciones avanzadas.
+- **@gsap/react 2.1.2**: Hook useGSAP para integración con React.
 - **Tailwind CSS 4**: Estilos modernos.
 - **ESLint 9**: Linting avanzado.
 
@@ -108,6 +109,7 @@ Se usa lint-staged para ejecutar linters solo en archivos modificados durante el
 
 ### Animaciones con GSAP
 - Usa GSAP para animaciones complejas.
+- Utiliza el hook `useGSAP` de `@gsap/react` para integración nativa con React.
 - Coordina con animaciones de Three.js para transiciones suaves.
 - Implementa timelines para secuencias de animación.
 

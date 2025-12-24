@@ -40,7 +40,7 @@ export const MainHero: React.FC<MainHeroUI> = ({ data }) => {
           />
         </div>
       </div>
-      <TechStack />
+      <TechStack size={50} />
     </section>
   );
 };
