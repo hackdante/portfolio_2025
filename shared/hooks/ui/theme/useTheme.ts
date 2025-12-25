@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ThemeType } from "@/shared/types";
+import { ThemeModeType } from "@/shared/types";
 
-const isValidTheme = (value: string | null): value is ThemeType => {
+const isValidTheme = (value: string | null): value is ThemeModeType => {
   return value === "light" || value === "dark";
 };
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<ThemeType>(() => {
+  const [theme, setTheme] = useState<ThemeModeType>(() => {
     if (typeof window === "undefined") return "light";
 
     const localTheme = localStorage.getItem("theme");

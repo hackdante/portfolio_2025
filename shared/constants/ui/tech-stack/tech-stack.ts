@@ -1,4 +1,4 @@
-import { TechItemUI } from "@/shared/componets/composite";
+import { TechItemUI } from "@/shared/components/composite";
 import {
   SiNextdotjs,
   SiReact,

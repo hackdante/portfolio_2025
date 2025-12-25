@@ -1,71 +1,95 @@
 @import "tailwindcss";
 
-/* Tema claro */
+/* 1. IMPORTACIÓN DE COMPONENTES (Tokens de botones, etc.) */
+/* Asegúrate de que esta ruta sea correcta según tu estructura */
+
+
+/* 2. DEFINICIÓN DE VARIABLES (Design Tokens) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --- PALETA BASE (Valores fijos) --- */
+  --color-primary-40: #1b6ef3;
+  --color-primary-60: #3c8bf5;
+  --color-white-100: #ffffff;
+  --color-neutral-10: #121212;
+  --color-neutral-40: #757575;
+  
+  /* --- SEMÁNTICOS (Material Design) --- */
+  --color-semantic-success: #2e7d32;
+  --color-semantic-info: #0288d1;
+  --color-semantic-warning: #ed6c02;
+  --color-semantic-error: #d32f2f;
+
+  /* --- VARIABLES DINÁMICAS (Tema Claro por defecto) --- */
+  --color-ui-background: #ffffff;
+  --color-ui-foreground: #121212;
+  --color-ui-primary: var(--color-primary-40);
+  --color-ui-primary-hover: #1558c7;
+  --color-ui-border: #e0e0e0;
+  
+  /* Gradientes Hero */
+  --hero-gradient-start: #f8f9fa;
+  --hero-gradient-end: #e2e8f0;
+
+  /* Elevaciones */
+  --radius-button: 9999px; /* Pill shape para M3 */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 3. REACCIÓN AL THEME PROVIDER (Modo Oscuro) */
+/* Al usar attribute="data-theme" en tu Provider, este selector es el que manda */
+[data-theme="dark"] {
+  --color-ui-background: #000000;
+  --color-ui-foreground: #ffffff;
+  --color-ui-primary: var(--color-primary-60);
+  --color-ui-primary-hover: #5a9fff;
+  --color-ui-border: #333333;
+
+  /* Gradientes Hero Dark */
+  --hero-gradient-start: #121212;
+  --hero-gradient-end: #000000;
+  
+  /* Ajuste semántico para legibilidad en Dark Mode */
+  --color-semantic-success: #4caf50;
+}
+
+/* 4. CONFIGURACIÓN DEL TEMA DE TAILWIND V4 */
+@theme inline {
+  --color-ui-background: var(--color-ui-background);
+  --color-ui-foreground: var(--color-ui-foreground);
+  --color-ui-primary: var(--color-ui-primary);
+  --color-ui-primary-hover: var(--color-ui-primary-hover);
+  --color-ui-border: var(--color-ui-border);
+  
+  --color-semantic-success: var(--color-semantic-success);
+  --color-semantic-info: var(--color-semantic-info);
+  --color-semantic-warning: var(--color-semantic-warning);
+  --color-semantic-error: var(--color-semantic-error);
+  
+  --radius-button: var(--radius-button);
+}
+
+/* 5. ESTILOS BASE (Reset & Global) */
+@layer base {
+  *, ::after, ::before {
+    box-sizing: border-box;
+    border-color: var(--color-ui-border);
+  }
+
+  body {
+    background-color: var(--color-ui-background);
+    color: var(--color-ui-foreground);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 6. UTILIDADES EXTRA PARA EL HERO */
+@utility bg-ui-background {
+  background-color: var(--color-ui-background);
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans); 
+@utility text-ui-foreground {
+  color: var(--color-ui-foreground);
 }
 
-.link {
-  @apply hover:underline hover:text-blue-400 mr-2 transition-all;
-}
-
-.active-link {
-  @apply text-blue-500;
-}
-
-
-@theme {
-  --color-ui-background: var(--background);
-  --color-ui-foreground: var(--foreground);
-  --color-ui-border: var(--border);
-
-  --color-semantic-success: var(--success);
-  --color-semantic-error: var(--error);
-  --color-semantic-warning: var(--warning);
-  --color-semantic-info: var(--info);
-  --color-semantic-disabled: var(--disabled);
-  --radius-button: 9999px;
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --border: #e2e8f0;
-  --success: #10b981;
-  --error: #f43f5e;
-  --warning: #f59e0b;
-  --info: #0ea5e9;
-  --disabled: #f4f4f5;
-}
-
-[data-theme='dark'] {
-  --background: #000000;
-  --foreground: #ffffff;
-  --border: #27272a;
-  --success: #059669;
-  --error: #e11d48;
-  --disabled: #18181b;
-}
+@import "../shared/components/index.css";

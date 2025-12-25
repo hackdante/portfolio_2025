@@ -1,0 +1,117 @@
+@utility btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  background-color: var(--color-ui-primary); /* Variable dinámica */
+  color: var(--color-white-100);
+  box-shadow: var(--btn-shadow); /* Variable dinámica */
+}
+
+.btn-base:hover {
+  box-shadow: var(--btn-shadow-hover);
+  /* State Layer de Material Design */
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+}
+
+/* 2. VARIANTES DE COLOR (Basado en tus UI Tokens) */
+@utility btn-variant-default {
+  background-color: var(--color-ui-primary);
+  color: var(--color-white-100);
+}
+
+@utility btn-variant-success {
+  background-color: var(--color-semantic-success);
+  color: var(--color-white-100);
+}
+
+@utility btn-variant-info {
+  background-color: var(--color-semantic-info);
+  color: var(--color-white-100);
+}
+
+@utility btn-variant-warning {
+  background-color: var(--color-semantic-warning);
+  color: var(--color-white-100);
+}
+
+@utility btn-variant-error {
+  background-color: var(--color-semantic-error);
+  color: var(--color-white-100);
+}
+
+@utility btn-variant-disable {
+  background-color: var(--color-ui-border);
+  color: var(--color-neutral-40);
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  opacity: 0.38; /* Opacidad estándar MD3 para deshabilitados */
+}
+
+/* 3. TAMAÑOS (Escala Material) */
+@utility btn-size-sm {
+  height: 2rem; /* 32px */
+  padding: 0 1rem;
+  font-size: 0.813rem;
+}
+
+@utility btn-size-md {
+  height: 2.5rem; /* 40px */
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+}
+
+@utility btn-size-lg {
+  height: 3rem; /* 48px */
+  padding: 0 1.5rem;
+  font-size: 0.875rem;
+}
+
+@utility btn-size-xl {
+  height: 3.5rem; /* 56px */
+  padding: 0 2rem;
+  font-size: 1rem;
+}
+
+/* 4. STATE LAYERS & EFFECTS (CSS Estándar para evitar errores de Turbopack) */
+
+/* Efecto Elástico y Elevación en Hover */
+.btn-base:hover {
+  /* Elevación Nivel 2 */
+  box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  /* Capa de brillo sutil (State Layer) */
+  background-image: linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08));
+}
+
+/* Efecto Bouncy / Active */
+.btn-base:active {
+  transform: scale(0.96);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación elástica específica */
+@utility btn-elastic-hover {
+  transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), 
+              box-shadow 0.2s ease, 
+              background-color 0.2s ease;
+}
+
+/* Estado de carga */
+@utility btn-state-loading {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+/* 5. HOVERS ESPECÍFICOS (Manual para máxima compatibilidad) */
+.btn-variant-default:hover { background-color: var(--color-ui-primary-hover); }
+.btn-variant-success:hover, .btn-variant-info:hover, .btn-variant-warning:hover, .btn-variant-error:hover {
+  filter: brightness(1.1);
+}

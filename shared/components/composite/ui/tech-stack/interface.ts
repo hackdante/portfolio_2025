@@ -1,5 +1,7 @@
+import { ThemeModeType } from "@/shared/types";
+import { StatusType } from "@/types";
 import { IconType } from "react-icons";
-import { ThemeType, OrientationType, VariantType } from "@/shared/types";
+
 
 export interface TechItemUI {
   readonly name: string;
@@ -7,9 +9,9 @@ export interface TechItemUI {
 }
 
 export interface TechStackUI {
-  readonly theme?: ThemeType;
+  readonly theme?: ThemeModeType;
   readonly orientation?: OrientationType;
-  readonly variant?: VariantType;
+  readonly variant?: StatusType;
   readonly size?: number;
   readonly columns?: number;
 }

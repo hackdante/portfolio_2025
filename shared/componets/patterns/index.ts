@@ -1,1 +1,0 @@
-export * from "@/shared/componets/patterns/heros"

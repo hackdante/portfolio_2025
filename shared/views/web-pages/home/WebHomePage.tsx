@@ -1,5 +1,5 @@
 import { HomeController } from "@/core/web-page";
-import { MainHero } from "@/shared/componets/patterns";
+import { MainHero } from "@/shared/components/patterns";
 
 export default function WebHomePage() {
   const heroData = HomeController.getHeroData();

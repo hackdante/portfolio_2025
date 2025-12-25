@@ -1,10 +1,10 @@
 import { ElementType } from "react";
-import { ThemeType, VariantType } from "@/shared/types";
+import { StatusType, ThemeModeType } from "@/shared/types";
 
 export interface TechStackUI {
-  readonly theme?: ThemeType;
+  readonly theme?: ThemeModeType;
   readonly orientation?: "horizontal" | "vertical";
-  readonly variant?: VariantType | "default" | "active";
+  readonly variant?: StatusType;
   readonly size?: number;
   readonly columns?: number;
 }
