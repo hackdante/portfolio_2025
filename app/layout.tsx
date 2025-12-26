@@ -4,16 +4,21 @@ import { RootLayoutUI } from "@/types";
 
 import "./globals.css";
 
+
 export const metadata: Metadata = {
   title: "Kensai Experience",
   description:
     "High-end digital experiences built with Next.js and Material Design",
 };
 
+
 export default function RootLayout({ children }: RootLayoutUI) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className="antialiased selection:bg-ui-primary selection:text-white overflow-x-hidden">
+      <body 
+        suppressHydrationWarning
+        className="antialiased selection:bg-ui-primary selection:text-white overflow-x-hidden"
+      >
         <ThemeProviderSwitch
           attribute="data-theme"
           defaultTheme="system"
@@ -22,7 +27,9 @@ export default function RootLayout({ children }: RootLayoutUI) {
           disableTransitionOnChange={false}
         >
           <div className="relative min-h-screen flex flex-col bg-ui-background text-ui-foreground transition-colors duration-500 ease-in-out">
-            {children}
+            <main className="grow">
+              {children}
+            </main>
           </div>
         </ThemeProviderSwitch>
       </body>

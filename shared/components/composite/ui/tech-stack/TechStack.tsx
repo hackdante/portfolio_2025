@@ -1,99 +1,124 @@
 "use client";
 
-import { FC, useRef } from "react";
+import { FC, useRef, useMemo } from "react";
 import { useGSAP } from "@gsap/react";
 import { TechStackUI } from "./interface";
 import { CORE_STACK } from "@/shared/constants";
 import { useIsMounted } from "@/shared/hooks";
-import { horizontalLoop } from "@/shared/utils";
 import gsap from "gsap";
 
-export const TechStack: FC<TechStackUI> = ({
-  theme = "dark",
-  variant = "default",
-  size = 40,
-  columns,
-}) => {
+export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
   const isMounted = useIsMounted();
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const xPercent = useRef(0);
+  const isPaused = useRef(false);
+
+  const displayItems = useMemo(
+    () =>
+      columns
+        ? CORE_STACK
+        : [...CORE_STACK, ...CORE_STACK, ...CORE_STACK, ...CORE_STACK],
+    [columns]
+  );
 
   useGSAP(() => {
     if (!isMounted || !sliderRef.current || columns) return;
 
     const slider = sliderRef.current;
     const items = gsap.utils.toArray(slider.children) as HTMLElement[];
-    
- 
-    const loop = horizontalLoop(items, {
-      repeat: -1,
-      speed: 0.7,
-      paddingRight: 80,
+
+    const animate = () => {
+      if (!isPaused.current) {
+        xPercent.current -= 0.02;
+      }
+
+      if (xPercent.current <= -50) {
+        xPercent.current = 0;
+      }
+
+      gsap.set(slider, { xPercent: xPercent.current });
+
+      const containerRect = containerRef.current?.getBoundingClientRect();
+      if (containerRect) {
+        const centerX = containerRect.left + containerRect.width / 2;
+
+        items.forEach((item) => {
+          if (item.getAttribute("data-hovering") === "true") return;
+
+          const itemRect = item.getBoundingClientRect();
+          const itemCenter = itemRect.left + itemRect.width / 2;
+          const dist = Math.abs(centerX - itemCenter);
+          const normalized = Math.min(dist / (containerRect.width / 2), 1);
+
+          gsap.set(item, {
+            scale: 1 - normalized * 0.25,
+            opacity: 1 - normalized * 0.7,
+            overwrite: "auto",
+          });
+        });
+      }
+    };
+
+    gsap.ticker.add(animate);
+    return () => gsap.ticker.remove(animate);
+  }, [isMounted, columns]);
+
+  const onEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    isPaused.current = true;
+    const target = e.currentTarget;
+    target.setAttribute("data-hovering", "true");
+
+    gsap.to(target, {
+      scale: 1.4,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out",
+      overwrite: true,
     });
 
-  
-    const updateScales = () => {
-      const containerRect = containerRef.current?.getBoundingClientRect();
-      if (!containerRect) return;
-
-      const centerX = containerRect.left + containerRect.width / 2;
-
-      items.forEach((item) => {
-        const itemRect = item.getBoundingClientRect();
-        const itemCenter = itemRect.left + itemRect.width / 2;
-        
-     
-        const distanceFromCenter = Math.abs(centerX - itemCenter);
-        const normalizedDistance = Math.min(distanceFromCenter / (containerRect.width / 2), 1);
-        
-        const scale = 1 - (normalizedDistance * 0.2); 
-        const opacity = 1 - (normalizedDistance * 0.8);
-
-        gsap.set(item, { 
-          scale: scale,
-          opacity: opacity,
-          overwrite: "auto"
-        });
-      });
-    };
-
-    gsap.ticker.add(updateScales);
-
-    return () => {
-      loop.kill();
-      gsap.ticker.remove(updateScales);
-    };
-  }, { scope: containerRef, dependencies: [isMounted, columns] });
-
-  const getVariantClass = () => {
-    if (variant === "default") return "text-ui-foreground hover:text-ui-foreground";
-    return `text-semantic-${variant}`;
+    const siblings = Array.from(sliderRef.current?.children || []);
+    siblings.forEach((s) => {
+      if (s !== target) gsap.to(s, { opacity: 0.1, duration: 0.4 });
+    });
   };
 
-  const displayItems = columns ? CORE_STACK : [...CORE_STACK, ...CORE_STACK, ...CORE_STACK];
+  const onLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    target.removeAttribute("data-hovering");
+
+    isPaused.current = false;
+
+    const items = Array.from(sliderRef.current?.children || []);
+    gsap.to(items, {
+      scale: 1,
+      opacity: 0.8,
+      duration: 0.4,
+      ease: "power2.inOut",
+    });
+  };
+
+  if (!isMounted) return <div className="h-32" />;
 
   return (
-    <div 
-      data-theme={isMounted ? theme : undefined} 
-      className="w-full relative mt-16 overflow-hidden select-none" 
+    <div
       ref={containerRef}
+      className="w-full relative overflow-hidden select-none"
     >
-      <div className="py-24">
-        <div
-          ref={sliderRef}
-          className={`flex items-center gap-20 w-max ${columns ? "md:grid md:justify-center" : ""}`}
-        >
-          {displayItems.map((tech, index) => {
+      <div className="py-16 border-y border-ui-text-primary/5">
+        <div ref={sliderRef} className="flex gap-20 whitespace-nowrap w-max">
+          {displayItems.map((tech, i) => {
             const Icon = tech.icon;
             return (
               <div
-                key={`${tech.name}-${index}`}
-                className="group flex flex-col items-center gap-5 shrink-0 cursor-pointer"
+                key={`${tech.name}-${i}`}
+                onMouseEnter={onEnter}
+                onMouseLeave={onLeave}
+                className="flex flex-col items-center gap-4 cursor-pointer px-4"
               >
-                <div className="relative">
-                  <Icon size={size} className={getVariantClass()} />
-                </div>
-                <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-ui-foreground/40">
+                <Icon size={size} className="text-ui-text-primary" />
+                <span className="text-[10px] font-mono tracking-widest text-ui-text-primary/40 uppercase">
                   {tech.name}
                 </span>
               </div>
