@@ -6,10 +6,10 @@ export type TooltipPositionType = "top" | "bottom" | "left" | "right";
 
 export interface IconDefaultUI {
   readonly icon: ComponentType<IconBaseProps>;
-  readonly toolTip: string;
+  readonly toolTip?: string; 
   readonly type: StatusType;
-  readonly size: SizesType;
-  readonly action: () => void;
-  readonly id: string;
   readonly tooltipPosition?: TooltipPositionType;
+  readonly size?: SizesType;
+  readonly id?: string;
+  readonly action?: () => void;
 }

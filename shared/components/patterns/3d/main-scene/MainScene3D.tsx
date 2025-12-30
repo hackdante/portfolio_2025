@@ -1,9 +1,7 @@
 "use client";
 
 import { GBLLoader } from "@/shared/components/base";
-import {
-  LoadCharacterSceneMain,
-} from "@/shared/components/composite";
+import { LoadCharacterSceneMain } from "@/shared/components/composite";
 import { Canvas } from "@react-three/fiber";
 import { useState, Suspense, useCallback } from "react";
 import {

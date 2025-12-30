@@ -1,8 +1,13 @@
-import { IconDefaultUI } from "@/shared/components/base";
+import { IconDefaultUI, TooltipPositionType } from "@/shared/components/base";
 
-export type SpeedDialDirectionType = "up" | "down" | "left" | "right";
+export type SpeedDialVariant = 'vertical' | 'horizontal' | 'radial';
+export type SpeedDialDirection = 'top' | 'bottom' | 'left' | 'right';
 
-export interface SpeedDialUI extends IconDefaultUI {
-  readonly dial: string
-
+export interface SpeedDialUI {
+  readonly id: string;
+  readonly menu: Omit<IconDefaultUI, 'size'>[]; 
+  readonly variant: SpeedDialVariant;
+  readonly direction: SpeedDialDirection; 
+  readonly radius?: number; 
+  readonly tooltipPosition?: TooltipPositionType; 
 }
