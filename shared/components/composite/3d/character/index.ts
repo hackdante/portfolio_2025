@@ -1,2 +1,2 @@
-export * from "./Character3D"
+export * from "./LoadCharacterSceneMain"
 export * from "./interface"

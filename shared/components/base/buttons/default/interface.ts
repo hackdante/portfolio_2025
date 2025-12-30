@@ -1,16 +1,15 @@
-// shared/components/base/buttons/default/interface.ts
 import { ReactNode, MouseEventHandler } from "react";
-import { SizesType, StatusType, ButtonActionType } from "@/shared/types"; // Ajusta la ruta según tu alias
+import { SizesType, StatusType, ButtonActionType } from "@/shared/types"; 
 
 export interface ButtonDefaultUI {
-  children: ReactNode;
-  variant?: Exclude<StatusType, 'hover'>; // 'hover' no es una variante, es un estado
-  size?: SizesType;
-  isLoading?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  fullWidth?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  type?: ButtonActionType;
-  id?: string;
+  readonly children: ReactNode;
+  readonly variant?: StatusType; 
+  readonly size?: SizesType;
+  readonly isLoading?: boolean;
+  readonly leftIcon?: ReactNode;
+  readonly rightIcon?: ReactNode;
+  readonly fullWidth?: boolean;
+  readonly onClick?: MouseEventHandler<HTMLButtonElement>;
+  readonly type?: ButtonActionType;
+  readonly id?: string;
 }
