@@ -3,7 +3,7 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 import gsap from "gsap";
-import { CameraRigPropsUI } from "./interface";
+import { CameraRigUI } from "./interface";
 
 export function CameraRig({
   active,
@@ -12,7 +12,7 @@ export function CameraRig({
   duration = 3,
   ease = "power1.out",
   onFinish,
-}: CameraRigPropsUI) {
+}: CameraRigUI) {
   const { camera } = useThree();
 
   useEffect(() => {

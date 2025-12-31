@@ -1,4 +1,4 @@
-import { Vector3UI } from "@/types/global";
+import { Vector3UI } from "./position";
 
 export type CameraMotionToScenesUI =
   | "camera-scene/initial"

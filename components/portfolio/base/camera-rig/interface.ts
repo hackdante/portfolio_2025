@@ -1,12 +1,11 @@
-import { Vector3UI } from "@/types";
-
+import {  Vector3UI } from "@/types";
 
 export interface CameraRigFinishPayloadUI {
   camera: Vector3UI;
   target: Vector3UI;
 }
 
-export interface CameraRigPropsUI {
+export interface CameraRigUI {
   active: boolean;
   startPosition: { camera: Vector3UI; target: Vector3UI };
   endPosition: { camera: Vector3UI; target: Vector3UI };
