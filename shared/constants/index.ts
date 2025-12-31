@@ -1,2 +1,2 @@
-export * from "@/shared/constants/ui"
-export * from "@/shared/constants/web-page"
+export * from "./ui"
+export * from "./web-page"

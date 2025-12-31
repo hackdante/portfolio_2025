@@ -1,2 +1,2 @@
-export * from "@/shared/components/patterns/heros"
-export * from "@/shared/components/patterns/3d"
+export * from "./heros"
+export * from "./3d"

@@ -1,2 +1,2 @@
-export * from "@/shared/hooks/ui"
-export * from "@/shared/hooks/life-cicle"
+export * from "./ui"
+export * from "./life-cicle"

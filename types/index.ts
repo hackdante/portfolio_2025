@@ -1,2 +1,2 @@
-export * from "@/types/global"
-export * from "@/types/layouts"
+export * from "./global"
+export * from "./layouts"

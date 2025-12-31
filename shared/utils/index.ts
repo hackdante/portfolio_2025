@@ -1,1 +1,1 @@
-export * from "@/shared/utils/animations"
+export * from "./animations"

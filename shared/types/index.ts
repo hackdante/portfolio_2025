@@ -1,1 +1,1 @@
-export * from "@/shared/types/global"
+export * from "./global"

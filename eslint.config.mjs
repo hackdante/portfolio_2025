@@ -8,10 +8,8 @@ const eslintConfig = defineConfig([
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
-      // 1. Restricción de Console (Solo permite warn y error)
       "no-console": ["error", { allow: ["warn", "error"] }],
 
-      // 2. Comentarios prohibidos (Bloquea el commit si existen)
       "no-warning-comments": [
         "error",
         {
@@ -33,6 +31,30 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+
+  {
+    files: [
+      "types/**/index.ts",
+      "shared/**/index.ts",
+      "utils/**/index.ts",
+      "core/**/index.ts",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@/*"],
+              message:
+                "❌ No uses aliases (@/) dentro de barrels internos. Usa imports relativos.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
 ]);
 

@@ -1,4 +1,5 @@
-import { Vector3UI } from "@/types/global";
+import { Vector3UI } from "@/types";
+
 
 export interface CameraRigFinishPayloadUI {
   camera: Vector3UI;

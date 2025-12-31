@@ -1,1 +1,1 @@
-export * from "@/shared/views/web-pages"
+export * from "./web-pages"

@@ -1,1 +1,1 @@
-export * from '@/utils/math'
+export * from './math'
