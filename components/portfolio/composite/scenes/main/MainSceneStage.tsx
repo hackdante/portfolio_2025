@@ -5,6 +5,7 @@ import { Text } from "@react-three/drei";
 
 import {
   InstancedModel,
+  LoadFBXModel,
   LoadGBLModel,
   Particles3dV1,
   SceneFloor,
@@ -15,7 +16,7 @@ import { degToRad } from "@/utils";
 import { useIsMobile } from "@/hooks";
 import { MainSceneUI } from "./interface";
 
-const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/model.glb";
+const URL_KENSAI_MODEL = "/portfolio/models/kensai-icon-3d/KENSAI_SAMURAI_3D.fbx";
 const URL_KENSAI_LOGO = "/portfolio/models/kensai-logo/logo_v1.glb";
 const URL_SAKURA_TREE = "/portfolio/models/sakura-tree/sakura_tree.glb";
 const URL_PAGODA = "/portfolio/models/pagoda/pagoda.glb";
@@ -39,13 +40,15 @@ export function MainSceneStage({
         receiveShadow
       />
 
-      <LoadGBLModel
+      {/* <LoadGBLModel
         scale={0.9}
         objPath={URL_KENSAI_MODEL}
         position={[-1.53, -0.1, 0.5]}
         castShadow
         receiveShadow
-      />
+      /> */}
+
+      <LoadFBXModel path={URL_KENSAI_MODEL} position={[-1.8,-0.8,1]} scale={0.01} />
 
       <Text
         position={isMobile ? [0, 8.8, -2] : [-0.5, 7.2, 0]}

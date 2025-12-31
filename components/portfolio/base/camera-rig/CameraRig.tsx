@@ -3,21 +3,10 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
 import gsap from "gsap";
-import { Vector3UI } from "@/types/global";
+import { CameraRigPropsUI } from "./interface";
 
-export interface CameraRigFinishPayloadUI {
-  camera: Vector3UI;
-  target: Vector3UI;
-}
 
-interface CameraRigPropsUI {
-  active: boolean;
-  startPosition: { camera: Vector3UI; target: Vector3UI };
-  endPosition: { camera: Vector3UI; target: Vector3UI };
-  duration?: number;
-  ease?: gsap.TweenVars["ease"];
-  onFinish?: (payload: CameraRigFinishPayloadUI) => void;
-}
+
 
 export function CameraRig({
   active,

@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo, useLayoutEffect } from "react";
 import { useFBX } from "@react-three/drei";
-import { Mesh, Group } from "three"; 
+import { Mesh } from "three";
 import { SkeletonUtils } from "three-stdlib";
 import { LoadFBXModelUI } from "./interface";
 
@@ -10,16 +10,29 @@ export function LoadFBXModel({
   path,
   position = [0, 0, 0],
   scale = 1,
+  castShadow = true,
+  receiveShadow = true,
   onLoad,
 }: LoadFBXModelUI) {
   const fbx = useFBX(path);
 
   const clone = useMemo(() => {
-    return SkeletonUtils.clone(fbx) as Group;
-  }, [fbx]);
+    const object = SkeletonUtils.clone(fbx);
 
-  useEffect(() => {
-    if (onLoad) onLoad(clone);
+    object.traverse((child) => {
+      if (child instanceof Mesh) {
+        child.castShadow = castShadow;
+        child.receiveShadow = receiveShadow;
+      }
+    });
+
+    return object;
+  }, [fbx, castShadow, receiveShadow]);
+
+  useLayoutEffect(() => {
+    if (onLoad) {
+      onLoad(clone);
+    }
 
     return () => {
       clone.traverse((child) => {

@@ -4,3 +4,5 @@ export interface MainSceneUI {
   activeActions: boolean;
   onNavigate: (section: CameraMotionToScenesUI) => void;
 }
+
+
