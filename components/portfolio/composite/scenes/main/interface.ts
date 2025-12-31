@@ -1,4 +1,4 @@
-import { CameraMotionToScenesUI } from "@/types/global";
+import { CameraMotionToScenesUI } from "@/types";
 
 export interface MainSceneUI {
   activeActions: boolean;

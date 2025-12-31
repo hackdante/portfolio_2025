@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 
 import { AudioController, StaticPageLoader } from "@/components/base";
-import { ClientScreenSizeUI } from "@/types/global";
+import { ClientScreenSizeUI } from "@/types";
 import { Hero3D } from "@/components/portfolio/composite";
 
 let currentSize: ClientScreenSizeUI = null;

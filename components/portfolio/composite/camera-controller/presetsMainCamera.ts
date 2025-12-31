@@ -1,4 +1,4 @@
-import { CameraPresetsUI } from "@/types/global";
+import { CameraPresetsUI } from "@/types";
 
 export const mainCameraPresets = {
   "camera-scene/initial": {

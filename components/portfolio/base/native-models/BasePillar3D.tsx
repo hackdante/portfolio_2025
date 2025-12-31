@@ -1,6 +1,6 @@
 "use client";
 
-import { Vector3TypeUI } from "@/types/global";
+import { Vector3TypeUI } from "@/types";
 
 interface BasePillar3DUI {
   positionXYZ?: Vector3TypeUI;

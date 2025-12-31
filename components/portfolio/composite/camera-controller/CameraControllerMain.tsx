@@ -12,7 +12,7 @@ import { degToRad } from "@/utils";
 import {
   CameraControllerMainUI,
   Vector3TypeUI,
-} from "@/types/global";
+} from "@/types";
 
 export function CameraControllerMain({
   motionType,

@@ -18,7 +18,7 @@ import {
   CameraControllerMain,
   MainEnvironment,
 } from "@/components/portfolio/composite";
-import { CameraMotionToScenesUI, ClientScreenSizeUI } from "@/types/global";
+import { CameraMotionToScenesUI, ClientScreenSizeUI } from "@/types";
 
 type CameraMotionTypeUI = "camera/in-motion" | "camera/out-motion";
 

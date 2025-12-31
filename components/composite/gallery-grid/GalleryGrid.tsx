@@ -1,5 +1,5 @@
 import { CardV1 } from "@/components/card/card-v1/CardV1";
-import { Cardv1UI } from "@/types/global";
+import { Cardv1UI } from "@/types";
 
 interface GalleryGridUI {
   portfolioList: Cardv1UI["cardInfoV1"][];

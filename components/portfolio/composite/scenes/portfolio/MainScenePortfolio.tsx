@@ -1,7 +1,7 @@
 "use client";
 
 import { Text } from "@react-three/drei";
-import { Vector3TypeUI } from "@/types/global";
+import { Vector3TypeUI } from "@/types";
 import { GLBCharacterLoader } from "@/shared/components/base/3d/loaders/gbl-loader/GLBCharacterLoader";
 import { useState } from "react";
 

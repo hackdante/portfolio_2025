@@ -1,4 +1,4 @@
-import { Cardv1UI } from "@/types/global";
+import { Cardv1UI } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 

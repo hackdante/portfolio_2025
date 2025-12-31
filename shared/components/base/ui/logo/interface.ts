@@ -1,4 +1,4 @@
-import { SizesType } from "@/shared/types/global/ui";
+import { SizesType } from "@/shared/types/global";
 
 export interface LogoUI {
   size?: SizesType;

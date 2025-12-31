@@ -1,4 +1,4 @@
-import { Cardv1UI } from "@/types/global";
+import { Cardv1UI } from "@/types";
 import { PokemonApiUI } from "./interface";
 import { GalleryGrid } from "@/components/composite";
 

@@ -1,4 +1,4 @@
-import { Vector3TypeUI } from "@/types/global";
+import { Vector3TypeUI } from "@/types";
 import { ReactNode } from "react";
 
 type PivotType = "center" | "top" | "bottom" | "left" | "right";

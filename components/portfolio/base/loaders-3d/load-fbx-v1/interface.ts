@@ -1,4 +1,4 @@
-import { Vector3TypeUI } from "@/types/global";
+import { Vector3TypeUI } from "@/types";
 import { Object3D } from "three";
 
 export interface LoadFBXModelUI {
