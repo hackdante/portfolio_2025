@@ -1,2 +1,2 @@
-export *from "./GBLLoader"
+export *from "./GLBCharacterLoader"
 export *from "./interface"

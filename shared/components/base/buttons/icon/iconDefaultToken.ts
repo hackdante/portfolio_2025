@@ -1,24 +1,24 @@
 import { SizesType, StatusType } from "@/shared/types";
-import { TooltipPositionType } from "./interface";
+import { TooltipPositionIconType } from "./interface";
 
 export const ICON_SIZE_MAP: Record<
   SizesType,
   { container: number; icon: number }
 > = {
-  sm: { container: 32, icon: 16 },
-  md: { container: 40, icon: 20 },
-  lg: { container: 48, icon: 24 },
-  xl: { container: 56, icon: 28 },
+  sm: { container: 20, icon: 10 },
+  md: { container: 32, icon: 18 },
+  lg: { container: 40, icon: 20 },
+  xl: { container: 50, icon: 25 },
 };
 
-export const TOOLTIP_POSITION_MAP: Record<TooltipPositionType, string> = {
+export const TOOLTIP_POSITION_ICON_MAP: Record<TooltipPositionIconType, string> = {
   top: "bottom-full mb-3 left-1/2 -translate-x-1/2 origin-bottom group-hover:translate-y-0 translate-y-1",
   bottom: "top-full mt-3 left-1/2 -translate-x-1/2 origin-top group-hover:translate-y-0 -translate-y-1",
   left: "right-full mr-3 top-1/2 -translate-y-1/2 origin-right group-hover:translate-x-0 translate-x-1",
   right: "left-full ml-3 top-1/2 -translate-y-1/2 origin-left group-hover:translate-x-0 -translate-x-1",
 };
 
-export const TOOLTIP_ARROW_MAP: Record<TooltipPositionType, string> = {
+export const TOOLTIP_ICON_ARROW_MAP: Record<TooltipPositionIconType, string> = {
   top: "top-full left-1/2 -translate-x-1/2 border-t-ui-foreground",
   bottom: "bottom-full left-1/2 -translate-x-1/2 border-b-ui-foreground",
   left: "left-full top-1/2 -translate-y-1/2 border-l-ui-foreground",

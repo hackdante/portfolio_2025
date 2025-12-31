@@ -1,10 +1,20 @@
 import { Text } from "@react-three/drei";
-import { BioCharacterController } from "@/components/portfolio/composite";
 import { Vector3TypeUI } from "@/types/global";
+import { GLBCharacterLoader } from "@/shared/components/base/3d/loaders/gbl-loader/GLBCharacterLoader";
+import { useState } from "react";
 
+const URL_KENSAI_CHARACTER = "/portfolio/models/anim/bio/LEO_ACTIONS_ANIM.glb";
 const currentInitialPosition: Vector3TypeUI = [2.5, 30, -10];
 
 export function MainSceneBio() {
+  const animation = "Jog_sign";
+
+  const [activeAnim, setActiveAnim] = useState<string>("");
+
+  function handleAnimationsLoaded() {
+    setActiveAnim(animation);
+  }
+
   return (
     <>
       <Text
@@ -25,10 +35,13 @@ export function MainSceneBio() {
       >
         Biografía
       </Text>
-      <BioCharacterController
-        activePose={1}
+
+      <GLBCharacterLoader
+        objPath={URL_KENSAI_CHARACTER}
         position={currentInitialPosition}
-        scale={0.035}
+        scale={1.5}
+        currentAnimation={activeAnim}
+        onAnimationsLoaded={handleAnimationsLoaded}
       />
     </>
   );

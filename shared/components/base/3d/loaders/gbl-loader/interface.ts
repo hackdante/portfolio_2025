@@ -1,4 +1,3 @@
-import { type ThreeElements } from "@react-three/fiber";
 import { AnimationClip, Material, Object3D } from "three";
 import { GLTF } from "three-stdlib";
 
@@ -8,9 +7,10 @@ export interface GLTFResultUI extends GLTF {
   animations: AnimationClip[];
 }
 
-export interface ModelPropsUI
-  extends Omit<ThreeElements["primitive"], "object"> {
+export interface GLBCharacterLoaderUI{
   objPath: string;
   currentAnimation?: string;
+  position?: [number, number, number];
+  scale?: number;
   onAnimationsLoaded?: (names: string[]) => void;
 }

@@ -1,16 +1,19 @@
 "use client";
 
+import { RefObject } from "react";
+import { MeshPhysicalMaterial } from "three";
 import { RoundedBox } from "@react-three/drei";
-import { Vector3TypeUI } from "@/types/global";
 
 interface PillarColumns3DUI {
-  positionXYZ?: Vector3TypeUI;
-  colorBox: string;
+  positionXYZ: [number, number, number];
+  materialRef: RefObject<MeshPhysicalMaterial | null>;
+  initialColor: string;
 }
 
 export function PillarColumns3D({
   positionXYZ = [0, 0, 0],
-  colorBox ="#000000"
+  materialRef,
+  initialColor,
 }: PillarColumns3DUI) {
   return (
     <RoundedBox
@@ -21,7 +24,13 @@ export function PillarColumns3D({
       receiveShadow
       position={positionXYZ}
     >
-      <meshStandardMaterial color={colorBox} roughness={1} metalness={0.7} />
+      <meshPhysicalMaterial
+        ref={materialRef}
+        color={initialColor}
+        roughness={1}
+        metalness={0.7}
+        clearcoat={1}
+      />
     </RoundedBox>
   );
 }

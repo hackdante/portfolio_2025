@@ -1,18 +1,24 @@
 "use client";
-import { LoadOBJModel } from "@/components/portfolio/base";
+import { GLBCharacterLoader } from "@/shared/components/base/3d/loaders/gbl-loader/GLBCharacterLoader";
+
 import { Text } from "@react-three/drei";
-// import { LoadFBXModel } from "@/components/portfolio/base";
+import { useState } from "react";
 
-//const URL_KENSAI_ROM = "/portfolio/models/roms/rom_fbx.fbx";
-const URL_KENSAI_ROM = "/portfolio/models/roms/room.obj";
-const URL_KENSAI_MAT = "/portfolio/models/roms/room.mtl";
-
+const URL_KENSAI_CHARACTER = "/portfolio/models/anim/bio/LEO_ACTIONS_ANIM.glb";
 
 export function MainSceneBio() {
+  const animation = "Bow";
+
+  const [activeAnim, setActiveAnim] = useState<string>("");
+  
+  function handleAnimationsLoaded() {
+    setActiveAnim(animation);
+  }
+
   return (
     <>
       <Text
-        position={[-2.4, 36.7, -20]}
+        position={[-2.4, 36.7, -15]}
         fontSize={0.7}
         color="black"
         anchorX="center"
@@ -21,7 +27,7 @@ export function MainSceneBio() {
         Contácto: 3136211448
       </Text>
       <Text
-        position={[0, 35, -20]}
+        position={[0, 35, -15]}
         fontSize={3}
         color="black"
         anchorX="center"
@@ -30,9 +36,13 @@ export function MainSceneBio() {
         Biografía
       </Text>
 
-      <LoadOBJModel  objPath={URL_KENSAI_ROM} mtlPath={URL_KENSAI_MAT} position={[15, 33, 8]} scale={0.017} rotation={[0,90,0]} />
-
-      {/* <LoadFBXModel path={URL_KENSAI_ROM} scale={0.005} position={[2.5, 30, -15]}  /> */}
+      <GLBCharacterLoader
+        objPath={URL_KENSAI_CHARACTER}
+        position={[0, 32, -10]}
+        scale={3}
+        currentAnimation={activeAnim}
+        onAnimationsLoaded={handleAnimationsLoaded}
+      />
     </>
   );
 }

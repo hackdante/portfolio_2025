@@ -4,6 +4,7 @@ import { ButtonDefault, CardText } from "@/shared/components/base";
 import { TechStack } from "@/shared/components/composite";
 import { MainHero } from "@/shared/components/patterns";
 import { HOME_FEATURES } from "@/shared/constants";
+import Link from "next/link";
 
 export default function WebHomePage() {
   return (
@@ -13,10 +14,12 @@ export default function WebHomePage() {
       <MainHero />
 
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col items-center pb-16">
-        <div className="flex flex-wrap justify-center gap-6 mb-20">
-          <ButtonDefault variant="default">Portafolio 3D</ButtonDefault>
-          <ButtonDefault variant="default">Información</ButtonDefault>
-          <ButtonDefault variant="disable">Plataforma</ButtonDefault>
+        <div className="flex flex-wrap justify-center gap-6 mt-5">
+          <Link href="/kensai-3d" className="w-max">
+          <ButtonDefault variant="success" toolTip="Portafolio 3d">Kensai 3D</ButtonDefault>
+          </Link>
+          <ButtonDefault variant="disable" toolTip="Próximamente" >Información</ButtonDefault>
+          <ButtonDefault variant="disable" toolTip="Próximamente" >Plataforma</ButtonDefault>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-6 w-full">

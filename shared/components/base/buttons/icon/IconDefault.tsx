@@ -4,8 +4,8 @@ import { JSX, useState } from "react";
 import {
   ICON_SIZE_MAP,
   STATUS_CLASS_MAP,
-  TOOLTIP_POSITION_MAP,
-  TOOLTIP_ARROW_MAP,
+  TOOLTIP_POSITION_ICON_MAP,
+  TOOLTIP_ICON_ARROW_MAP,
 } from "./iconDefaultToken";
 import { IconDefaultUI } from "./interface";
 
@@ -77,13 +77,13 @@ export function IconDefault({
             text-[10px] font-bold uppercase tracking-widest
             rounded-md shadow-xl pointer-events-none z-100
             opacity-0 scale-90 animate-in fade-in zoom-in duration-200 fill-mode-forwards
-            ${TOOLTIP_POSITION_MAP[tooltipPosition]}
+            ${TOOLTIP_POSITION_ICON_MAP[tooltipPosition]}
           `}
           style={{ opacity: 1, transform: "scale(1)" }}
         >
           {toolTip}
           <span
-            className={`absolute border-[6px] border-transparent ${TOOLTIP_ARROW_MAP[tooltipPosition]}`}
+            className={`absolute border-[6px] border-transparent ${TOOLTIP_ICON_ARROW_MAP[tooltipPosition]}`}
             aria-hidden="true"
           />
         </span>

@@ -138,7 +138,7 @@ export function SpeedDial({
           id="sd-main-trigger-icon"
           icon={FaBars}
           type="primary"
-          size="lg"
+          size="md"
           toolTip={isOpen ? undefined : "Menú"}
           action={() => setIsOpen(!isOpen)}
         />
