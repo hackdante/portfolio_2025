@@ -5,9 +5,6 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { CameraRigPropsUI } from "./interface";
 
-
-
-
 export function CameraRig({
   active,
   startPosition,
