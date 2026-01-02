@@ -2,7 +2,7 @@
 
 import { ButtonDefault, CardText } from "@/shared/components/base";
 import { TechStack } from "@/shared/components/composite";
-import { MainHero } from "@/shared/components/patterns";
+import { GameScene, MainHero } from "@/shared/components/patterns";
 import { HOME_FEATURES } from "@/shared/constants";
 import Link from "next/link";
 
@@ -32,6 +32,10 @@ export default function WebHomePage() {
             />
           ))}
         </div>
+
+      <section className="w-full my-16 rounded-2xl overflow-hidden border-4 border-ui-border shadow-2xl bg-neutral-900 h-[500px]">
+           <GameScene />
+        </section>
 
         <div className="w-full">
           <TechStack size={45} />

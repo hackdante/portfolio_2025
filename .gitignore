@@ -45,6 +45,6 @@ next-env.d.ts
 app/(public)/test/
 
 #docs
-CURRENT_PROJECT_CONFIG_UPDATED.txt
+CURRENT_PROJECT_CONFIG_UPDATED.md
 ROUTES_STRUCTURE.md
 IA_PROMPT.md

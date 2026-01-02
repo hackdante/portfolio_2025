@@ -21,6 +21,7 @@ El proyecto utiliza tecnologías de vanguardia como Next.js 16, React 19, TypeSc
 - **GSAP 3.13.0**: Animaciones avanzadas.
 - **@gsap/react 2.1.2**: Hook useGSAP para integración con React.
 - **Tailwind CSS 4**: Estilos modernos.
+- **next-themes 0.4.6**: Gestión de temas (claro/oscuro/sistema).
 - **ESLint 9**: Linting avanzado.
 
 ## Requisitos Previos
@@ -117,6 +118,14 @@ Se usa lint-staged para ejecutar linters solo en archivos modificados durante el
 - Usa el hook `useIsMobile` para detectar dispositivos.
 - Ajusta configuraciones de cámara y efectos según el dispositivo.
 - Optimiza assets para móviles (menos polígonos, texturas más pequeñas).
+
+### Gestión de Temas
+- Usa `next-themes` para soporte de temas claro/oscuro/sistema.
+- El `ThemeProviderSwitch` está configurado en el layout raíz con `attribute="data-theme"`.
+- Utiliza el hook `useTheme()` para acceder al tema actual y `setTheme()` para cambiarlo.
+- Los estilos deben ser compatibles con temas usando variables CSS (ej: `--hero-gradient-start`).
+- El componente `ThemeSwitcher` maneja el toggle entre temas con animaciones suaves.
+- Asegura que todos los componentes sean compatibles con temas (colores, fondos, etc.).
 
 ## Proceso de Contribución
 

@@ -7,6 +7,7 @@ Un portafolio interactivo y dinámico desarrollado por KENSAI, liderado por Lean
 - **Escenas 3D Interactivas**: Navegación fluida entre escenas de introducción, portafolio, biografía y contacto usando Three.js y React Three Fiber.
 - **Animaciones Avanzadas**: Integración con GSAP para transiciones suaves y efectos visuales.
 - **Audio Inmersivo**: Controladores de audio con música de fondo y efectos sonoros.
+- **Soporte de Temas**: Modo claro/oscuro/sistema con transiciones suaves.
 - **Responsive y Optimizado**: Diseño adaptativo con loaders personalizados y detección de dispositivos móviles.
 - **Dashboard Administrativo**: Área privada para gestión de proyectos y métricas.
 - **Juegos Sociales**: Experiencias interactivas con service workers para funcionalidad offline.
@@ -21,6 +22,7 @@ Un portafolio interactivo y dinámico desarrollado por KENSAI, liderado por Lean
 - **GSAP 3.13.0**: Librería de animaciones para transiciones fluidas.
 - **@gsap/react 2.1.2**: Hook useGSAP para integrar GSAP con React.
 - **Tailwind CSS 4**: Framework de estilos con PostCSS.
+- **next-themes 0.4.6**: Gestión de temas claro/oscuro/sistema.
 - **React Three Postprocessing**: Efectos visuales avanzados (bloom, depth of field, etc.).
 - **React Three Rapier**: Física para interacciones 3D.
 - **ESLint 9**: Linting y formateo de código.
@@ -82,7 +84,7 @@ WEB_PAGE/
 │   ├── dashboard/         # Dashboard administrativo
 │   └── juegos/            # Juegos sociales con SW
 ├── components/            # Componentes modulares
-│   ├── base/              # Componentes básicos (sidebar, navbar, loaders)
+│   ├── base/              # Componentes básicos (sidebar, navbar, loaders, themes)
 │   ├── card/              # Componentes de tarjetas
 │   ├── composite/         # Componentes complejos (hero 3D, navegación)
 │   └── portfolio/         # Componentes 3D especializados
@@ -99,6 +101,8 @@ WEB_PAGE/
 - **CameraControllerMain**: Control de cámara con animaciones.
 - **PostProcessingEffects**: Efectos visuales (bloom, DOF, etc.).
 - **MainEnvironment**: Entorno 3D con iluminación y física.
+- **ThemeSwitcher**: Componente para alternar entre temas claro/oscuro.
+- **ThemeProviderSwitch**: Proveedor de temas configurado globalmente.
 
 ## 🎮 Funcionalidades
 
