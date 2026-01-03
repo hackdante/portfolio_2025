@@ -1,10 +1,37 @@
 export type PlayerStateUI = "IDLE" | "RUN" | "JUMP" | "ATTACK";
 
+export interface SpriteSheetConfigUI {
+  readonly url: string;
+  readonly cols: number;
+  readonly rows: number;
+  readonly width: number;
+  readonly height: number;
+}
+
+export interface AnimationConfigUI {
+  readonly frames: number[];
+  readonly fps: number;
+  readonly loop?: boolean;
+}
+
+export type AnimationTableUI = Record<string, AnimationConfigUI>;
+
 export interface SpritePlayerUI {
-  readonly state: PlayerStateUI;
-  readonly direction: "LEFT" | "RIGHT";
+  readonly state: string;
+  readonly direction: "RIGHT" | "LEFT";
   readonly positionX: number;
   readonly positionY: number;
+  readonly sheet: SpriteSheetConfigUI;
+  readonly animations: AnimationTableUI;
+}
+
+export interface SpritePlayerRefUI {
+  readonly initialX?: number;
+  readonly initialY?: number;
+  readonly moveSpeed: number;
+  readonly jumpForce: number;
+  readonly playAttack?: () => void;
+  readonly getElement?: () => HTMLDivElement | null;
 }
 
 export interface SpritePlayerTokensUI {
@@ -13,17 +40,13 @@ export interface SpritePlayerTokensUI {
   readonly ANIMATION_SPEED: {
     readonly IDLE: number;
     readonly RUN: number;
-    readonly ATTACK: number;
+    readonly JUMP: number;
+    readonly ATTACK?: number;
   };
   readonly FRAME_COUNTS: {
     readonly IDLE: number;
     readonly RUN: number;
     readonly JUMP: number;
-    readonly ATTACK: number;
+    readonly ATTACK?: number;
   };
-}
-
-export interface SpritePlayerRefUI {
-  readonly playAttack: () => void;
-  readonly getElement: () => HTMLDivElement | null;
 }
