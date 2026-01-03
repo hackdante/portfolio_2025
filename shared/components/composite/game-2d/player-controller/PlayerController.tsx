@@ -4,19 +4,17 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useInput } from "@/shared/hooks";
-
+import { LayerController } from "../layer-controller";
 import {
   SpritePlayerRefUI,
   PlayerPhysicsStateUI,
   VisualStateUI,
 } from "./interface";
 import { PLAYER_CONTROLLER_TOKENS } from "./playerControllerToken";
-import { LayerController } from "../layer-controller";
 
 export function PlayerController(props: SpritePlayerRefUI) {
   const { initialX = 0, initialY = 0, moveSpeed, jumpForce } = props;
   const inputs = useInput();
-
   const sceneRef = useRef<HTMLDivElement>(null);
 
   const physics = useRef<PlayerPhysicsStateUI>({
@@ -38,20 +36,22 @@ export function PlayerController(props: SpritePlayerRefUI) {
   });
 
   useGSAP(() => {
-    const tick = () => {
+    const tick = (time: number, deltaTime: number) => {
       const p = physics.current;
       const { WORLD_WIDTH, WORLD_FLOOR_Y, GRAVITY, FRICTION } =
         PLAYER_CONTROLLER_TOKENS;
       const viewportWidth = sceneRef.current?.offsetWidth || 1200;
 
+      const ratio = deltaTime / (1000 / 60);
+
       if (inputs.current.left) {
-        p.vx = -moveSpeed;
+        p.vx = -moveSpeed * ratio;
         p.direction = "LEFT";
       } else if (inputs.current.right) {
-        p.vx = moveSpeed;
+        p.vx = moveSpeed * ratio;
         p.direction = "RIGHT";
       } else {
-        p.vx *= FRICTION;
+        p.vx *= Math.pow(FRICTION, ratio);
       }
 
       if (inputs.current.jump && p.isGrounded) {
@@ -60,11 +60,11 @@ export function PlayerController(props: SpritePlayerRefUI) {
       }
 
       if (!p.isGrounded) {
-        p.vy -= GRAVITY;
+        p.vy -= GRAVITY * ratio;
       }
 
-      p.x += p.vx;
-      p.y += p.vy;
+      p.x += p.vx * ratio;
+      p.y += p.vy * ratio;
 
       if (p.x < 0) p.x = 0;
       if (p.x > WORLD_WIDTH - 50) p.x = WORLD_WIDTH - 50;
@@ -80,17 +80,16 @@ export function PlayerController(props: SpritePlayerRefUI) {
 
       if (targetCameraX < 0) targetCameraX = 0;
       if (targetCameraX > maxCameraX) targetCameraX = maxCameraX;
-
       let newState: "IDLE" | "RUN" | "JUMP" = "IDLE";
       if (!p.isGrounded) {
         newState = "JUMP";
-      } else if (Math.abs(p.vx) > 0.2) {
+      } else if (Math.abs(p.vx) > 0.1) {
         newState = "RUN";
       }
 
       setVisualState((prev) => {
         const isSamePosition =
-          Math.abs(prev.x - p.x) < 0.1 && Math.abs(prev.y - p.y) < 0.1;
+          Math.abs(prev.x - p.x) < 0.01 && Math.abs(prev.y - p.y) < 0.01;
         const isSameState =
           prev.state === newState && prev.direction === p.direction;
         const isSameCamera = Math.abs(prev.cameraX - targetCameraX) < 0.1;
@@ -114,7 +113,7 @@ export function PlayerController(props: SpritePlayerRefUI) {
   return (
     <div
       ref={sceneRef}
-      className="absolute inset-0 overflow-hidden bg-[#0a0a0a]"
+      className="absolute inset-0 overflow-hidden bg-slate-950"
     >
       <div
         className="absolute inset-0 will-change-transform"
