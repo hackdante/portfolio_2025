@@ -3,17 +3,15 @@
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { SpritePlayer, ImageAssetLayer } from "@/shared/components/base";
 import { useInput } from "@/shared/hooks";
+
 import {
   SpritePlayerRefUI,
   PlayerPhysicsStateUI,
   VisualStateUI,
 } from "./interface";
 import { PLAYER_CONTROLLER_TOKENS } from "./playerControllerToken";
-import { RONIN_ANIMATIONS, RONIN_SHEET } from "@/shared/constants";
-
-const GAME_2D_SPRITES_PATH = "/images/game-2d";
+import { LayerController } from "../layer-controller";
 
 export function PlayerController(props: SpritePlayerRefUI) {
   const { initialX = 0, initialY = 0, moveSpeed, jumpForce } = props;
@@ -42,7 +40,8 @@ export function PlayerController(props: SpritePlayerRefUI) {
   useGSAP(() => {
     const tick = () => {
       const p = physics.current;
-      const worldWidth = PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH;
+      const { WORLD_WIDTH, WORLD_FLOOR_Y, GRAVITY, FRICTION } =
+        PLAYER_CONTROLLER_TOKENS;
       const viewportWidth = sceneRef.current?.offsetWidth || 1200;
 
       if (inputs.current.left) {
@@ -52,7 +51,7 @@ export function PlayerController(props: SpritePlayerRefUI) {
         p.vx = moveSpeed;
         p.direction = "RIGHT";
       } else {
-        p.vx *= PLAYER_CONTROLLER_TOKENS.FRICTION;
+        p.vx *= FRICTION;
       }
 
       if (inputs.current.jump && p.isGrounded) {
@@ -61,41 +60,40 @@ export function PlayerController(props: SpritePlayerRefUI) {
       }
 
       if (!p.isGrounded) {
-        p.vy -= PLAYER_CONTROLLER_TOKENS.GRAVITY;
+        p.vy -= GRAVITY;
       }
 
       p.x += p.vx;
       p.y += p.vy;
 
       if (p.x < 0) p.x = 0;
-      if (p.x > worldWidth - 50) p.x = worldWidth - 50;
+      if (p.x > WORLD_WIDTH - 50) p.x = WORLD_WIDTH - 50;
 
-      if (p.y <= PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y) {
-        p.y = PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y;
+      if (p.y <= WORLD_FLOOR_Y) {
+        p.y = WORLD_FLOOR_Y;
         p.vy = 0;
         p.isGrounded = true;
       }
 
       let targetCameraX = p.x - viewportWidth / 2;
-      const maxCameraX = worldWidth - viewportWidth;
+      const maxCameraX = WORLD_WIDTH - viewportWidth;
+
       if (targetCameraX < 0) targetCameraX = 0;
       if (targetCameraX > maxCameraX) targetCameraX = maxCameraX;
 
       let newState: "IDLE" | "RUN" | "JUMP" = "IDLE";
-
       if (!p.isGrounded) {
         newState = "JUMP";
       } else if (Math.abs(p.vx) > 0.2) {
         newState = "RUN";
-      } else {
-        newState = "IDLE";
       }
 
       setVisualState((prev) => {
-        const isSamePosition = prev.x === p.x && prev.y === p.y;
+        const isSamePosition =
+          Math.abs(prev.x - p.x) < 0.1 && Math.abs(prev.y - p.y) < 0.1;
         const isSameState =
           prev.state === newState && prev.direction === p.direction;
-        const isSameCamera = prev.cameraX === targetCameraX;
+        const isSameCamera = Math.abs(prev.cameraX - targetCameraX) < 0.1;
 
         if (isSamePosition && isSameState && isSameCamera) return prev;
 
@@ -114,7 +112,10 @@ export function PlayerController(props: SpritePlayerRefUI) {
   }, [moveSpeed, jumpForce]);
 
   return (
-    <div ref={sceneRef} className="absolute inset-0 overflow-hidden">
+    <div
+      ref={sceneRef}
+      className="absolute inset-0 overflow-hidden bg-[#0a0a0a]"
+    >
       <div
         className="absolute inset-0 will-change-transform"
         style={{
@@ -122,78 +123,9 @@ export function PlayerController(props: SpritePlayerRefUI) {
           transform: `translateX(${-visualState.cameraX}px)`,
         }}
       >
-        <ImageAssetLayer
-          imageUrl={`${GAME_2D_SPRITES_PATH}/sky_level_1.jpg`}
-          width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
-          height={340}
-          y={150}
-          repeat="repeat-x"
-          tileSize={1070}
-          parallaxFactor={0.1}
-          autoScrollSpeed={0.2}
+        <LayerController
           cameraX={visualState.cameraX}
-          zIndex={1}
-          opacity={1}
-        />
-
-        <ImageAssetLayer
-          imageUrl={`${GAME_2D_SPRITES_PATH}/mountains.png`}
-          width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
-          height={500}
-          y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y - 10}
-          repeat="repeat-x"
-          tileSize={512}
-          parallaxFactor={0.6}
-          cameraX={visualState.cameraX}
-          zIndex={1}
-          opacity={1}
-        />
-
-        <ImageAssetLayer
-          imageUrl={`${GAME_2D_SPRITES_PATH}/pagoda_kensai.png`}
-          width={280}
-          height={350}
-          x={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 0.43}
-          y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y + 34}
-          repeat="no-repeat"
-          tileSize={280}
-          
-          parallaxFactor={0.6}
-          cameraX={visualState.cameraX}
-          zIndex={1}
-          opacity={1}
-        />
-
-        <ImageAssetLayer
-          imageUrl={`${GAME_2D_SPRITES_PATH}/tree_sakura.png`}
-          width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 1.5}
-          height={400}
-          y={30}
-          parallaxFactor={0.5}
-          zIndex={1}
-          opacity={1}
-        />
-
-        <SpritePlayer
-          state={visualState.state}
-          direction={visualState.direction}
-          positionX={visualState.x}
-          positionY={visualState.y}
-          sheet={RONIN_SHEET}
-          animations={RONIN_ANIMATIONS}
-        />
-
-        <ImageAssetLayer
-          imageUrl={`${GAME_2D_SPRITES_PATH}/grass.png`}
-          width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 2}
-          height={160}
-          y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y - 80}
-          repeat="repeat-x"
-          tileSize={674}
-          parallaxFactor={1.4}
-          cameraX={visualState.cameraX}
-          zIndex={100}
-          opacity={1}
+          playerVisuals={visualState}
         />
       </div>
     </div>
