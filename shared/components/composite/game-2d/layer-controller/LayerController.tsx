@@ -5,9 +5,12 @@ import {
   SpritePlayer,
   EntityLayer,
 } from "@/shared/components/base";
-import { RONIN_ANIMATIONS, RONIN_SHEET } from "@/shared/constants";
-
-import { PLAYER_CONTROLLER_TOKENS } from "../player-controller";
+import {
+  RONIN_ANIMATIONS,
+  RONIN_SHEET,
+  PLAYER_CONTROLLER_TOKENS,
+  STONE_ENTITIES,
+} from "@/shared/constants";
 import { EntityInstanceUI, LayerControllerUI } from "@/shared/types";
 
 const SPRITES_PATH = "/images/game-2d";
@@ -16,7 +19,8 @@ export function LayerController({
   cameraX,
   playerVisuals,
   onCollisionAction,
-}: LayerControllerUI) {
+  levelEntities = STONE_ENTITIES,
+}: LayerControllerUI & { levelEntities?: EntityInstanceUI[] }) {
   const handleTriggerEnter = (entity: EntityInstanceUI): void => {
     onCollisionAction({
       isBlocked: entity.type === "solid",
@@ -107,18 +111,10 @@ export function LayerController({
           playerVisuals.x + (playerVisuals.direction === "RIGHT" ? 25 : -25)
         }
         playerY={playerVisuals.y}
-        entities={[
-          {
-            id: "solid-stone-1",
-            x: 400,
-            y: 80,
-            type: "solid",
-            isActive: true,
-          },
-        ]}
+        entities={levelEntities}
+        debug={true}
         onTriggerEnter={handleTriggerEnter}
         onTriggerLeave={handleTriggerLeave}
-        debug={true}
         zIndex={20}
       />
 

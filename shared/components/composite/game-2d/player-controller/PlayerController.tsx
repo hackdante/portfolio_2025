@@ -1,35 +1,26 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useInput } from "@/shared/hooks";
+import { useCollisionSensor } from "@/shared/hooks/game-2d/useCollisionSensor";
 import {
-  
-  CollisionEventUI,
-  PlayerControllerTokensUI,
-} from "./interface";
-
-import { PlayerPhysicsStateUI, SpritePlayerRefUI, VisualStateUI } from "@/shared/types";
+  PlayerPhysicsStateUI,
+  VisualStateUI,
+  SpritePlayerRefUI,
+  PlayerDirectionType,
+  PlayerStateUI,
+} from "@/shared/types";
 import { LayerController } from "../layer-controller";
-
-export const PLAYER_CONTROLLER_TOKENS: PlayerControllerTokensUI = {
-  GRAVITY: 0.8,
-  FRICTION: 0.9,
-  WORLD_FLOOR_Y: 62,
-  WORLD_WIDTH: 3000,
-  WORLD_HEIGHT: 500,
-};
-
+import { PLAYER_CONTROLLER_TOKENS, STONE_ENTITIES } from "@/shared/constants";
 
 export function PlayerController(props: SpritePlayerRefUI) {
-  const { initialX = 0, initialY = 0, moveSpeed, jumpForce } = props;
+  const { initialX = 100, initialY = 100, moveSpeed, jumpForce } = props;
   const inputs = useInput();
+  const { registerEntity, checkSensors } = useCollisionSensor();
   const sceneRef = useRef<HTMLDivElement>(null);
-
-  const isBlocked = useRef(false);
-  const blockDirection = useRef<"LEFT" | "RIGHT" | null>(null);
-  const platformY = useRef<number | null>(null);
+  const lastDirectionRef = useRef<PlayerDirectionType>("RIGHT");
 
   const physics = useRef<PlayerPhysicsStateUI>({
     x: initialX,
@@ -38,7 +29,7 @@ export function PlayerController(props: SpritePlayerRefUI) {
     vy: 0,
     isGrounded: false,
     state: "IDLE",
-    direction: "RIGHT",
+    contacts: [],
   });
 
   const [visualState, setVisualState] = useState<VisualStateUI>({
@@ -49,79 +40,105 @@ export function PlayerController(props: SpritePlayerRefUI) {
     cameraX: 0,
   });
 
-  const handleCollision = useCallback((event: CollisionEventUI) => {
-    if (event.isFloor && physics.current.vy <= 0) {
-      platformY.current = 118; // Ajuste según altura de piedra (80y + 38h)
-      isBlocked.current = false;
-    } else {
-      isBlocked.current = event.isBlocked;
-      if (event.isBlocked) blockDirection.current = physics.current.direction;
-    }
-  }, []);
+  useEffect(() => {
+    STONE_ENTITIES.forEach((s) => {
+      registerEntity(s.id, "/images/game-2d/hit/rock_wall_mask.jpg", 121, 38);
+    });
+  }, [registerEntity]);
 
   useGSAP(() => {
     const tick = (_: number, deltaTime: number) => {
       const p = physics.current;
-      const { WORLD_WIDTH, WORLD_FLOOR_Y, GRAVITY, FRICTION } =
-        PLAYER_CONTROLLER_TOKENS;
-      const viewportWidth = sceneRef.current?.offsetWidth || 1200;
-      const ratio = deltaTime / (1000 / 60);
-      const preMoveX = p.x;
+      const ratio = Math.min(deltaTime / 16.66, 2.0);
+      const T = PLAYER_CONTROLLER_TOKENS;
 
-      if (inputs.current.left) {
-        p.vx = -moveSpeed * ratio;
-        p.direction = "LEFT";
-      } else if (inputs.current.right) {
-        p.vx = moveSpeed * ratio;
-        p.direction = "RIGHT";
-      } else {
-        p.vx *= Math.pow(FRICTION, ratio);
+      let targetVx = 0;
+      if (inputs.current.left) targetVx = -moveSpeed;
+      if (inputs.current.right) targetVx = moveSpeed;
+
+      p.vx = targetVx !== 0 ? targetVx : p.vx * (1 - T.FRICTION);
+      if (Math.abs(p.vx) < 0.1) p.vx = 0;
+
+      if (!p.isGrounded) {
+        p.vy -= T.GRAVITY * ratio;
+        if (p.vy < T.TERMINAL_VELOCITY) p.vy = T.TERMINAL_VELOCITY;
       }
 
-      if (isBlocked.current && blockDirection.current === p.direction) {
-        p.x = preMoveX;
-        p.vx = 0;
+      const directionOffset =
+        lastDirectionRef.current === "RIGHT"
+          ? T.COLLISION_OFFSET
+          : -T.COLLISION_OFFSET;
+      const samplingX = p.x + p.vx * ratio + directionOffset;
+      const nextY = p.y + p.vy * ratio;
+
+      const currentContacts = checkSensors(
+        samplingX,
+        nextY,
+        STONE_ENTITIES,
+        121,
+        38
+      );
+
+      let finalX = p.x + p.vx * ratio;
+      let finalY = nextY;
+
+      const floor = currentContacts.find((c) => c.type === "FLOOR");
+      const wall = currentContacts.find(
+        (c) => c.type === "WALL_LEFT" || c.type === "WALL_RIGHT"
+      );
+
+      if (wall) {
+        if (
+          (wall.type === "WALL_RIGHT" && p.vx > 0) ||
+          (wall.type === "WALL_LEFT" && p.vx < 0)
+        ) {
+          p.vx = 0;
+          finalX = p.x;
+        }
       }
 
-      if (inputs.current.jump && p.isGrounded) {
-        p.vy = jumpForce;
-        p.isGrounded = false;
-        platformY.current = null;
-      }
-
-      if (!p.isGrounded) p.vy -= GRAVITY * ratio;
-
-      p.x += p.vx * ratio;
-      p.y += p.vy * ratio;
-
-      const currentFloor = platformY.current ?? WORLD_FLOOR_Y;
-      if (p.y <= currentFloor) {
-        p.y = currentFloor;
+      if (floor && p.vy <= 0) {
+        finalY = floor.surfaceY ?? nextY;
+        p.vy = 0;
+        p.isGrounded = true;
+      } else if (nextY <= T.WORLD_FLOOR_Y) {
+        finalY = T.WORLD_FLOOR_Y;
         p.vy = 0;
         p.isGrounded = true;
       } else {
         p.isGrounded = false;
       }
 
-      if (p.x < 0) p.x = 0;
-      if (p.x > WORLD_WIDTH - 50) p.x = WORLD_WIDTH - 50;
+      if (inputs.current.jump && p.isGrounded) {
+        p.vy = jumpForce;
+        p.isGrounded = false;
+      }
 
-      const targetCameraX = Math.max(
-        0,
-        Math.min(p.x - viewportWidth / 2, WORLD_WIDTH - viewportWidth)
-      );
+      p.x = Math.max(0, Math.min(finalX, T.WORLD_WIDTH - 50));
+      p.y = finalY;
 
+      if (p.vx < -0.1) lastDirectionRef.current = "LEFT";
+      else if (p.vx > 0.1) lastDirectionRef.current = "RIGHT";
+
+      const anim: PlayerStateUI = !p.isGrounded
+        ? "JUMP"
+        : Math.abs(p.vx) > 0.1
+        ? "RUN"
+        : "IDLE";
+
+      const vw = sceneRef.current?.offsetWidth || 1200;
       setVisualState({
         x: p.x,
         y: p.y,
-        direction: p.direction,
-        state: !p.isGrounded ? "JUMP" : Math.abs(p.vx) > 0.1 ? "RUN" : "IDLE",
-        cameraX: targetCameraX,
+        direction: lastDirectionRef.current,
+        state: anim,
+        cameraX: Math.max(0, Math.min(p.x - vw / 2, T.WORLD_WIDTH - vw)),
       });
     };
+
     gsap.ticker.add(tick);
     return () => gsap.ticker.remove(tick);
-  }, [moveSpeed, jumpForce]);
+  }, [moveSpeed, jumpForce, checkSensors]);
 
   return (
     <div
@@ -133,12 +150,14 @@ export function PlayerController(props: SpritePlayerRefUI) {
         style={{
           width: PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH,
           transform: `translateX(${-visualState.cameraX}px)`,
+          transition: "none",
         }}
       >
         <LayerController
           cameraX={visualState.cameraX}
           playerVisuals={visualState}
-          onCollisionAction={handleCollision}
+          levelEntities={STONE_ENTITIES}
+          onCollisionAction={() => {}}
         />
       </div>
     </div>

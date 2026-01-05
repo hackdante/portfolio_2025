@@ -1,12 +1,24 @@
 export type EntityCollisionType = "solid" | "trigger" | "active";
-export type PlayerStateUI = "IDLE" | "RUN" | "JUMP" | "ATTACK";
+export type PlayerStateUI =
+  | "IDLE"
+  | "RUN"
+  | "JUMP"
+  | "ATTACK"
+  | "FALL"
+  | "BLOCKED";
 export type PlayerDirectionType = "LEFT" | "RIGHT";
+export type ContactType =
+  | "NONE"
+  | "FLOOR"
+  | "WALL_LEFT"
+  | "WALL_RIGHT"
+  | "CEILING";
 
-export interface CollisionEventUI {
-  readonly isBlocked: boolean;
-  readonly type: EntityCollisionType;
-  readonly entityId: string;
-  readonly isFloor?: boolean;
+export interface ContactStateUI {
+  type: ContactType;
+  entityId: string | null;
+  surfaceY?: number;
+  surfaceX?: number;
 }
 
 export interface PlayerPhysicsStateUI {
@@ -14,11 +26,17 @@ export interface PlayerPhysicsStateUI {
   y: number;
   vx: number;
   vy: number;
+  contacts: ContactStateUI[]; // Soporta múltiples contactos simultáneos (suelo + pared)
   isGrounded: boolean;
   state: PlayerStateUI;
-  direction: PlayerDirectionType;
 }
 
+export interface CollisionEventUI {
+  readonly isBlocked: boolean;
+  readonly type: EntityCollisionType;
+  readonly entityId: string;
+  readonly isFloor?: boolean;
+}
 
 export interface VisualStateUI {
   readonly x: number;
@@ -33,7 +51,6 @@ export interface LayerControllerUI {
   readonly playerVisuals: VisualStateUI;
   readonly onCollisionAction: (event: CollisionEventUI) => void;
 }
-
 
 export interface SpritePlayerRefUI {
   readonly initialX?: number;
@@ -51,4 +68,19 @@ export interface EntityInstanceUI {
   readonly type: EntityCollisionType;
   readonly isActive: boolean;
   readonly isFloor?: boolean;
+}
+
+export interface PlayerTokensUI {
+  GRAVITY: number;
+  FRICTION: number;
+  WORLD_FLOOR_Y: number;
+  WORLD_WIDTH: number;
+  TERMINAL_VELOCITY: number;
+  COLLISION_OFFSET: number;
+}
+
+export interface CollisionMapType {
+  readonly data: Uint8ClampedArray;
+  readonly width: number;
+  readonly height: number;
 }
