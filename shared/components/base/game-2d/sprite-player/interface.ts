@@ -1,5 +1,3 @@
-export type PlayerStateUI = "IDLE" | "RUN" | "JUMP" | "ATTACK";
-
 export interface SpriteSheetConfigUI {
   readonly url: string;
   readonly cols: number;
@@ -25,14 +23,6 @@ export interface SpritePlayerUI {
   readonly animations: AnimationTableUI;
 }
 
-export interface SpritePlayerRefUI {
-  readonly initialX?: number;
-  readonly initialY?: number;
-  readonly moveSpeed: number;
-  readonly jumpForce: number;
-  readonly playAttack?: () => void;
-  readonly getElement?: () => HTMLDivElement | null;
-}
 
 export interface SpritePlayerTokensUI {
   readonly FRAME_WIDTH: number;

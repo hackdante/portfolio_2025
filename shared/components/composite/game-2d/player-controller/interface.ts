@@ -1,34 +1,41 @@
-import { PlayerStateUI } from "@/shared/components/base";
+import { EntityCollisionType, EntityInstanceUI, VisualStateUI } from "@/shared/types";
 
-export interface SpritePlayerRefUI {
-  readonly initialX?: number;
-  readonly initialY?: number;
-  readonly moveSpeed: number;
-  readonly jumpForce: number;
+
+export interface EntityLayerUI {
+  readonly id: string;
+  readonly imageUrl: string;
+  readonly maskUrl: string;
+  readonly width: number;
+  readonly height: number;
+  readonly isAnimated?: boolean;
+  readonly totalFrames?: number;
+  readonly fps?: number;
+  readonly entities: EntityInstanceUI[];
+  readonly playerX: number;
+  readonly playerY: number;
+  readonly onTriggerEnter?: (entity: EntityInstanceUI) => void;
+  readonly onTriggerLeave?: (entity: EntityInstanceUI) => void;
+  readonly debug?: boolean;
 }
 
-export interface PlayerPhysicsStateUI {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  isGrounded: boolean;
-  state: PlayerStateUI;
-  direction: "LEFT" | "RIGHT";
+export interface CollisionEventUI {
+  readonly isBlocked: boolean;
+  readonly type: EntityCollisionType;
+  readonly entityId: string;
+  readonly isFloor?: boolean;
+}
+
+export interface LayerControllerUI {
+  readonly cameraX: number;
+  readonly playerVisuals: VisualStateUI;
+  readonly onCollisionAction: (event: CollisionEventUI) => void;
 }
 
 export interface PlayerControllerTokensUI {
-  readonly GRAVITY: number;
-  readonly FRICTION: number;
-  readonly WORLD_FLOOR_Y: number;
-  readonly WORLD_WIDTH: number;
-  readonly WORLD_HEIGHT: number;
-}
+  GRAVITY: number;
+  FRICTION: number;
+  WORLD_FLOOR_Y:number;
+  WORLD_WIDTH: number;
+  WORLD_HEIGHT: number;
+};
 
- export interface VisualStateUI {
-  x: number;
-  y: number;
-  direction: "RIGHT" | "LEFT";
-  state: "IDLE" | "RUN" | "JUMP";
-  cameraX: number;
-}

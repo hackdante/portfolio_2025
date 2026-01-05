@@ -4,3 +4,4 @@ export * from "./parallax-layer";
 export * from "./dummys-scene";
 export * from "./image-asset-layer";
 export * from "./image-asset-animation-layer";
+export * from "./entity-layer";

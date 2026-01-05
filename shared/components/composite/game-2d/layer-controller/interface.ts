@@ -1,10 +1,3 @@
-import { VisualStateUI } from "../player-controller/interface";
-
-export interface LayerControllerUI {
-  readonly cameraX: number;
-  readonly playerVisuals: VisualStateUI;
-}
-
 export interface LayerConfigUI {
   readonly id: string;
   readonly imageUrl: string;

@@ -1,13 +1,40 @@
 "use client";
 
-import { ImageAssetLayer, SpritePlayer } from "@/shared/components/base";
-import { PLAYER_CONTROLLER_TOKENS } from "../player-controller/playerControllerToken";
+import {
+  ImageAssetLayer,
+  SpritePlayer,
+  EntityLayer,
+} from "@/shared/components/base";
 import { RONIN_ANIMATIONS, RONIN_SHEET } from "@/shared/constants";
-import { LayerControllerUI } from "./interface";
+
+import { PLAYER_CONTROLLER_TOKENS } from "../player-controller";
+import { EntityInstanceUI, LayerControllerUI } from "@/shared/types";
 
 const SPRITES_PATH = "/images/game-2d";
 
-export function LayerController({ cameraX, playerVisuals }: LayerControllerUI) {
+export function LayerController({
+  cameraX,
+  playerVisuals,
+  onCollisionAction,
+}: LayerControllerUI) {
+  const handleTriggerEnter = (entity: EntityInstanceUI): void => {
+    onCollisionAction({
+      isBlocked: entity.type === "solid",
+      type: entity.type,
+      entityId: entity.id,
+      isFloor: entity.isFloor,
+    });
+  };
+
+  const handleTriggerLeave = (entity: EntityInstanceUI): void => {
+    onCollisionAction({
+      isBlocked: false,
+      type: entity.type,
+      entityId: entity.id,
+      isFloor: false,
+    });
+  };
+
   return (
     <>
       <ImageAssetLayer
@@ -67,6 +94,31 @@ export function LayerController({ cameraX, playerVisuals }: LayerControllerUI) {
         y={10}
         parallaxFactor={1}
         cameraX={cameraX}
+        zIndex={20}
+      />
+
+      <EntityLayer
+        id="level-solids"
+        imageUrl={`${SPRITES_PATH}/hit/rock_wall.png`}
+        maskUrl={`${SPRITES_PATH}/hit/rock_wall_mask.jpg`}
+        width={121}
+        height={38}
+        playerX={
+          playerVisuals.x + (playerVisuals.direction === "RIGHT" ? 25 : -25)
+        }
+        playerY={playerVisuals.y}
+        entities={[
+          {
+            id: "solid-stone-1",
+            x: 400,
+            y: 80,
+            type: "solid",
+            isActive: true,
+          },
+        ]}
+        onTriggerEnter={handleTriggerEnter}
+        onTriggerLeave={handleTriggerLeave}
+        debug={true}
         zIndex={20}
       />
 
