@@ -1,16 +1,18 @@
 "use client";
 
-import {
-  ImageAssetLayer,
-  SpritePlayer,
-  EntityLayer,
+import { useEffect } from "react";
+import { 
+  ImageAssetLayer, 
+  SpritePlayer, 
+  EntityLayer 
 } from "@/shared/components/base";
-import {
-  RONIN_ANIMATIONS,
-  RONIN_SHEET,
-  PLAYER_CONTROLLER_TOKENS,
-  STONE_ENTITIES,
+import { 
+  RONIN_ANIMATIONS, 
+  RONIN_SHEET, 
+  PLAYER_CONTROLLER_TOKENS, 
+  STONE_ENTITIES 
 } from "@/shared/constants";
+import { useCollisionSensor } from "@/shared/hooks";
 import { EntityInstanceUI, LayerControllerUI } from "@/shared/types";
 
 const SPRITES_PATH = "/images/game-2d";
@@ -21,6 +23,21 @@ export function LayerController({
   onCollisionAction,
   levelEntities = STONE_ENTITIES,
 }: LayerControllerUI & { levelEntities?: EntityInstanceUI[] }) {
+  const { registerEntity } = useCollisionSensor();
+
+  useEffect(() => {
+    levelEntities.forEach((entity) => {
+      if (entity.maskUrl) {
+        registerEntity(
+          entity.id,
+          entity.maskUrl,
+          entity.collisionWidth,
+          entity.collisionHeight
+        );
+      }
+    });
+  }, [levelEntities, registerEntity]);
+
   const handleTriggerEnter = (entity: EntityInstanceUI): void => {
     onCollisionAction({
       isBlocked: entity.type === "solid",
@@ -101,22 +118,22 @@ export function LayerController({
         zIndex={20}
       />
 
-      <EntityLayer
-        id="level-solids"
-        imageUrl={`${SPRITES_PATH}/hit/rock_wall.png`}
-        maskUrl={`${SPRITES_PATH}/hit/rock_wall_mask.jpg`}
-        width={121}
-        height={38}
-        playerX={
-          playerVisuals.x + (playerVisuals.direction === "RIGHT" ? 25 : -25)
-        }
-        playerY={playerVisuals.y}
-        entities={levelEntities}
-        debug={true}
-        onTriggerEnter={handleTriggerEnter}
-        onTriggerLeave={handleTriggerLeave}
-        zIndex={20}
-      />
+      {levelEntities.map((entity) => (
+        <EntityLayer
+          key={entity.id}
+          id={entity.id}
+          imageUrl={`${SPRITES_PATH}/hit/rock_wall.png`}
+          maskUrl={entity.maskUrl}
+          width={entity.collisionWidth}
+          height={entity.collisionHeight}
+          playerX={playerVisuals.x + (playerVisuals.direction === "RIGHT" ? PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X : -PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X)}
+          playerY={playerVisuals.y}
+          entities={[entity]}
+          onTriggerEnter={handleTriggerEnter}
+          onTriggerLeave={handleTriggerLeave}
+          zIndex={20}
+        />
+      ))}
 
       <SpritePlayer
         state={playerVisuals.state}

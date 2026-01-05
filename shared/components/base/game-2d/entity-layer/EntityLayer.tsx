@@ -65,10 +65,10 @@ export function EntityLayer(props: EntityLayerUI) {
         const isFeetHit = feetPixel[0] > 200;
 
         if (isWallHit || isFeetHit) {
-          const mutableEntity = {
+          const mutableEntity : EntityInstanceUI = {
             ...entity,
             isFloor: isFeetHit && !isWallHit && playerY >= entity.y + 20,
-          } as EntityInstanceUI;
+          }
           onTriggerEnter?.(mutableEntity);
         } else {
           onTriggerLeave?.(entity);

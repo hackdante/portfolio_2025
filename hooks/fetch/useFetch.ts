@@ -8,29 +8,34 @@ export const useFetch = <T>(url: string): ParamsFetchUI<T> => {
 
   useEffect(() => {
     const controller = new AbortController();
-    const fetchData = async () => {
+
+    const fetchData = async (): Promise<void> => {
       setLoading(true);
       try {
-        const response = await fetch(url, { signal: controller.signal });
+        const response: Response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok) {
           throw new Error("No fue posible conectar con la base de datos...");
         }
 
-        const jsonData: T = await response.json();
+        const raw: Promise<T> = response.json();
+        const jsonData: T = await raw;
 
         setData(jsonData);
       } catch (e) {
-        const err = e as Error;
-        if (err.name !== "AbortError") {
-          setError(err);
+        if (e instanceof Error) {
+          if (e.name !== "AbortError") {
+            setError(e);
+          }
+        } else {
+          setError(new Error("Error inesperado"));
         }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    void fetchData();
 
     return () => {
       controller.abort();

@@ -1,14 +1,12 @@
 import gsap from "gsap";
 import { HorizontalLoopTimelineUI, HorizontalLoopUI } from "@/shared/utils";
 
-
 export function horizontalLoop(
   items: HTMLElement[],
   config: HorizontalLoopUI
 ): HorizontalLoopTimelineUI {
-  const itemsArray = gsap.utils.toArray(items) as HTMLElement[];
+  const itemsArray: HTMLElement[] = gsap.utils.toArray(items);
   
-  // Inicialización de la Timeline base
   const tl = gsap.timeline({
     repeat: config.repeat,
     paused: config.paused,
@@ -27,13 +25,12 @@ export function horizontalLoop(
   const snap = config.snap === false ? (v: number) => v : gsap.utils.snap(Number(config.snap) || 1);
   let curIndex = 0;
 
-  // Configuración inicial de posiciones
   gsap.set(itemsArray, {
-    xPercent: (i, el) => {
-      const w = (widths[i] = parseFloat(gsap.getProperty(el, "width", "px") as string));
+    xPercent: (i: number, el: HTMLElement) => {
+      const w = (widths[i] = parseFloat(String(gsap.getProperty(el, "width", "px"))));
       xPercents[i] = snap(
-        (parseFloat(gsap.getProperty(el, "x", "px") as string) / w) * 100 +
-          (gsap.getProperty(el, "xPercent") as number)
+        (parseFloat(String(gsap.getProperty(el, "x", "px"))) / w) * 100 +
+          Number(gsap.getProperty(el, "xPercent"))
       );
       return xPercents[i];
     },
@@ -41,19 +38,19 @@ export function horizontalLoop(
 
   gsap.set(itemsArray, { x: 0 });
 
+  const lastIndex = length - 1;
   const totalWidth =
-    itemsArray[length - 1].offsetLeft +
-    (xPercents[length - 1] / 100) * widths[length - 1] -
+    itemsArray[lastIndex].offsetLeft +
+    (xPercents[lastIndex] / 100) * widths[lastIndex] -
     startX +
-    itemsArray[length - 1].offsetWidth * (gsap.getProperty(itemsArray[length - 1], "scaleX") as number) +
+    itemsArray[lastIndex].offsetWidth * Number(gsap.getProperty(itemsArray[lastIndex], "scaleX")) +
     (parseFloat(String(config.paddingRight)) || 0);
 
-  // Construcción de la animación por cada item
   for (let i = 0; i < length; i++) {
     const item = itemsArray[i];
     const curX = (xPercents[i] / 100) * widths[i];
     const distanceToStart = item.offsetLeft + curX - startX;
-    const distanceToLoop = distanceToStart + widths[i] * (gsap.getProperty(item, "scaleX") as number);
+    const distanceToLoop = distanceToStart + widths[i] * Number(gsap.getProperty(item, "scaleX"));
 
     tl.to(item, {
       xPercent: snap(((curX - distanceToLoop) / widths[i]) * 100),
@@ -71,7 +68,6 @@ export function horizontalLoop(
     times[i] = distanceToStart / pixelsPerSecond;
   }
 
-  // Lógica interna para navegación por índice
   function toIndex(index: number, vars: gsap.TweenVars = {}) {
     let targetIndex = index;
     if (Math.abs(targetIndex - curIndex) > length / 2) {
@@ -88,15 +84,8 @@ export function horizontalLoop(
     return tl.tweenTo(time, vars);
   }
 
-  /**
-   * SOLUCIÓN DE ERRORES:
-   * 1. Definimos los métodos en un objeto separado.
-   * 2. Usamos Object.defineProperties o asignación directa previa al cast 
-   * para satisfacer las restricciones de Readonly.
-   */
-  const loop = tl as unknown as HorizontalLoopTimelineUI;
+  const loop = tl as HorizontalLoopTimelineUI;
 
-  // Asignación de métodos sin violar restricciones de solo lectura
   Object.assign(loop, {
     next: (vars?: gsap.TweenVars) => toIndex(curIndex + 1, vars),
     prev: (vars?: gsap.TweenVars) => toIndex(curIndex - 1, vars),
@@ -108,7 +97,9 @@ export function horizontalLoop(
   tl.progress(1, true).progress(0, true);
   
   if (config.reversed) {
-    tl.vars.onReverseComplete?.();
+    if (tl.vars.onReverseComplete) {
+      tl.vars.onReverseComplete();
+    }
     tl.reverse();
   }
 

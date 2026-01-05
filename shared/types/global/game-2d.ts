@@ -68,15 +68,20 @@ export interface EntityInstanceUI {
   readonly type: EntityCollisionType;
   readonly isActive: boolean;
   readonly isFloor?: boolean;
+  readonly maskUrl: string;
+  readonly collisionWidth: number;
+  readonly collisionHeight: number;
 }
 
 export interface PlayerTokensUI {
-  GRAVITY: number;
-  FRICTION: number;
-  WORLD_FLOOR_Y: number;
-  WORLD_WIDTH: number;
-  TERMINAL_VELOCITY: number;
-  COLLISION_OFFSET: number;
+ readonly GRAVITY: number;
+ readonly FRICTION: number;
+ readonly WORLD_FLOOR_Y: number;
+ readonly WORLD_WIDTH: number;
+ readonly TERMINAL_VELOCITY: number;
+ readonly BODY_OFFSET_X: number; 
+ readonly BODY_OFFSET_Y: number; 
+ readonly GROUND_CHECK_PADDING: number;
 }
 
 export interface CollisionMapType {

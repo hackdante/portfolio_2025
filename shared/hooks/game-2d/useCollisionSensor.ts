@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback } from "react";
-import { collisionBuffer } from "@/shared/utils/game-2d/collision-buffer";
+import { collisionBuffer } from "@/shared/utils";
 import { ContactStateUI, EntityInstanceUI } from "@/shared/types";
+import { PLAYER_CONTROLLER_TOKENS } from "@/shared/constants";
 
 export function useCollisionSensor() {
   const registerEntity = useCallback(
@@ -16,66 +17,61 @@ export function useCollisionSensor() {
     (
       playerX: number,
       playerY: number,
-      entities: EntityInstanceUI[],
-      maskWidth: number,
-      maskHeight: number
+      nextY: number,
+      entities: EntityInstanceUI[]
     ): ContactStateUI[] => {
       const activeContacts: ContactStateUI[] = [];
+      const T = PLAYER_CONTROLLER_TOKENS;
 
       for (const entity of entities) {
         if (!entity.isActive) continue;
 
         const localX = playerX - entity.x;
-        const localY = playerY - entity.y;
-
-        if (
-          localX < -20 ||
-          localX > maskWidth + 20 ||
-          localY < -20 ||
-          localY > maskHeight + 20
-        ) {
+        
+        if (localX < -T.GROUND_CHECK_PADDING || localX > entity.collisionWidth + T.GROUND_CHECK_PADDING) {
           continue;
         }
 
-        const isFootTouching = collisionBuffer.isPixelSolid(
-          entity.id,
-          localX,
-          localY
-        );
+        const startY = Math.floor(playerY);
+        const endY = Math.floor(nextY);
+        const isFalling = nextY < playerY;
 
-        if (isFootTouching) {
-          activeContacts.push({
-            type: "FLOOR",
-            entityId: entity.id,
-            surfaceY: entity.y + localY,
-          });
+        if (isFalling) {
+          for (let testY = startY; testY >= endY; testY--) {
+            const localY = testY - entity.y;
+
+            if (localY < 0 || localY > entity.collisionHeight) continue;
+
+            if (collisionBuffer.isPixelSolid(entity.id, localX, localY)) {
+              activeContacts.push({
+                type: "FLOOR",
+                entityId: entity.id,
+                surfaceY: entity.y + localY,
+              });
+              break;
+            }
+          }
         }
 
-        const isHitRight = collisionBuffer.isPixelSolid(
-          entity.id,
-          localX + 15,
-          localY + 25
-        );
-        const isHitLeft = collisionBuffer.isPixelSolid(
-          entity.id,
-          localX - 15,
-          localY + 25
-        );
+        const detectionMidY = nextY + T.BODY_OFFSET_Y;
+        const localMidY = detectionMidY - entity.y;
 
-        if (isHitRight) {
-          activeContacts.push({
-            type: "WALL_RIGHT",
-            entityId: entity.id,
-            surfaceX: entity.x + localX,
-          });
-        }
+        if (localMidY >= 0 && localMidY <= entity.collisionHeight) {
+          if (collisionBuffer.isPixelSolid(entity.id, localX + T.BODY_OFFSET_X, localMidY)) {
+            activeContacts.push({
+              type: "WALL_RIGHT",
+              entityId: entity.id,
+              surfaceX: entity.x + localX,
+            });
+          }
 
-        if (isHitLeft) {
-          activeContacts.push({
-            type: "WALL_LEFT",
-            entityId: entity.id,
-            surfaceX: entity.x + localX,
-          });
+          if (collisionBuffer.isPixelSolid(entity.id, localX - T.BODY_OFFSET_X, localMidY)) {
+            activeContacts.push({
+              type: "WALL_LEFT",
+              entityId: entity.id,
+              surfaceX: entity.x + localX,
+            });
+          }
         }
       }
 

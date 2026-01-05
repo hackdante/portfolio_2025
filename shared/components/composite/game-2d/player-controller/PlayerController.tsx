@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useInput } from "@/shared/hooks";
-import { useCollisionSensor } from "@/shared/hooks/game-2d/useCollisionSensor";
+import { useCollisionSensor, useInput } from "@/shared/hooks";
 import {
   PlayerPhysicsStateUI,
   VisualStateUI,
@@ -18,9 +17,10 @@ import { PLAYER_CONTROLLER_TOKENS, STONE_ENTITIES } from "@/shared/constants";
 export function PlayerController(props: SpritePlayerRefUI) {
   const { initialX = 100, initialY = 100, moveSpeed, jumpForce } = props;
   const inputs = useInput();
-  const { registerEntity, checkSensors } = useCollisionSensor();
+  const { checkSensors } = useCollisionSensor();
   const sceneRef = useRef<HTMLDivElement>(null);
   const lastDirectionRef = useRef<PlayerDirectionType>("RIGHT");
+  const jumpLockFrames = useRef(0);
 
   const physics = useRef<PlayerPhysicsStateUI>({
     x: initialX,
@@ -40,17 +40,13 @@ export function PlayerController(props: SpritePlayerRefUI) {
     cameraX: 0,
   });
 
-  useEffect(() => {
-    STONE_ENTITIES.forEach((s) => {
-      registerEntity(s.id, "/images/game-2d/hit/rock_wall_mask.jpg", 121, 38);
-    });
-  }, [registerEntity]);
-
   useGSAP(() => {
     const tick = (_: number, deltaTime: number) => {
       const p = physics.current;
-      const ratio = Math.min(deltaTime / 16.66, 2.0);
       const T = PLAYER_CONTROLLER_TOKENS;
+      const ratio = Math.min(deltaTime / 16.66, 2.0);
+
+      if (jumpLockFrames.current > 0) jumpLockFrames.current--;
 
       let targetVx = 0;
       if (inputs.current.left) targetVx = -moveSpeed;
@@ -64,47 +60,41 @@ export function PlayerController(props: SpritePlayerRefUI) {
         if (p.vy < T.TERMINAL_VELOCITY) p.vy = T.TERMINAL_VELOCITY;
       }
 
-      const directionOffset =
-        lastDirectionRef.current === "RIGHT"
-          ? T.COLLISION_OFFSET
-          : -T.COLLISION_OFFSET;
-      const samplingX = p.x + p.vx * ratio + directionOffset;
-      const nextY = p.y + p.vy * ratio;
+      const nextX = p.x + p.vx * ratio;
+      const nextY = p.y + p.vy * ratio - (p.isGrounded ? 4 : 0);
 
-      const currentContacts = checkSensors(
-        samplingX,
-        nextY,
-        STONE_ENTITIES,
-        121,
-        38
-      );
+      const contacts = checkSensors(nextX, p.y, nextY, STONE_ENTITIES);
+      const floor = contacts.find((c) => c.type === "FLOOR");
+      const wallR = contacts.find((c) => c.type === "WALL_RIGHT");
+      const wallL = contacts.find((c) => c.type === "WALL_LEFT");
 
-      let finalX = p.x + p.vx * ratio;
-      let finalY = nextY;
+      let finalX = nextX;
+      let finalY = p.y + p.vy * ratio;
 
-      const floor = currentContacts.find((c) => c.type === "FLOOR");
-      const wall = currentContacts.find(
-        (c) => c.type === "WALL_LEFT" || c.type === "WALL_RIGHT"
-      );
-
-      if (wall) {
-        if (
-          (wall.type === "WALL_RIGHT" && p.vx > 0) ||
-          (wall.type === "WALL_LEFT" && p.vx < 0)
-        ) {
-          p.vx = 0;
-          finalX = p.x;
-        }
+      if (wallR && p.vx > 0) {
+        p.vx = 0;
+        finalX = p.x;
+      }
+      if (wallL && p.vx < 0) {
+        p.vx = 0;
+        finalX = p.x;
       }
 
-      if (floor && p.vy <= 0) {
-        finalY = floor.surfaceY ?? nextY;
-        p.vy = 0;
-        p.isGrounded = true;
-      } else if (nextY <= T.WORLD_FLOOR_Y) {
-        finalY = T.WORLD_FLOOR_Y;
-        p.vy = 0;
-        p.isGrounded = true;
+      const GROUND_TOLERANCE = 2.0;
+      const isFalling = p.vy <= 0.1;
+
+      if (jumpLockFrames.current === 0 && isFalling) {
+        if (floor) {
+          finalY = floor.surfaceY ?? finalY;
+          p.vy = 0;
+          p.isGrounded = true;
+        } else if (finalY <= T.WORLD_FLOOR_Y + GROUND_TOLERANCE) {
+          finalY = T.WORLD_FLOOR_Y;
+          p.vy = 0;
+          p.isGrounded = true;
+        } else {
+          p.isGrounded = false;
+        }
       } else {
         p.isGrounded = false;
       }
@@ -112,6 +102,8 @@ export function PlayerController(props: SpritePlayerRefUI) {
       if (inputs.current.jump && p.isGrounded) {
         p.vy = jumpForce;
         p.isGrounded = false;
+        jumpLockFrames.current = 8;
+        finalY += 2;
       }
 
       p.x = Math.max(0, Math.min(finalX, T.WORLD_WIDTH - 50));
@@ -120,19 +112,19 @@ export function PlayerController(props: SpritePlayerRefUI) {
       if (p.vx < -0.1) lastDirectionRef.current = "LEFT";
       else if (p.vx > 0.1) lastDirectionRef.current = "RIGHT";
 
-      const anim: PlayerStateUI = !p.isGrounded
+      const currentAnim: PlayerStateUI = !p.isGrounded
         ? "JUMP"
         : Math.abs(p.vx) > 0.1
         ? "RUN"
         : "IDLE";
+      const viewW = sceneRef.current?.offsetWidth || 1200;
 
-      const vw = sceneRef.current?.offsetWidth || 1200;
       setVisualState({
         x: p.x,
         y: p.y,
         direction: lastDirectionRef.current,
-        state: anim,
-        cameraX: Math.max(0, Math.min(p.x - vw / 2, T.WORLD_WIDTH - vw)),
+        state: currentAnim,
+        cameraX: Math.max(0, Math.min(p.x - viewW / 2, T.WORLD_WIDTH - viewW)),
       });
     };
 
@@ -140,19 +132,18 @@ export function PlayerController(props: SpritePlayerRefUI) {
     return () => gsap.ticker.remove(tick);
   }, [moveSpeed, jumpForce, checkSensors]);
 
+  const containerStyle = {
+    width: PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH,
+    transform: `translateX(${-visualState.cameraX}px)`,
+    transition: "none",
+  };
+
   return (
     <div
       ref={sceneRef}
       className="absolute inset-0 overflow-hidden bg-slate-950"
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          width: PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH,
-          transform: `translateX(${-visualState.cameraX}px)`,
-          transition: "none",
-        }}
-      >
+      <div className="absolute inset-0" style={containerStyle}>
         <LayerController
           cameraX={visualState.cameraX}
           playerVisuals={visualState}

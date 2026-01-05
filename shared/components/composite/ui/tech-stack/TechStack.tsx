@@ -27,7 +27,7 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
     if (!isMounted || !sliderRef.current || columns) return;
 
     const slider = sliderRef.current;
-    const items = gsap.utils.toArray(slider.children) as HTMLElement[];
+    const items: HTMLElement[] = gsap.utils.toArray(slider.children);
 
     const animate = () => {
       if (!isPaused.current) {
