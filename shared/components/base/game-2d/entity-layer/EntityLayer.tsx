@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { EntityLayerUI } from "./interface";
-import { EntityInstanceUI } from "@/shared/types";
+import { CollisionEventUI } from "@/shared/types";
 
 export function EntityLayer(props: EntityLayerUI) {
   const {
@@ -65,16 +65,19 @@ export function EntityLayer(props: EntityLayerUI) {
         const isFeetHit = feetPixel[0] > 200;
 
         if (isWallHit || isFeetHit) {
-          const mutableEntity : EntityInstanceUI = {
-            ...entity,
-            isFloor: isFeetHit && !isWallHit && playerY >= entity.y + 20,
-          }
-          onTriggerEnter?.(mutableEntity);
+          const event: CollisionEventUI = {
+            isBlocked: isWallHit || entity.type === "solid",
+            type: entity.type,
+            entityId: entity.id,
+            isFloor: isFeetHit && !isWallHit && playerY >= entity.y + 20
+          };
+          
+          onTriggerEnter?.(event);
         } else {
-          onTriggerLeave?.(entity);
+          onTriggerLeave?.();
         }
       } else {
-        onTriggerLeave?.(entity);
+        onTriggerLeave?.();
       }
     });
   }, [
@@ -96,6 +99,8 @@ export function EntityLayer(props: EntityLayerUI) {
         height={height}
         className="hidden"
       />
+      
+  
       {entities.map((entity) => (
         <div
           key={entity.id}

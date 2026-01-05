@@ -9,6 +9,13 @@ const eslintConfig = defineConfig([
     files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
       "no-console": ["error", { allow: ["warn", "error"] }],
+      "sonarjs/prefer-readonly-properties": "off",
+      "sonarjs/cognitive-complexity": "off",
+      "sonarjs/no-duplicate-string": "off",
+      "sonarjs/no-negated-condition": "off",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+
+      "@typescript-eslint/prefer-readonly-parameter-types": "off",
 
       "no-warning-comments": [
         "error",

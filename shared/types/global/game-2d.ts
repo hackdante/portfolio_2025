@@ -26,7 +26,7 @@ export interface PlayerPhysicsStateUI {
   y: number;
   vx: number;
   vy: number;
-  contacts: ContactStateUI[]; // Soporta múltiples contactos simultáneos (suelo + pared)
+  contacts: ContactStateUI[];
   isGrounded: boolean;
   state: PlayerStateUI;
 }
@@ -44,12 +44,6 @@ export interface VisualStateUI {
   readonly direction: PlayerDirectionType;
   readonly state: PlayerStateUI;
   readonly cameraX: number;
-}
-
-export interface LayerControllerUI {
-  readonly cameraX: number;
-  readonly playerVisuals: VisualStateUI;
-  readonly onCollisionAction: (event: CollisionEventUI) => void;
 }
 
 export interface SpritePlayerRefUI {
@@ -74,18 +68,54 @@ export interface EntityInstanceUI {
 }
 
 export interface PlayerTokensUI {
- readonly GRAVITY: number;
- readonly FRICTION: number;
- readonly WORLD_FLOOR_Y: number;
- readonly WORLD_WIDTH: number;
- readonly TERMINAL_VELOCITY: number;
- readonly BODY_OFFSET_X: number; 
- readonly BODY_OFFSET_Y: number; 
- readonly GROUND_CHECK_PADDING: number;
+  readonly GRAVITY: number;
+  readonly FRICTION: number;
+  readonly WORLD_FLOOR_Y: number;
+  readonly WORLD_WIDTH: number;
+  readonly TERMINAL_VELOCITY: number;
+  readonly BODY_OFFSET_X: number;
+  readonly BODY_OFFSET_Y: number;
+  readonly GROUND_CHECK_PADDING: number;
 }
 
 export interface CollisionMapType {
   readonly data: Uint8ClampedArray;
   readonly width: number;
   readonly height: number;
+}
+
+export interface PortfolioAssetsUI {
+  readonly uid: number;
+  readonly imag: string;
+  readonly title: string;
+  readonly description: string;
+  readonly url: string;
+  readonly stack: string;
+}
+
+export interface InteractionPopupUI {
+  readonly data: PortfolioAssetsUI | null;
+  readonly isVisible: boolean;
+  readonly position: { readonly x: number; readonly y: number };
+}
+
+export interface ActiveInteractionUI {
+  readonly data: PortfolioAssetsUI;
+  readonly physicEvent: CollisionEventUI;
+  readonly position: {
+    readonly x: number;
+    readonly y: number;
+  };
+}
+
+export interface LayerControllerUI {
+  readonly cameraX: number;
+  readonly playerVisuals: {
+    readonly x: number;
+    readonly y: number;
+    readonly direction: PlayerDirectionType;
+    readonly state: string;
+  };
+  readonly onCollisionAction: (interaction: ActiveInteractionUI | null) => void;
+  readonly levelEntities?: EntityInstanceUI[];
 }

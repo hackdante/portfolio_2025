@@ -10,17 +10,21 @@ import {
   SpritePlayerRefUI,
   PlayerDirectionType,
   PlayerStateUI,
+  ActiveInteractionUI,
 } from "@/shared/types";
 import { LayerController } from "../layer-controller";
+import { InteractionPopup } from "@/shared/components/base/interaction-popup"; 
 import { PLAYER_CONTROLLER_TOKENS, STONE_ENTITIES } from "@/shared/constants";
 
-export function PlayerController(props: SpritePlayerRefUI) {
+export function PlayerController(props: Readonly<SpritePlayerRefUI>) {
   const { initialX = 100, initialY = 100, moveSpeed, jumpForce } = props;
   const inputs = useInput();
   const { checkSensors } = useCollisionSensor();
   const sceneRef = useRef<HTMLDivElement>(null);
   const lastDirectionRef = useRef<PlayerDirectionType>("RIGHT");
   const jumpLockFrames = useRef(0);
+  
+  const [activeInteraction, setActiveInteraction] = useState<ActiveInteractionUI | null>(null);
 
   const physics = useRef<PlayerPhysicsStateUI>({
     x: initialX,
@@ -148,7 +152,13 @@ export function PlayerController(props: SpritePlayerRefUI) {
           cameraX={visualState.cameraX}
           playerVisuals={visualState}
           levelEntities={STONE_ENTITIES}
-          onCollisionAction={() => {}}
+          onCollisionAction={(interaction) => setActiveInteraction(interaction)}
+        />
+
+        <InteractionPopup 
+          data={activeInteraction?.data ?? null}
+          isVisible={!!activeInteraction}
+          position={activeInteraction?.position ?? { x: 0, y: 0 }}
         />
       </div>
     </div>

@@ -1,19 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
-import { 
-  ImageAssetLayer, 
-  SpritePlayer, 
-  EntityLayer 
+import { useEffect, useRef } from "react";
+import {
+  ImageAssetLayer,
+  SpritePlayer,
+  EntityLayer,
 } from "@/shared/components/base";
-import { 
-  RONIN_ANIMATIONS, 
-  RONIN_SHEET, 
-  PLAYER_CONTROLLER_TOKENS, 
-  STONE_ENTITIES 
+import {
+  RONIN_ANIMATIONS,
+  RONIN_SHEET,
+  PLAYER_CONTROLLER_TOKENS,
+  STONE_ENTITIES,
+  PROJECTS_PORTFOLIO,
 } from "@/shared/constants";
 import { useCollisionSensor } from "@/shared/hooks";
-import { EntityInstanceUI, LayerControllerUI } from "@/shared/types";
+import {
+  EntityInstanceUI,
+  LayerControllerUI,
+  CollisionEventUI,
+} from "@/shared/types";
 
 const SPRITES_PATH = "/images/game-2d";
 
@@ -24,6 +29,8 @@ export function LayerController({
   levelEntities = STONE_ENTITIES,
 }: LayerControllerUI & { levelEntities?: EntityInstanceUI[] }) {
   const { registerEntity } = useCollisionSensor();
+
+  const activeEntityIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     levelEntities.forEach((entity) => {
@@ -37,24 +44,6 @@ export function LayerController({
       }
     });
   }, [levelEntities, registerEntity]);
-
-  const handleTriggerEnter = (entity: EntityInstanceUI): void => {
-    onCollisionAction({
-      isBlocked: entity.type === "solid",
-      type: entity.type,
-      entityId: entity.id,
-      isFloor: entity.isFloor,
-    });
-  };
-
-  const handleTriggerLeave = (entity: EntityInstanceUI): void => {
-    onCollisionAction({
-      isBlocked: false,
-      type: entity.type,
-      entityId: entity.id,
-      isFloor: false,
-    });
-  };
 
   return (
     <>
@@ -105,7 +94,6 @@ export function LayerController({
         parallaxFactor={0.75}
         cameraX={cameraX}
         zIndex={12}
-        opacity={1}
       />
 
       <ImageAssetLayer
@@ -118,7 +106,7 @@ export function LayerController({
         zIndex={20}
       />
 
-      {levelEntities.map((entity) => (
+      {levelEntities.map((entity, index) => (
         <EntityLayer
           key={entity.id}
           id={entity.id}
@@ -126,15 +114,43 @@ export function LayerController({
           maskUrl={entity.maskUrl}
           width={entity.collisionWidth}
           height={entity.collisionHeight}
-          playerX={playerVisuals.x + (playerVisuals.direction === "RIGHT" ? PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X : -PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X)}
+          playerX={
+            playerVisuals.x +
+            (playerVisuals.direction === "RIGHT"
+              ? PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X
+              : -PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X)
+          }
           playerY={playerVisuals.y}
           entities={[entity]}
-          onTriggerEnter={handleTriggerEnter}
-          onTriggerLeave={handleTriggerLeave}
+          onTriggerEnter={(physicEvent: CollisionEventUI) => {
+            if (
+              physicEvent.isFloor &&
+              activeEntityIdRef.current !== entity.id
+            ) {
+              const projectData = PROJECTS_PORTFOLIO[index];
+              if (projectData) {
+                activeEntityIdRef.current = entity.id;
+
+                onCollisionAction({
+                  data: projectData,
+                  physicEvent: physicEvent,
+                  position: {
+                    x: entity.x + entity.collisionWidth / 2,
+                    y: entity.y + entity.collisionHeight,
+                  },
+                });
+              }
+            }
+          }}
+          onTriggerLeave={() => {
+            if (activeEntityIdRef.current === entity.id) {
+              activeEntityIdRef.current = null;
+              onCollisionAction(null);
+            }
+          }}
           zIndex={20}
         />
       ))}
-
       <SpritePlayer
         state={playerVisuals.state}
         direction={playerVisuals.direction}

@@ -1,4 +1,4 @@
-import { EntityInstanceUI, PlayerTokensUI } from "@/shared/types";
+import { EntityInstanceUI, PlayerTokensUI, PortfolioAssetsUI } from "@/shared/types";
 
 export const PLAYER_CONTROLLER_TOKENS: PlayerTokensUI = {
   GRAVITY: 0.8,
@@ -46,3 +46,31 @@ export const STONE_ENTITIES: EntityInstanceUI[] = [
     collisionHeight: 38,
   },
 ];
+
+
+export const PROJECTS_PORTFOLIO: readonly PortfolioAssetsUI[] = [{
+  uid: 1,
+  imag: '/images/projects/kensai_prj.png',
+  title: 'KENSAI | Sitio web',
+  description: 'Proyecto que combina la parte interactiva, con la parte web, sin afectacion del SEO.',
+  url: 'https://portfolio-2025-umber-xi.vercel.app/',
+  stack: 'React.js | Next.js | Typescript | React Fiber (R3F) | Three.js | GSAP'
+},
+
+{
+  uid: 2,
+  imag: '/images/projects/kensai_prj.png',
+  title: 'KENSAI 2 | Sitio web',
+  description: 'Proyecto que combina la parte interactiva, con la parte web, sin afectacion del SEO.',
+  url: 'https://portfolio-2025-umber-xi.vercel.app/',
+  stack: 'React.js | Next.js | Typescript | React Fiber (R3F) | Three.js | GSAP'
+},
+{
+  uid: 3,
+  imag: '/images/projects/kensai_prj.png',
+  title: 'KENSAI 3 | Sitio web',
+  description: 'Proyecto que combina la parte interactiva, con la parte web, sin afectacion del SEO.',
+  url: 'https://portfolio-2025-umber-xi.vercel.app/',
+  stack: 'React.js | Next.js | Typescript | React Fiber (R3F) | Three.js | GSAP'
+}
+]

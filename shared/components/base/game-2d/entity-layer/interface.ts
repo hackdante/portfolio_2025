@@ -1,4 +1,4 @@
-import {  EntityInstanceUI } from "@/shared/types";
+import { CollisionEventUI, EntityInstanceUI } from "@/shared/types";
 
 export interface EntityLayerUI {
   readonly id: string;
@@ -12,11 +12,8 @@ export interface EntityLayerUI {
   readonly entities: EntityInstanceUI[];
   readonly playerX: number;
   readonly playerY: number;
-  readonly onTriggerEnter?: (entity: EntityInstanceUI) => void;
-  readonly onTriggerLeave?: (entity: EntityInstanceUI) => void;
+  readonly onTriggerEnter?: (entity: CollisionEventUI) => void;
+  readonly onTriggerLeave?: () => void;
   readonly debug?: boolean;
   readonly zIndex?: number;
 }
-
-
-
