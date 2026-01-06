@@ -78,7 +78,7 @@ export function SpritePlayer(props: SpritePlayerUI) {
   }
 
   return (
-    <div className="absolute animate-gpu z-50 overflow-hidden" style={containerStyle}>
+    <div className="absolute animate-gpu z-8 overflow-hidden" style={containerStyle}>
       {canAnimate ? (
         <div
           ref={spriteRef}

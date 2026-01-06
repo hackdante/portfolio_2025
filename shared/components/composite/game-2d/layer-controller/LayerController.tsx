@@ -86,28 +86,80 @@ export function LayerController({
   return (
     <>
       <ImageAssetLayer
-        imageUrl={`${SPRITES_PATH}/sky_level_1.jpg`}
+        imageUrl={`${SPRITES_PATH}/stars.jpg`}
         width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
-        height={340}
-        y={150}
+        height={300}
+        y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y + 150}
         repeat="repeat-x"
-        tileSize={1070}
-        parallaxFactor={0.1}
-        autoScrollSpeed={0.2}
+        tileSize={600}
+        parallaxFactor={0.08}
         cameraX={cameraX}
         zIndex={1}
       />
+
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/kensai_logo.png`}
+        width={400}
+        height={103}
+        x={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 0}
+        y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y + 200}
+        repeat="no-repeat"
+        parallaxFactor={-0.03}
+        cameraX={cameraX}
+        zIndex={1}
+      />
+
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/moon.png`}
+        width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
+        height={400}
+        y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y}
+        x={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 0.17}
+        repeat="no-repeat"
+        tileSize={400}
+        parallaxFactor={0.05}
+        cameraX={cameraX}
+        zIndex={2}
+      />
+
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/sky_level_dark.png`}
+        width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
+        height={457}
+        y={50}
+        repeat="repeat-x"
+        tileSize={1248}
+        parallaxFactor={0}
+        autoScrollSpeed={0.15}
+        cameraX={cameraX}
+        opacity={0.7}
+        zIndex={3}
+      />
+
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/mountains.png`}
         width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
-        height={500}
+        height={241}
         y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y - 10}
         repeat="repeat-x"
-        tileSize={512}
+        tileSize={800}
         parallaxFactor={0.6}
         cameraX={cameraX}
         zIndex={5}
       />
+
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/pagoda_kensai.png`}
+        width={280}
+        height={350}
+        x={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 0.43}
+        y={PLAYER_CONTROLLER_TOKENS.WORLD_FLOOR_Y + 40}
+        repeat="no-repeat"
+        parallaxFactor={0.6}
+        cameraX={cameraX}
+        zIndex={6}
+      />
+
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/pagoda_kensai.png`}
         width={280}
@@ -128,6 +180,19 @@ export function LayerController({
         tileSize={800}
         parallaxFactor={0.75}
         cameraX={cameraX}
+        zIndex={7}
+      />
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/fog.png`}
+        width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 3}
+        height={228}
+        y={80}
+        repeat="repeat-x"
+        tileSize={1248}
+        parallaxFactor={1}
+        autoScrollSpeed={-0.1}
+        cameraX={cameraX}
+        opacity={0.8}
         zIndex={7}
       />
       <ImageAssetLayer
@@ -175,7 +240,21 @@ export function LayerController({
         tileSize={674}
         parallaxFactor={1.4}
         cameraX={cameraX}
-        zIndex={100}
+        zIndex={10}
+      />
+
+      <ImageAssetLayer
+        imageUrl={`${SPRITES_PATH}/fog.png`}
+        width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 3}
+        height={228}
+        y={-30}
+        repeat="repeat-x"
+        tileSize={1248}
+        parallaxFactor={1}
+        autoScrollSpeed={0.05}
+        cameraX={cameraX}
+        opacity={0.6}
+        zIndex={12}
       />
     </>
   );
