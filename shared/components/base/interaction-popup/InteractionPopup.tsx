@@ -11,75 +11,57 @@ export function InteractionPopup({ data, isVisible, position }: InteractionPopup
 
   useGSAP(() => {
     if (!containerRef.current) return;
+    gsap.killTweensOf(containerRef.current);
 
     if (isVisible && data) {
       gsap.set(containerRef.current, { display: "block" });
-      
       gsap.to(containerRef.current, { 
-        scale: 1, 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.5, 
-        ease: "back.out(1.2)",
-        overwrite: true
+        scale: 1, opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.2)", overwrite: true 
       });
     } else {
       gsap.to(containerRef.current, { 
-        scale: 0.7, 
-        opacity: 0, 
-        y: 20, 
-        duration: 0.3, 
-        ease: "power2.in",
-        overwrite: true,
-        onComplete: () => {
-          if (containerRef.current) containerRef.current.style.display = "none";
-        }
+        scale: 0.8, opacity: 0, y: 15, duration: 0.2, ease: "power2.in", overwrite: true,
+        onComplete: () => { if (containerRef.current) containerRef.current.style.display = "none"; }
       });
     }
-  }, { dependencies: [isVisible, data] });
+  }, { dependencies: [isVisible, data?.uid] });
 
   return (
     <div
       ref={containerRef}
-      className="absolute z-9999 w-72 p-0 bg-slate-950/90 backdrop-blur-md border border-indigo-500/50 rounded-2xl text-white shadow-[0_0_30px_rgba(79,70,229,0.2)] opacity-0 hidden overflow-visible"
+      className="absolute z-19 w-52 p-0 bg-slate-950/95 backdrop-blur-sm border border-indigo-500/30 rounded-lg text-white shadow-2xl opacity-0 hidden"
       style={{
         left: `${position.x}px`,
         bottom: `${position.y}px`,
-        marginBottom: "140px",
+        marginBottom: "155px",
         transform: "translateX(-50%)",
       }}
     >
       {data && (
         <div className="flex flex-col">
-          <div className="relative w-full h-36 overflow-hidden rounded-t-2xl border-b border-indigo-500/30">
-            <Image 
-              src={data.imag} 
-              alt={data.title} 
-              fill
-              className="object-cover"
-              sizes="288px"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 to-transparent" />
+          <div className="relative w-full h-14 overflow-hidden rounded-t-lg border-b border-white/5">
+            <Image src={data.imag} alt={data.title} fill className="object-cover brightness-75" sizes="200px" priority />
           </div>
 
-          <div className="p-4 flex flex-col gap-2">
-            <h3 className="text-lg font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-400 to-cyan-400">
-              {data.title}
-            </h3>
-            <p className="text-[11px] text-slate-300 leading-relaxed line-clamp-3">
-              {data.description}
-            </p>
-          
-            <div className="flex flex-wrap gap-1 mt-2">
-              {data.stack.split(",").map((tech) => (
-                <span key={tech} className="text-[9px] font-bold text-cyan-400 bg-cyan-950/30 border border-cyan-500/20 px-2 py-0.5 rounded-full uppercase tracking-tighter">
+          <div className="p-2.5 flex flex-col gap-1.5">
+            <div>
+              <h3 className="text-[10px] font-bold text-indigo-300 truncate">{data.title}</h3>
+              <p className="text-[8px] text-slate-400 line-clamp-2 leading-tight mt-0.5">{data.description}</p>
+            </div>
+
+            <div className="flex flex-wrap gap-1">
+              {data.stack.split(",").slice(0, 2).map((tech) => (
+                <span key={tech} className="text-[6px] font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-1 rounded uppercase">
                   {tech.trim()}
                 </span>
               ))}
             </div>
-          </div>
 
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-slate-950 border-r border-b border-indigo-500/50 rotate-45 shadow-lg" />
+            <a href={data.url} target="_blank" rel="noopener noreferrer" className="w-full py-1 bg-indigo-600 hover:bg-indigo-500 rounded text-center transition-all active:scale-95 text-[8px] font-bold uppercase tracking-wider">
+              Ver Proyecto
+            </a>
+          </div>
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-950 border-r border-b border-indigo-500/30 rotate-45" />
         </div>
       )}
     </div>

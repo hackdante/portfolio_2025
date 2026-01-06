@@ -1,122 +1,72 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useCollisionSensor } from "@/shared/hooks";
+import { ContactStateUI } from "@/shared/types";
 import { EntityLayerUI } from "./interface";
-import { CollisionEventUI } from "@/shared/types";
 
-export function EntityLayer(props: EntityLayerUI) {
-  const {
-    entities,
-    maskUrl,
-    imageUrl,
-    width,
-    height,
-    playerX,
-    playerY,
-    onTriggerEnter,
-    onTriggerLeave,
-    debug,
-    zIndex = 0,
-  } = props;
-
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const maskImageRef = useRef<HTMLImageElement | null>(null);
+export function EntityLayer({
+  id,
+  imageUrl,
+  width,
+  height,
+  playerX,
+  playerY,
+  entities,
+  onTriggerEnter,
+  onTriggerLeave,
+  zIndex = 20,
+}: EntityLayerUI) {
+  const { checkSensors } = useCollisionSensor();
+  const isPlayerInside = useRef(false);
 
   useEffect(() => {
-    const img = new Image();
-    img.src = maskUrl;
-    img.onload = () => {
-      maskImageRef.current = img;
-    };
-  }, [maskUrl]);
+    if (!entities || entities.length === 0) return;
 
-  useEffect(() => {
-    if (!maskImageRef.current || !canvasRef.current) return;
-    const ctx = canvasRef.current.getContext("2d", {
-      willReadFrequently: true,
-    });
-    if (!ctx) return;
+    const contacts = checkSensors(playerX, playerY, playerY, entities);
+    
+    const floorContact = contacts.find(
+      (c): c is ContactStateUI & { type: "FLOOR"; entityId: string; surfaceY: number } => 
+        c.entityId === id && 
+        c.type === "FLOOR" && 
+        typeof c.surfaceY === "number"
+    );
 
-    ctx.clearRect(0, 0, width, height);
-    ctx.drawImage(maskImageRef.current, 0, 0, width, height);
-
-    entities.forEach((entity) => {
-      if (!entity.isActive) return;
-
-      const relX = Math.floor(playerX - entity.x);
-      const wallY = Math.floor(height - (playerY - entity.y) - 35);
-      const feetY = Math.floor(height - (playerY - entity.y) + 2);
-
-      if (relX >= 0 && relX < width) {
-        const wallPixel = ctx.getImageData(
-          relX,
-          Math.max(0, Math.min(height - 1, wallY)),
-          1,
-          1
-        ).data;
-        const feetPixel = ctx.getImageData(
-          relX,
-          Math.max(0, Math.min(height - 1, feetY)),
-          1,
-          1
-        ).data;
-
-        const isWallHit = wallPixel[0] > 200;
-        const isFeetHit = feetPixel[0] > 200;
-
-        if (isWallHit || isFeetHit) {
-          const event: CollisionEventUI = {
-            isBlocked: isWallHit || entity.type === "solid",
-            type: entity.type,
-            entityId: entity.id,
-            isFloor: isFeetHit && !isWallHit && playerY >= entity.y + 20
-          };
-          
-          onTriggerEnter?.(event);
-        } else {
-          onTriggerLeave?.();
+    if (floorContact) {
+      if (!isPlayerInside.current) {
+        isPlayerInside.current = true;
+        if (onTriggerEnter) {
+          onTriggerEnter({
+            type: "active", 
+            entityId: floorContact.entityId,
+            isBlocked: false,
+            isFloor: true
+          });
         }
-      } else {
-        onTriggerLeave?.();
       }
-    });
-  }, [
-    playerX,
-    playerY,
-    entities,
-    width,
-    height,
-    onTriggerEnter,
-    onTriggerLeave,
-    maskUrl,
-  ]);
+    } else {
+      if (isPlayerInside.current) {
+        isPlayerInside.current = false;
+        if (onTriggerLeave) {
+          onTriggerLeave();
+        }
+      }
+    }
+  }, [playerX, playerY, id, entities, checkSensors, onTriggerEnter, onTriggerLeave]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none" style={{ zIndex }}>
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        className="hidden"
-      />
-      
-  
-      {entities.map((entity) => (
-        <div
-          key={entity.id}
-          className="absolute"
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-            left: `${entity.x}px`,
-            bottom: `${entity.y}px`,
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: "contain",
-            zIndex: 1,
-            border: debug ? "2px solid cyan" : "none",
-          }}
-        />
-      ))}
-    </div>
+    <div
+      className="absolute pointer-events-none"
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        width: `${width}px`,
+        height: `${height}px`,
+        left: `${entities[0].x}px`,
+        bottom: `${entities[0].y}px`,
+        zIndex,
+      }}
+    />
   );
 }

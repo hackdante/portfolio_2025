@@ -17,12 +17,7 @@ export class CollisionBuffer {
     return CollisionBuffer.instance;
   }
 
-  public async loadMask(
-    id: string,
-    url: string,
-    width: number,
-    height: number
-  ): Promise<void> {
+  public async loadMask(id: string, url: string, width: number, height: number): Promise<void> {
     if (this.maps.has(id)) return;
 
     return new Promise((resolve, reject) => {
@@ -35,24 +30,14 @@ export class CollisionBuffer {
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
-        if (!ctx) {
-          reject(new Error("Failed to create canvas context"));
-          return;
-        }
+        if (!ctx) { reject(new Error("Failed context")); return; }
 
         ctx.drawImage(img, 0, 0, width, height);
         const imageData = ctx.getImageData(0, 0, width, height).data;
-
-        this.maps.set(id, {
-          data: imageData,
-          width,
-          height,
-        });
+        this.maps.set(id, { data: imageData, width, height });
         resolve();
       };
-
-      img.onerror = () => reject(new Error(`Failed to load mask: ${url}`));
+      img.onerror = () => reject(new Error(`Failed load: ${url}`));
     });
   }
 
@@ -60,20 +45,19 @@ export class CollisionBuffer {
     const map = this.maps.get(mapId);
     if (!map) return false;
 
-    const canvasY = Math.floor(map.height - y);
     const canvasX = Math.floor(x);
+    const canvasY = Math.floor(map.height - y);
 
-    if (
-      canvasX < 0 ||
-      canvasX >= map.width ||
-      canvasY < 0 ||
-      canvasY >= map.height
-    ) {
+    if (canvasX < 0 || canvasX >= map.width || canvasY < 0 || canvasY >= map.height) {
       return false;
     }
 
     const index = (canvasY * map.width + canvasX) * 4;
     return map.data[index] > COLOR_THRESHOLD;
+  }
+
+  public clearMask(id: string): void {
+    this.maps.delete(id);
   }
 
   public clear(): void {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import {
   ImageAssetLayer,
   SpritePlayer,
@@ -28,9 +28,8 @@ export function LayerController({
   onCollisionAction,
   levelEntities = STONE_ENTITIES,
 }: LayerControllerUI & { levelEntities?: EntityInstanceUI[] }) {
-  const { registerEntity } = useCollisionSensor();
-
-  const activeEntityIdRef = useRef<string | null>(null);
+  const { registerEntity, unregisterEntity } = useCollisionSensor();
+  const currentActiveId = useRef<string | null>(null);
 
   useEffect(() => {
     levelEntities.forEach((entity) => {
@@ -43,7 +42,46 @@ export function LayerController({
         );
       }
     });
-  }, [levelEntities, registerEntity]);
+    return () => {
+      levelEntities.forEach((entity) => {
+        unregisterEntity(entity.id);
+      });
+    };
+  }, [levelEntities, registerEntity, unregisterEntity]);
+
+  const handleTriggerEnter = useCallback(
+    (
+      physicEvent: CollisionEventUI,
+      entity: EntityInstanceUI,
+      index: number
+    ) => {
+      if (physicEvent.isFloor && currentActiveId.current !== entity.id) {
+        const projectData = PROJECTS_PORTFOLIO[index];
+        if (projectData) {
+          currentActiveId.current = entity.id;
+          onCollisionAction({
+            data: projectData,
+            physicEvent,
+            position: {
+              x: entity.x + entity.collisionWidth / 2,
+              y: entity.y,
+            },
+          });
+        }
+      }
+    },
+    [onCollisionAction]
+  );
+
+  const handleTriggerLeave = useCallback(
+    (entityId: string) => {
+      if (currentActiveId.current === entityId) {
+        currentActiveId.current = null;
+        onCollisionAction(null);
+      }
+    },
+    [onCollisionAction]
+  );
 
   return (
     <>
@@ -59,7 +97,6 @@ export function LayerController({
         cameraX={cameraX}
         zIndex={1}
       />
-
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/mountains.png`}
         width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
@@ -69,9 +106,8 @@ export function LayerController({
         tileSize={512}
         parallaxFactor={0.6}
         cameraX={cameraX}
-        zIndex={10}
+        zIndex={5}
       />
-
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/pagoda_kensai.png`}
         width={280}
@@ -81,9 +117,8 @@ export function LayerController({
         repeat="no-repeat"
         parallaxFactor={0.6}
         cameraX={cameraX}
-        zIndex={10}
+        zIndex={6}
       />
-
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/tree_sakura.png`}
         width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH * 1.2}
@@ -93,9 +128,8 @@ export function LayerController({
         tileSize={800}
         parallaxFactor={0.75}
         cameraX={cameraX}
-        zIndex={12}
+        zIndex={7}
       />
-
       <ImageAssetLayer
         imageUrl={`${SPRITES_PATH}/stone_walkway.png`}
         width={PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH}
@@ -103,7 +137,7 @@ export function LayerController({
         y={10}
         parallaxFactor={1}
         cameraX={cameraX}
-        zIndex={20}
+        zIndex={8}
       />
 
       {levelEntities.map((entity, index) => (
@@ -114,43 +148,15 @@ export function LayerController({
           maskUrl={entity.maskUrl}
           width={entity.collisionWidth}
           height={entity.collisionHeight}
-          playerX={
-            playerVisuals.x +
-            (playerVisuals.direction === "RIGHT"
-              ? PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X
-              : -PLAYER_CONTROLLER_TOKENS.BODY_OFFSET_X)
-          }
+          playerX={playerVisuals.x}
           playerY={playerVisuals.y}
           entities={[entity]}
-          onTriggerEnter={(physicEvent: CollisionEventUI) => {
-            if (
-              physicEvent.isFloor &&
-              activeEntityIdRef.current !== entity.id
-            ) {
-              const projectData = PROJECTS_PORTFOLIO[index];
-              if (projectData) {
-                activeEntityIdRef.current = entity.id;
-
-                onCollisionAction({
-                  data: projectData,
-                  physicEvent: physicEvent,
-                  position: {
-                    x: entity.x + entity.collisionWidth / 2,
-                    y: entity.y + entity.collisionHeight,
-                  },
-                });
-              }
-            }
-          }}
-          onTriggerLeave={() => {
-            if (activeEntityIdRef.current === entity.id) {
-              activeEntityIdRef.current = null;
-              onCollisionAction(null);
-            }
-          }}
-          zIndex={20}
+          onTriggerEnter={(e) => handleTriggerEnter(e, entity, index)}
+          onTriggerLeave={() => handleTriggerLeave(entity.id)}
+          zIndex={8}
         />
       ))}
+
       <SpritePlayer
         state={playerVisuals.state}
         direction={playerVisuals.direction}

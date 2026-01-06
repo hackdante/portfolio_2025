@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useCollisionSensor, useInput } from "@/shared/hooks";
@@ -25,6 +25,14 @@ export function PlayerController(props: Readonly<SpritePlayerRefUI>) {
   const jumpLockFrames = useRef(0);
   
   const [activeInteraction, setActiveInteraction] = useState<ActiveInteractionUI | null>(null);
+
+  const handleCollisionAction = useCallback((interaction: ActiveInteractionUI | null) => {
+    setActiveInteraction(prev => {
+      if (!interaction && !prev) return null;
+      if (interaction?.data?.uid === prev?.data?.uid) return prev;
+      return interaction;
+    });
+  }, []);
 
   const physics = useRef<PlayerPhysicsStateUI>({
     x: initialX,
@@ -75,14 +83,8 @@ export function PlayerController(props: Readonly<SpritePlayerRefUI>) {
       let finalX = nextX;
       let finalY = p.y + p.vy * ratio;
 
-      if (wallR && p.vx > 0) {
-        p.vx = 0;
-        finalX = p.x;
-      }
-      if (wallL && p.vx < 0) {
-        p.vx = 0;
-        finalX = p.x;
-      }
+      if (wallR && p.vx > 0) { p.vx = 0; finalX = p.x; }
+      if (wallL && p.vx < 0) { p.vx = 0; finalX = p.x; }
 
       const GROUND_TOLERANCE = 2.0;
       const isFalling = p.vy <= 0.1;
@@ -116,11 +118,7 @@ export function PlayerController(props: Readonly<SpritePlayerRefUI>) {
       if (p.vx < -0.1) lastDirectionRef.current = "LEFT";
       else if (p.vx > 0.1) lastDirectionRef.current = "RIGHT";
 
-      const currentAnim: PlayerStateUI = !p.isGrounded
-        ? "JUMP"
-        : Math.abs(p.vx) > 0.1
-        ? "RUN"
-        : "IDLE";
+      const currentAnim: PlayerStateUI = !p.isGrounded ? "JUMP" : Math.abs(p.vx) > 0.1 ? "RUN" : "IDLE";
       const viewW = sceneRef.current?.offsetWidth || 1200;
 
       setVisualState({
@@ -136,25 +134,15 @@ export function PlayerController(props: Readonly<SpritePlayerRefUI>) {
     return () => gsap.ticker.remove(tick);
   }, [moveSpeed, jumpForce, checkSensors]);
 
-  const containerStyle = {
-    width: PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH,
-    transform: `translateX(${-visualState.cameraX}px)`,
-    transition: "none",
-  };
-
   return (
-    <div
-      ref={sceneRef}
-      className="absolute inset-0 overflow-hidden bg-slate-950"
-    >
-      <div className="absolute inset-0" style={containerStyle}>
+    <div ref={sceneRef} className="absolute inset-0 overflow-hidden bg-slate-950">
+      <div className="absolute inset-0" style={{ width: PLAYER_CONTROLLER_TOKENS.WORLD_WIDTH, transform: `translateX(${-visualState.cameraX}px)`, transition: "none" }}>
         <LayerController
           cameraX={visualState.cameraX}
           playerVisuals={visualState}
           levelEntities={STONE_ENTITIES}
-          onCollisionAction={(interaction) => setActiveInteraction(interaction)}
+          onCollisionAction={handleCollisionAction}
         />
-
         <InteractionPopup 
           data={activeInteraction?.data ?? null}
           isVisible={!!activeInteraction}
