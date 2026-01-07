@@ -21,4 +21,36 @@ export interface ActiveInteractionUI {
     readonly x: number;
     readonly y: number;
   };
+  readonly zIndex?: number;
+}
+
+export interface InteractinPopupTokesUI {
+  readonly SIZE: number;
+  readonly OFFSET_Y: number;
+  readonly ANIMATION: {
+    IN: {
+      scale:number;
+      opacity: number;
+      y: number;
+      duration: number;
+      ease: string;
+    },
+    OUT: {
+      scale: number;
+      opacity: number;
+      y: number;
+      duration:number;
+      ease: string;
+    }
+  }
+}
+
+export interface InteractionPopupUI {
+  readonly data: PopControllerUI | null;
+  readonly isVisible: boolean;
+  readonly position: {
+    readonly x: number;
+    readonly y: number;
+  };
+  readonly zIndex?: number;
 }
