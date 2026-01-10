@@ -19,23 +19,24 @@ export function MainScene3D({
   }
 
   return (
-    <>
+  <div className="relative w-full h-[300px] outline-none">
       <Canvas
         shadows
         camera={{ position: [0, 0, 10], fov: 35 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}
+        className="touch-none"
       >
         <Suspense fallback={<Loader3D />}>
           <LoadCharacterSceneMain />
           <GLBCharacterLoader
             objPath={URL_MODEL_3D_V2}
-            position={[0, -3, 0]}
-            scale={1.5}
+            position={[0, -2, 0]}
+            scale={2.6}
             currentAnimation={activeAnim}
             onAnimationsLoaded={handleAnimationsLoaded}
           />
         </Suspense>
       </Canvas>
-    </>
+    </div>
   );
 }

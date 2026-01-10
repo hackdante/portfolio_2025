@@ -1,54 +1,42 @@
 @import "tailwindcss";
 
-/* 1. DEFINICIÓN DE VARIABLES (Design Tokens) */
 :root {
-  /* --- PALETA BASE (Valores fijos) --- */
   --color-primary-40: #1b6ef3;
   --color-primary-60: #3c8bf5;
   --color-white-100: #ffffff;
   --color-neutral-10: #121212;
   --color-neutral-40: #757575;
 
-  /* --- SEMÁNTICOS (Material Design) --- */
   --color-semantic-success: #2e7d32;
   --color-semantic-info: #0288d1;
   --color-semantic-warning: #ed6c02;
   --color-semantic-error: #d32f2f;
 
-  /* --- VARIABLES DINÁMICAS (Tema Claro por defecto) --- */
   --color-ui-background: #ffffff;
   --color-ui-foreground: #121212;
   --color-ui-primary: var(--color-primary-40);
   --color-ui-primary-hover: #1558c7;
   --color-ui-border: #e0e0e0;
 
-  /* Gradientes Hero */
   --hero-gradient-start: #f8f9fa;
   --hero-gradient-end: #e2e8f0;
 
-  /* Elevaciones */
-  --radius-button: 9999px; /* Pill shape para M3 */
+  --radius-button: 9999px; 
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 2. REACCIÓN AL THEME PROVIDER (Modo Oscuro) */
-/* Al usar attribute="data-theme" en tu Provider, este selector es el que manda */
 [data-theme="dark"] {
   --color-ui-background: #190000;
   --color-ui-foreground: #ffffff;
   --color-ui-primary: var(--color-primary-60);
   --color-ui-primary-hover: #5a9fff;
   --color-ui-border: #333333;
-
-  /* Gradientes Hero Dark */
   --hero-gradient-start: #121212;
   --hero-gradient-end: #000000;
-
-  /* Ajuste semántico para legibilidad en Dark Mode */
   --color-semantic-success: #4caf50;
 }
 
-/* 3. CONFIGURACIÓN DEL TEMA DE TAILWIND V4 */
+
 @theme inline {
   --color-ui-background: var(--color-ui-background);
   --color-ui-foreground: var(--color-ui-foreground);
@@ -64,7 +52,6 @@
   --radius-button: var(--radius-button);
 }
 
-/* 4. ESTILOS BASE (Reset & Global) */
 @layer base {
   *,
   ::after,
@@ -81,7 +68,6 @@
   }
 }
 
-/* 5. UTILIDADES EXTRA PARA EL HERO */
 @utility bg-ui-background {
   background-color: var(--color-ui-background);
 }

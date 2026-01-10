@@ -1,8 +1,8 @@
 import { SizesType } from "@/shared/types/global";
 
-export interface LogoUI {
-  size?: SizesType;
-  width?: number;
-  height?: number;
-  path?: string;
+export interface MainLogoUI {
+  readonly size?: SizesType;
+  readonly path?: string;
+  readonly altText?: string;
+  readonly opacity?: number;
 }

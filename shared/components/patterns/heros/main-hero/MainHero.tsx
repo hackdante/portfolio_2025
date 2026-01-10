@@ -1,8 +1,6 @@
-import {
-  LogoContainer,
-  SpeedDial,
-  ThemeSwitcher,
-} from "@/shared/components/composite";
+'use client'
+
+import { SpeedDial } from "@/shared/components/composite";
 
 import {
   FaUserPlus,
@@ -76,29 +74,22 @@ export function MainHero() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center px-6 max-w-7xl mx-auto w-full relative min-h-[500px]">
-      <div className="z-10 flex flex-col items-center">
-        <div className="mb-6">
-          <LogoContainer />
-        </div>
-        <div className="flex flex-col items-center gap-12 z-12">
-          <ThemeSwitcher />
-        </div>
-        <div className="absolute bottom-0 w-full h-full">
-          <MainScene3D animation={currentAnimation} />
-        </div>
+  <section className="relative w-full h-[300px] overflow-hidden bg-transparent">
+<div className="absolute inset-0 z-0">
+      <MainScene3D animation={currentAnimation} />
+      </div>
+ 
 
-        <div className="flex flex-col items-center w-full h-[200] z-12">
-          <div className="absolute bottom-0">
-            <SpeedDial
-              menu={CHARACTER_ANIMATION_MENU}
-              variant="radial"
-              direction="bottom"
-              id="menu-dial"
-            />
-          </div>
+      <div className="flex flex-col items-center w-full h-[200] z-12">
+        <div className="absolute bottom-0">
+          <SpeedDial
+            menu={CHARACTER_ANIMATION_MENU}
+            variant="radial"
+            direction="bottom"
+            id="menu-dial"
+          />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
