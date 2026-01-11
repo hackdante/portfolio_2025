@@ -6,10 +6,18 @@ import {
   HiOutlineRocketLaunch,
   HiOutlineShieldCheck,
 } from "react-icons/hi2";
-import { InteractiveCardUI } from "@/shared/components/composite";
+
+import { 
+  BsLightningCharge, 
+  BsGraphUpArrow, 
+  BsCrosshair2, 
+  BsShieldCheck 
+} from "react-icons/bs";
+
 import { CardTextUI } from "@/shared/components/base";
 
 import { HomeSeoUI } from "./interface";
+import { BusinessGridCardUI } from "@/shared/components/composite";
 
 export const HOME_FEATURES: readonly CardTextUI[] = [
   {
@@ -34,29 +42,36 @@ export const HOME_FEATURES: readonly CardTextUI[] = [
 
 export const HOME_SEO_DATA: HomeSeoUI = {
   hero: {
-    title: "ACTIVOS DIGITALES DE ALTO RENDIMIENTO",
-    description:
-      "Transformamos procesos corporativos complejos en interfaces interactivas que aceleran decisiones críticas y generan ingresos medibles.",
+    title: "ACTIVOS DIGITALES",
+    subtitle: "DE ALTO RENDIMIENTO",
+    header: "INTERACCIÓN DISEÑADA PARA DECIDIR, NO SOLO PARA VISUALIZAR.",
+    description: "Transformamos procesos corporativos complejos en interfaces interactivas que aceleran decisiones críticas y generan ingresos medibles.",
+    icon: BsLightningCharge,
   },
   portfolio: {
-    title: "CATÁLOGO DE SOLUCIONES ESTRATÉGICAS",
-    subtitle: "Interacción diseñada para decidir, no solo para visualizar.",
-    description:
-      "Superamos los dashboards tradicionales. Implementamos herramientas donde el usuario interactúa con la información para cerrar ventas y reducir costos operativos.",
+    title: "CATÁLOGO DE",
+    subtitle: "SOLUCIONES RENTABLES",
+    header: "SOLUCIONES DISEÑADAS PARA EL CIERRE COMERCIAL.",
+    description: "Superamos los dashboards pasivos. Implementamos herramientas donde el usuario interactúa con la información para cerrar ventas y mitigar riesgos operativos.",
+    icon: BsGraphUpArrow 
   },
   stack: {
-    title: "KENSAI ONBOARDING: EFICIENCIA OPERATIVA",
-    description:
-      "Plataformas gamificadas que reducen hasta un 50% el tiempo de entrenamiento y optimizan la retención de conocimiento desde el primer día.",
+    title: "EFICIENCIA OPERATIVA",
+    subtitle: "KENSAI ONBOARDING",
+    header: "REDUZCA COSTOS DE FORMACIÓN DESDE EL PRIMER DÍA.",
+    description: "Plataformas interactivas que reducen hasta un 50% el tiempo de entrenamiento, mejorando la retención técnica y eliminando errores operativos costosos.",
+    icon: BsCrosshair2 
   },
   authority: {
-    title: "INGENIERÍA SIN FRICCIÓN",
-    description:
-      "Tecnología Web Spatial de carga instantánea. Sin instalaciones, sin dependencias. Solo activos digitales escalables y rentables.",
+    title: "INGENIERÍA",
+    subtitle: "CERO FRICCIÓN TÉCNICA",
+    header: "TECNOLOGÍA WEB SPATIAL DE CARGA INSTANTÁNEA.",
+    description: "Sin instalaciones ni dependencias. Desarrollamos activos digitales de alto rendimiento optimizados para carga móvil y estabilidad comercial inmediata.",
+    icon: BsShieldCheck
   },
 };
 
-export const BUSINESS_SOLUTIONS_CARD: InteractiveCardUI[] = [
+export const BUSINESS_SOLUTIONS_CARD: BusinessGridCardUI[] = [
   {
     id: "config",
     icon: HiOutlineCube,

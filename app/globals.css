@@ -1,42 +1,128 @@
 @import "tailwindcss";
 
+/* ======================================================
+   ROOT — LIGHT THEME
+   Design goals:
+   - Cold, tech-oriented palette
+   - Strong primary, controlled accent
+   - Explicit semantic and surface tokens
+   ====================================================== */
 :root {
-  --color-primary-40: #1b6ef3;
-  --color-primary-60: #3c8bf5;
-  --color-white-100: #ffffff;
-  --color-neutral-10: #121212;
-  --color-neutral-40: #757575;
+  /* =========================
+     PRIMARY SCALE
+     Used for brand, CTAs, focus, highlights
+     ========================= */
+  --color-primary-20: #E8EDFF;   /* soft backgrounds, subtle highlights */
+  --color-primary-30: #BFCBFF;   /* hover backgrounds, low emphasis */
+  --color-primary-40: #2D5BFF;   /* main brand color (existing) */
+  --color-primary-50: #1F4BFF;   /* pressed / active states */
+  --color-primary-60: #5C82FF;   /* secondary emphasis (existing) */
 
+  /* =========================
+     NEUTRAL SCALE
+     Used for text, borders, UI structure
+     ========================= */
+  --color-white-100: #ffffff;
+  --color-neutral-10: #080808;   /* primary text */
+  --color-neutral-20: #1A1A1A;
+  --color-neutral-30: #3A3A3A;
+  --color-neutral-40: #6B6B6B;   /* secondary text (contrast-safe) */
+  --color-neutral-50: #9E9E9E;
+  --color-neutral-70: #D1D1D1;
+  --color-neutral-87: rgba(8, 8, 8, 0.87);
+  --color-neutral-95: #F5F5F7;
+
+  /* =========================
+     SEMANTIC COLORS
+     Status-driven, not decorative
+     ========================= */
   --color-semantic-success: #2e7d32;
   --color-semantic-info: #0288d1;
   --color-semantic-warning: #ed6c02;
   --color-semantic-error: #d32f2f;
 
-  --color-ui-background: #ffffff;
-  --color-ui-foreground: #121212;
+  /* =========================
+     UI CORE TOKENS
+     Never use raw colors directly in components
+     ========================= */
+  --color-ui-background: #F5F5F7;
+  --color-ui-foreground: var(--color-neutral-10);
   --color-ui-primary: var(--color-primary-40);
-  --color-ui-primary-hover: #1558c7;
+  --color-ui-primary-hover: #1A45E5;
   --color-ui-border: #e0e0e0;
 
+  /* =========================
+     SURFACES
+     Cards, modals, layers, overlays
+     ========================= */
+  --color-ui-surface-100: #ffffff;
+  --color-ui-surface-95: #F5F5F7;
+  --color-ui-surface-87: rgba(8, 8, 8, 0.87);
+  --color-ui-surface-60: rgba(8, 8, 8, 0.60);
+  --color-ui-surface-38: rgba(8, 8, 8, 0.38);
+  --color-ui-surface-12: rgba(8, 8, 8, 0.12);
+
+  /* =========================
+     ACCENT
+     High-contrast, limited usage only
+     ========================= */
+  --color-ui-accent: #CCFF00;        /* strong highlight / CTA */
+  --color-ui-accent-hover: #B8E600;
+  --color-ui-accent-soft: #E6F2A6;   /* badges, subtle emphasis */
+
+  /* =========================
+     MISC
+     ========================= */
   --hero-gradient-start: #f8f9fa;
   --hero-gradient-end: #e2e8f0;
-
-  --radius-button: 9999px; 
+  --radius-button: 9999px;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ======================================================
+   DARK THEME
+   Design goals:
+   - Cyber / neon feel without eye fatigue
+   - High contrast text
+   - Soft surfaces, not pure black everywhere
+   ====================================================== */
 [data-theme="dark"] {
-  --color-ui-background: #190000;
+  /* Core UI */
+  --color-ui-background: #080808;
   --color-ui-foreground: #ffffff;
-  --color-ui-primary: var(--color-primary-60);
-  --color-ui-primary-hover: #5a9fff;
-  --color-ui-border: #333333;
-  --hero-gradient-start: #121212;
-  --hero-gradient-end: #000000;
+  --color-ui-border: #1A1A1A;
+
+  /* Primary — neon, but controlled */
+  --color-primary-20: rgba(0, 240, 255, 0.12);
+  --color-primary-40: #00F0FF;
+  --color-primary-60: #66F6FF;
+
+  --color-ui-primary: var(--color-primary-40);
+  --color-ui-primary-hover: #00D1E0;
+
+  /* Surfaces — white-based opacity for clarity */
+  --color-ui-surface-100: #0F0F0F;
+  --color-ui-surface-95: #141414;
+  --color-ui-surface-87: rgba(255, 255, 255, 0.87);
+  --color-ui-surface-60: rgba(255, 255, 255, 0.60);
+  --color-ui-surface-38: rgba(255, 255, 255, 0.38);
+  --color-ui-surface-12: rgba(255, 255, 255, 0.12);
+
+  /* Accent — reduced aggression */
+  --color-ui-accent-soft: rgba(204, 255, 0, 0.25);
+
+  /* Semantic tuning */
   --color-semantic-success: #4caf50;
+
+  /* Hero */
+  --hero-gradient-start: #080808;
+  --hero-gradient-end: #000000;
 }
 
-
+/* ======================================================
+   TAILWIND INLINE THEME
+   Exposes tokens as Tailwind utilities
+   ====================================================== */
 @theme inline {
   --color-ui-background: var(--color-ui-background);
   --color-ui-foreground: var(--color-ui-foreground);
@@ -50,8 +136,21 @@
   --color-semantic-error: var(--color-semantic-error);
 
   --radius-button: var(--radius-button);
+
+  --color-ui-accent: var(--color-ui-accent);
+  --color-ui-accent-soft: var(--color-ui-accent-soft);
+
+  --color-ui-surface-100: var(--color-ui-surface-100);
+  --color-ui-surface-95: var(--color-ui-surface-95);
+  --color-ui-surface-87: var(--color-ui-surface-87);
+  --color-ui-surface-60: var(--color-ui-surface-60);
+  --color-ui-surface-38: var(--color-ui-surface-38);
+  --color-ui-surface-12: var(--color-ui-surface-12);
 }
 
+/* ======================================================
+   BASE LAYER
+   ====================================================== */
 @layer base {
   *,
   ::after,
@@ -63,15 +162,24 @@
   body {
     background-color: var(--color-ui-background);
     color: var(--color-ui-foreground);
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition:
+      background-color 0.5s var(--ease-standard),
+      color 0.5s var(--ease-standard);
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@utility bg-ui-background {
-  background-color: var(--color-ui-background);
-}
+/* ======================================================
+   UTILITIES
+   Only semantic utilities, no raw colors
+   ====================================================== */
+@utility bg-ui-background { background-color: var(--color-ui-background); }
+@utility text-ui-foreground { color: var(--color-ui-foreground); }
 
-@utility text-ui-foreground {
-  color: var(--color-ui-foreground);
-}
+@utility bg-ui-primary { background-color: var(--color-ui-primary); }
+@utility bg-ui-accent { background-color: var(--color-ui-accent); }
+@utility bg-ui-accent-soft { background-color: var(--color-ui-accent-soft); }
+
+@utility text-ui-surface-87 { color: var(--color-ui-surface-87); }
+@utility text-ui-surface-60 { color: var(--color-ui-surface-60); }
+@utility text-ui-surface-38 { color: var(--color-ui-surface-38); }

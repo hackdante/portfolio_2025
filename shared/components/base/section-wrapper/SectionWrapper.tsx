@@ -1,22 +1,49 @@
+"use client";
+
 import { SectionWrapperUI } from "./interface";
+import { SECTION_BG_STYLES } from "./SectionWrapperToken";
 
 export function SectionWrapper({
   children,
-  fullHeight = false,
+  bgType,
+  bgColor,
   id,
+  withContainer = false,
 }: SectionWrapperUI) {
+  const currentType = bgType || "transparent";
+  const styles = SECTION_BG_STYLES[currentType];
+
+  const inlineStyles =
+    currentType === "default" && bgColor ? { backgroundColor: bgColor } : {};
+
   return (
     <section
       id={id}
+      style={inlineStyles}
       className={`
+        relative 
         w-full 
-        mx-auto 
-        relative
         overflow-hidden
-        ${fullHeight ? "min-h-dvh" : "min-h-fit"}
+        transition-colors 
+        duration-500 
+       ease-(--ease-standard)
+        ${styles.container}
       `}
     >
-      <div className="flex flex-col items-center justify-center">
+      <div
+        className={`
+          relative 
+          z-10 
+          flex 
+          flex-col 
+          items-center
+          w-full
+          ${withContainer 
+            ? "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" 
+            : "px-0"
+          }
+        `}
+      >
         {children}
       </div>
     </section>

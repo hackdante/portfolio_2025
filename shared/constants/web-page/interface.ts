@@ -1,8 +1,11 @@
+import { IconType } from "react-icons";
+
 export interface ContentMainUI {
   readonly title: string;
-  readonly subtitle?: string;
+  readonly subtitle: string;
+  readonly header: string;
   readonly description: string;
-  readonly highlight?: string;
+  readonly icon: IconType;
 }
 
 export interface HomeSeoUI {

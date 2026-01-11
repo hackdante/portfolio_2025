@@ -14,9 +14,7 @@ export interface CardTokensUI {
   };
 }
 
-
-
-export interface InteractiveCardUI {
+export interface BusinessGridCardUI {
   readonly id: "config" | "onboarding" | "data" | "deployment" | "optimization";
   readonly icon: IconType;
   readonly title: string;
@@ -26,3 +24,24 @@ export interface InteractiveCardUI {
   readonly cta: string;
   readonly onAction: () => void;
 }
+
+export interface AnimationConfigUI {
+  readonly duration: number;
+  readonly yOffset: number;
+  readonly boxShadowActive: string;
+  readonly boxShadowIdle: string;
+  readonly borderColorIdle: string;
+  readonly cherry: string;
+}
+
+
+export interface  PathImagesConfigUI {
+ readonly sizeW: number;
+ readonly sizeH: number;
+ readonly duration: number;
+ readonly pathA: string;
+ readonly pathB: string;
+ readonly pathC: string;
+  
+}
+
