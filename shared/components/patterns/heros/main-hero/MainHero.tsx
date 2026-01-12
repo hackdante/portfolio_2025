@@ -1,25 +1,24 @@
-'use client'
-
-import { SpeedDial } from "@/shared/components/composite";
-
-import {
-  FaUserPlus,
-  FaPersonWalking,
-  FaPersonRunning,
-  FaArrowPointer,
-  FaHandFist,
-  FaHandshake,
-  FaStar,
-} from "react-icons/fa6";
-import { IconDefaultUI } from "@/shared/components/base";
+"use client";
 
 import { useState } from "react";
+import { 
+  FaUserPlus, 
+  FaPersonWalking, 
+  FaPersonRunning, 
+  FaArrowPointer, 
+  FaHandFist, 
+  FaHandshake, 
+  FaStar 
+} from "react-icons/fa6";
+
+import { SpeedDial } from "@/shared/components/composite";
+import { IconDefaultUI } from "@/shared/components/base";
 import { CharacterAnimationType } from "@/shared/types";
 import { MainScene3D } from "@/shared/components/patterns";
 
+
 export function MainHero() {
-  const [currentAnimation, setCurrentAnimation] =
-    useState<CharacterAnimationType>("000_Awake");
+  const [currentAnimation, setCurrentAnimation] = useState<CharacterAnimationType>("000_Awake");
 
   const CHARACTER_ANIMATION_MENU: Omit<IconDefaultUI, "size">[] = [
     {
@@ -74,19 +73,18 @@ export function MainHero() {
   ];
 
   return (
-  <section className="relative w-full h-[300px] overflow-hidden bg-transparent">
-<div className="absolute inset-0 z-0">
-      <MainScene3D animation={currentAnimation} />
+    <section className="relative w-full h-[300px] overflow-hidden bg-transparent">
+      <div className="absolute inset-0 z-0">
+        <MainScene3D animation={currentAnimation} />
       </div>
- 
 
-      <div className="flex flex-col items-center w-full h-[200] z-12">
-        <div className="absolute bottom-0">
+      <div className="flex flex-col items-center w-full h-full z-10 pointer-events-none">
+        <div className="absolute bottom-4 pointer-events-auto">
           <SpeedDial
             menu={CHARACTER_ANIMATION_MENU}
             variant="radial"
             direction="bottom"
-            id="menu-dial"
+            id="menu-dial-hero"
           />
         </div>
       </div>

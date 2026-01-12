@@ -28,6 +28,7 @@ export function BusinessGridCard() {
 
   const { contextSafe } = useGSAP({ scope: sliderRef });
 
+
   const goToSlide = contextSafe((index: number) => {
     setActiveTab(index);
     const cardWidth = 300;
@@ -42,43 +43,39 @@ export function BusinessGridCard() {
     });
   });
 
-  const hasImages = Boolean(
-    PATH_IMAGES_CONFIG.pathA && PATH_IMAGES_CONFIG.pathB
-  );
-
   return (
-    <section className="w-full max-w-6xl mx-auto overflow-hidden">
-      <div className="grid grid-cols-12 gap-12 items-center">
-        <div className="col-span-12 lg:col-span-4 flex justify-center min-h-[500px]">
-          {hasImages ? (
-            <ImageTransition
-              width={PATH_IMAGES_CONFIG.sizeW}
-              height={PATH_IMAGES_CONFIG.sizeH}
-              activate={activeGif}
-              time={PATH_IMAGES_CONFIG.duration}
-              firstImgPath={PATH_IMAGES_CONFIG.pathA}
-              secondImgPath={PATH_IMAGES_CONFIG.pathB}
-              threeImgPath={PATH_IMAGES_CONFIG.pathC}
-              reset={resetGif}
-            />
-          ) : (
-            <div className="w-full h-full border border-dashed border-white/10 rounded-3xl flex items-center justify-center text-white/20 italic">
-              Esperando nuevos renders...
-            </div>
-          )}
+    <section className="w-full max-w-6xl mx-auto overflow-hidden px-4">
+      <div className="grid grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="col-span-12 lg:col-span-4 flex justify-center min-h-[550px] relative">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(60,139,245,0.05),transparent_70%)] pointer-events-none" />
+
+          <ImageTransition
+            width={PATH_IMAGES_CONFIG.sizeW}
+            height={PATH_IMAGES_CONFIG.sizeH}
+            activate={activeGif}
+            time={PATH_IMAGES_CONFIG.duration}
+            firstImgPath={PATH_IMAGES_CONFIG.pathA}
+            secondImgPath={PATH_IMAGES_CONFIG.pathB}
+            threeImgPath={PATH_IMAGES_CONFIG.pathC}
+            reset={resetGif}
+          />
         </div>
 
         <div className="col-span-12 lg:col-span-8">
-          <div className="flex flex-wrap gap-3 mb-7">
+          <div className="flex flex-wrap gap-3 mb-12 justify-center lg:justify-start">
             {BUSINESS_SOLUTIONS_CARD.map((service, index) => (
               <button
                 key={`tab-${service.id}`}
                 onMouseEnter={() => goToSlide(index)}
-                className={`px-5 py-2 rounded-lg border text-[10px] font-black tracking-widest uppercase transition-all duration-500 ${
-                  activeTab === index
-                    ? "bg-[#3C8BF5] border-[#3C8BF5] text-white shadow-[0_0_20px_rgba(60,139,245,0.4)]"
-                    : "border-white/10 bg-white/5 text-white/40 hover:border-white/20"
-                }`}
+                className={`
+        px-6 py-2.5 rounded-xl border text-[11px] font-black tracking-[0.15em] uppercase 
+        transition-all duration-500 transform
+        ${
+          activeTab === index
+            ? "bg-[#3C8BF5] border-[#3C8BF5] text-white shadow-[0_0_25px_rgba(60,139,245,0.5)] scale-105"
+            : "border-white/10 bg-[#121212] text-white/40 hover:border-white/30 hover:text-white"
+        }
+      `}
               >
                 {service.title}
               </button>

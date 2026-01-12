@@ -1,2 +1,2 @@
 export * from "./ThemeProviderSwitch"
-export * from "./interfaces"
+export * from "./interface"

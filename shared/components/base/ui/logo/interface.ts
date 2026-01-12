@@ -6,3 +6,10 @@ export interface MainLogoUI {
   readonly altText?: string;
   readonly opacity?: number;
 }
+
+export interface LogoWidthUI {
+ readonly sm: number;
+ readonly md: number;
+ readonly lg: number;
+ readonly xl: number;
+}

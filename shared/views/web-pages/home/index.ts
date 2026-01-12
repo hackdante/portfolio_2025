@@ -1,2 +1,2 @@
-export * from "./WebHomePage"
+export * from "./HomeView"
 export * from "./interface"

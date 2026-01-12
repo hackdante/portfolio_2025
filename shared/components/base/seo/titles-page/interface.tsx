@@ -7,6 +7,7 @@ export interface TitlesPageUI {
   readonly headText: string;
   readonly isDark?: boolean;
   readonly icon?: IconType;
+  readonly className?: string;
 }
 
 

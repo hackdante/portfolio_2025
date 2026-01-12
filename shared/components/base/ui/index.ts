@@ -1,3 +1,5 @@
 export * from "./theme"
 export * from "./logo"
 export * from "./icon-animate"
+export * from "./grid"
+export * from "./footer"

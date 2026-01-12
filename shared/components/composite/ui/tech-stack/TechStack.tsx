@@ -1,19 +1,53 @@
 "use client";
 
-import { FC, useRef, useMemo } from "react";
+import { FC, useRef, useMemo, useState, useEffect, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import { TechStackUI } from "./interface";
 import { CORE_STACK } from "@/shared/constants";
 import { useIsMounted } from "@/shared/hooks";
 import gsap from "gsap";
 
+type KensaiTheme = "light" | "dark";
+
 export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
   const isMounted = useIsMounted();
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
-
   const xPercent = useRef(0);
   const isPaused = useRef(false);
+
+  const isValidTheme = (value: string | null): value is KensaiTheme => {
+    return value === "light" || value === "dark";
+  };
+
+  // Solución: Lazy initialization para evitar el set-state en el efecto inicial
+  const [currentTheme, setCurrentTheme] = useState<KensaiTheme>(() => {
+    if (typeof document !== "undefined") {
+      const themeAttr = document.documentElement.getAttribute("data-theme");
+      return isValidTheme(themeAttr) ? themeAttr : "dark";
+    }
+    return "dark";
+  });
+
+  const updateTheme = useCallback(() => {
+    const themeAttr = document.documentElement.getAttribute("data-theme");
+    if (isValidTheme(themeAttr)) {
+      setCurrentTheme(themeAttr);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    // Solo nos suscribimos a cambios futuros
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    
+    return () => observer.disconnect();
+  }, [isMounted, updateTheme]);
 
   const displayItems = useMemo(
     () =>
@@ -87,7 +121,6 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
   const onLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
     target.removeAttribute("data-hovering");
-
     isPaused.current = false;
 
     const items = Array.from(sliderRef.current?.children || []);
@@ -104,9 +137,9 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
   return (
     <div
       ref={containerRef}
-      className="w-full relative overflow-hidden select-none"
+      className="w-full relative overflow-hidden select-none transition-colors duration-500"
     >
-      <div className="py-16 border-y border-ui-text-primary/5">
+      <div className="py-16 border-y border-ui-border-10">
         <div ref={sliderRef} className="flex gap-20 whitespace-nowrap w-max">
           {displayItems.map((tech, i) => {
             const Icon = tech.icon;
@@ -115,10 +148,19 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
                 key={`${tech.name}-${i}`}
                 onMouseEnter={onEnter}
                 onMouseLeave={onLeave}
-                className="flex flex-col items-center gap-4 cursor-pointer px-4"
+                className="flex flex-col items-center gap-6 cursor-pointer px-4 group"
               >
-                <Icon size={size} className="text-ui-text-primary" />
-                <span className="text-[10px] font-mono tracking-widest text-ui-text-primary/40 uppercase">
+                <Icon 
+                  size={size} 
+                  className={`transition-colors duration-500 ${
+                    currentTheme === "dark" 
+                      ? "text-white/80 group-hover:text-ui-accent" 
+                      : "text-black/80 group-hover:text-ui-accent"
+                  }`} 
+                />
+                <span className={`text-[10px] font-mono tracking-[0.2em] uppercase transition-colors duration-500 ${
+                  currentTheme === "dark" ? "text-white/30" : "text-black/30"
+                }`}>
                   {tech.name}
                 </span>
               </div>

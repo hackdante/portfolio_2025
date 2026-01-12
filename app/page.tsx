@@ -1,21 +1,13 @@
-import { MainLogo, SectionWrapper } from "@/shared/components/base";
-import { ThemeSwitcher } from "@/shared/components/composite";
-import LogoSVG from "@/public/images/KENSAI_LOGO.svg";
+import { Metadata } from "next";
+import { HomeView } from "@/shared/views";
+import { HOME_SEO_DATA } from "@/shared/constants";
 
-export default function HomePageWeb() {
-  return (
-    <>
-      <SectionWrapper id="logo" bgType="dark">
-        <div className="mt-8">
-          <MainLogo size="lg" path={LogoSVG} opacity={0.75} />
-        </div>
-      </SectionWrapper>
+export const metadata: Metadata = {
+  title: "Kensai Experience | Engineering & Spatial Computing",
+  description:
+    "High-end digital experiences built with Next.js 15 and React 19.",
+};
 
-      <SectionWrapper id="theme-switch" bgType="light">
-        <div className="mt-4 mb-2">
-          <ThemeSwitcher />
-        </div>
-      </SectionWrapper>
-    </>
-  );
+export default function HomePage() {
+  return <HomeView seoData={HOME_SEO_DATA} />;
 }

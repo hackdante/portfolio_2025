@@ -1,44 +1,96 @@
 "use client";
 
-import { useSyncExternalStore, useMemo } from "react";
-import { useTheme } from "next-themes";
-import { HiSun, HiMoon } from "react-icons/hi";
+import { useSyncExternalStore, useState, useEffect } from "react";
+import { FaSun, FaMoon } from "react-icons/fa6";
+import { ThemeSwitcherUI } from "./interface";
 
-const emptySubscribe = () => () => {};
+type KensaiTheme = "light" | "dark";
 
-export const ThemeSwitcher = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+const isValidTheme = (value: string | null): value is KensaiTheme => {
+  return value === "light" || value === "dark";
+};
 
+const subscribe = (callback: () => void) => {
+  const observer = new MutationObserver(callback);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+};
+
+export const ThemeSwitcher = ({ size = "md" }: ThemeSwitcherUI) => {
   const isClient = useSyncExternalStore(
-    emptySubscribe,
+    subscribe,
     () => true,
     () => false
   );
 
-  const currentTheme = useMemo(() => {
-    return theme === "system" ? resolvedTheme : theme;
-  }, [theme, resolvedTheme]);
+  // Solución: Lazy Initialization para evitar setState en el efecto de montaje
+  const [currentTheme, setCurrentTheme] = useState<KensaiTheme>(() => {
+    if (typeof document !== "undefined") {
+      const themeAttr = document.documentElement.getAttribute("data-theme");
+      return isValidTheme(themeAttr) ? themeAttr : "dark";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleDOMChange = () => {
+      const themeAttr = document.documentElement.getAttribute("data-theme");
+      if (isValidTheme(themeAttr)) {
+        setCurrentTheme(themeAttr);
+      }
+    };
+
+    const observer = new MutationObserver(handleDOMChange);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ["data-theme"] 
+    });
+
+    return () => observer.disconnect();
+  }, [isClient]);
 
   const toggleTheme = () => {
-    setTheme(currentTheme === "light" ? "dark" : "light");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    
+    document.documentElement.setAttribute("data-theme", newTheme);
+    document.cookie = `kensai-theme=${newTheme}; path=/; max-age=31536000; SameSite=Lax`;
+    setCurrentTheme(newTheme);
+    window.dispatchEvent(new Event("kensai-theme-change"));
+  };
+
+  const sizeClasses = {
+    sm: "w-8 h-8",
+    md: "w-10 h-10",
+    lg: "w-12 h-12",
   };
 
   if (!isClient) {
     return (
-      <div className="w-10 h-10 rounded-full animate-pulse bg-ui-foreground/5" />
+      <div className={`${sizeClasses[size]} rounded-full animate-pulse bg-ui-foreground/5`} />
     );
   }
+
+  const isLight = currentTheme === "light";
 
   return (
     <button
       onClick={toggleTheme}
-      aria-label="Toggle Theme"
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-ui-foreground/5 hover:bg-ui-foreground/10 border border-ui-foreground/10 transition-all duration-300 group cursor-pointer"
+      aria-label={`Cambiar a modo ${isLight ? "oscuro" : "claro"}`}
+      className={`
+        flex items-center justify-center rounded-full transition-all duration-500 group cursor-pointer
+        bg-ui-surface-8 border border-ui-border-10 hover:border-ui-accent/40
+        ${sizeClasses[size]}
+      `}
     >
-      {currentTheme === "light" ? (
-        <HiMoon className="w-5 h-5 text-ui-text-primary transition-transform duration-500 group-hover:-rotate-12" />
+      {isLight ? (
+        <FaMoon className="w-5 h-5 text-ui-foreground-muted transition-transform duration-500 group-hover:-rotate-12 group-hover:text-ui-accent" />
       ) : (
-        <HiSun className="w-5 h-5 text-ui-text-primary transition-transform duration-500 group-hover:rotate-45" />
+        <FaSun className="w-5 h-5 text-ui-foreground-muted transition-transform duration-500 group-hover:rotate-45 group-hover:text-ui-accent" />
       )}
     </button>
   );
