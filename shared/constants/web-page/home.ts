@@ -7,11 +7,12 @@ import {
   HiOutlineShieldCheck,
 } from "react-icons/hi2";
 
-import { 
-  BsLightningCharge, 
-  BsGraphUpArrow, 
-  BsCrosshair2, 
-  BsShieldCheck 
+import {
+  BsLightningCharge,
+  BsGraphUpArrow,
+  BsCrosshair2,
+  BsShieldCheck,
+  BsJoystick,
 } from "react-icons/bs";
 
 import { CardTextUI } from "@/shared/components/base";
@@ -42,32 +43,44 @@ export const HOME_FEATURES: readonly CardTextUI[] = [
 
 export const HOME_SEO_DATA: HomeSeoUI = {
   hero: {
-    title: "ACTIVOS DIGITALES",
-    subtitle: "DE ALTO RENDIMIENTO",
-    header: "INTERACCIÓN DISEÑADA PARA DECIDIR, NO SOLO PARA VISUALIZAR.",
-    description: "Transformamos procesos corporativos complejos en interfaces interactivas que aceleran decisiones críticas y generan ingresos medibles.",
+    title: "RENTABILIDAD INTERACTIVA",
+    subtitle: "PARA OPERACIONES CRÍTICAS",
+    header: "DEJE DE MOSTRAR DATOS. EMPIECE A GENERAR DECISIONES.",
+    description:
+      "Convertimos la fricción operativa y comercial en activos digitales que aceleran el cierre de ventas y eliminan cuellos de botella mediante tecnología Spatial Web de alto impacto.",
     icon: BsLightningCharge,
   },
   portfolio: {
-    title: "CATÁLOGO DE",
-    subtitle: "SOLUCIONES RENTABLES",
-    header: "SOLUCIONES DISEÑADAS PARA EL CIERRE COMERCIAL.",
-    description: "Superamos los dashboards pasivos. Implementamos herramientas donde el usuario interactúa con la información para cerrar ventas y mitigar riesgos operativos.",
-    icon: BsGraphUpArrow 
+    title: "SOLUCIONES",
+    subtitle: "CON ROI INMEDIATO",
+    header: "HERRAMIENTAS DISEÑADAS PARA ACORTAR CICLOS DE VENTA.",
+    description:
+      "Sustituimos presentaciones estáticas por configuradores y visualizadores 3D de alta conversión. Reducimos la duda del cliente final para asegurar el cierre del negocio hoy mismo.",
+    icon: BsGraphUpArrow,
+  },
+  gamification: {
+    title: "SIMULACIÓN",
+    subtitle: "DE ALTO IMPACTO",
+    header: "CAPACITACIÓN DONDE EL ERROR NO CUESTA DINERO.",
+    description:
+      "No es juego, es competencia técnica verificable. Simulamos entornos de riesgo y venta para que su equipo demuestre capacidad antes de tocar un activo real o un cliente potencial.",
+    icon: BsJoystick,
   },
   stack: {
-    title: "EFICIENCIA OPERATIVA",
+    title: "AHORRO OPERATIVO",
     subtitle: "KENSAI ONBOARDING",
-    header: "REDUZCA COSTOS DE FORMACIÓN DESDE EL PRIMER DÍA.",
-    description: "Plataformas interactivas que reducen hasta un 50% el tiempo de entrenamiento, mejorando la retención técnica y eliminando errores operativos costosos.",
-    icon: BsCrosshair2 
+    header: "REDUZCA EL TIEMPO DE ENTRENAMIENTO EN UN 50%.",
+    description:
+      "Elimine costos de instructores y detenciones de planta. Nuestras plataformas garantizan retención de conocimiento inmediata y eliminan el error humano desde el día uno.",
+    icon: BsCrosshair2,
   },
   authority: {
-    title: "INGENIERÍA",
-    subtitle: "CERO FRICCIÓN TÉCNICA",
-    header: "TECNOLOGÍA WEB SPATIAL DE CARGA INSTANTÁNEA.",
-    description: "Sin instalaciones ni dependencias. Desarrollamos activos digitales de alto rendimiento optimizados para carga móvil y estabilidad comercial inmediata.",
-    icon: BsShieldCheck
+    title: "DESPLIEGUE",
+    subtitle: "SIN BARRERAS TÉCNICAS",
+    header: "TECNOLOGÍA WEB: SIN INSTALACIONES, SIN EXCUSAS.",
+    description:
+      "Arquitectura de carga instantánea que elimina la fricción de IT. Compatible con cualquier dispositivo móvil, garantizando que su fuerza de ventas tenga la herramienta disponible en cualquier lugar.",
+    icon: BsShieldCheck,
   },
 };
 
@@ -76,60 +89,100 @@ export const BUSINESS_SOLUTIONS_CARD: BusinessGridCardUI[] = [
     id: "config",
     icon: HiOutlineCube,
     title: "KENSAI CONFIG",
-    tagline: "Conversión Comercial 3D",
+    tagline: "Cuando las ventas se estancan por dudas del comprador",
     description:
-      "Visualización y configuración de productos en tiempo real para acelerar cierres de venta en e-commerce y real estate.",
+      "Si el cliente no logra visualizar el producto final, el ciclo de venta se alarga, la preventa se enfría y las oportunidades se pierden.",
     benefit:
-      "Reduce la incertidumbre del comprador y aumenta la tasa de cierre en preventa.",
-    cta: "Optimizar Ventas",
+      "Elimina la incertidumbre del comprador y acelera decisiones de compra en procesos de alto valor.",
+    cta: "Resolver Bloqueo Comercial",
     onAction: () => console.warn("Calculating ROI"),
   },
+
   {
     id: "onboarding",
     icon: HiOutlineAcademicCap,
     title: "KENSAI ONBOARDING",
-    tagline: "Eficiencia en RRHH",
+    tagline: "Cuando capacitar cuesta demasiado tiempo y dinero",
     description:
-      "Plataformas de capacitación gamificada que reducen hasta un 50% el tiempo de entrenamiento.",
+      "Procesos de formación largos generan errores operativos, baja retención de conocimiento y costos ocultos en RRHH.",
     benefit:
-      "Corta drásticamente los costos de formación y mejora la retención operativa.",
-    cta: "Reducir Costos",
+      "Reduce hasta un 50% el tiempo de entrenamiento y corta el desperdicio operativo desde el día uno.",
+    cta: "Eliminar Ineficiencias",
     onAction: () => console.warn("Calculating ROI"),
   },
+
   {
     id: "data",
     icon: HiOutlineChartBar,
     title: "KENSAI DATA",
-    tagline: "Toma de Decisiones",
+    tagline: "Cuando decidir tarde sale caro",
     description:
-      "Ingeniería de visualización para identificar cuellos de botella y riesgos operativos de forma inmediata.",
+      "Dashboards pasivos no revelan dependencias, cuellos de botella ni riesgos críticos a tiempo.",
     benefit:
-      "Convierte flujos complejos en representaciones espaciales para decisiones ejecutivas rápidas.",
-    cta: "Acelerar Decisiones",
+      "Permite detectar riesgos operativos y tomar decisiones ejecutivas antes de que impacten resultados.",
+    cta: "Reducir Riesgo",
     onAction: () => console.warn("Calculating ROI"),
   },
+
   {
     id: "deployment",
     icon: HiOutlineRocketLaunch,
     title: "KENSAI LAUNCH",
-    tagline: "Go-to-Market Acelerado",
+    tagline: "Cuando lanzar lento quema capital",
     description:
-      "Despliegue de MVPs interactivos en ciclos cortos con métricas claras de impacto económico.",
+      "Desarrollos largos sin validación consumen presupuesto antes de demostrar retorno real.",
     benefit:
-      "Elimina el desperdicio de capital en desarrollos largos sin validación de mercado.",
-    cta: "Lanzar Activo",
+      "Permite validar activos interactivos en ciclos cortos con métricas claras de impacto económico.",
+    cta: "Validar sin Desperdicio",
     onAction: () => console.warn("Calculating ROI"),
   },
+
   {
     id: "optimization",
     icon: HiOutlineShieldCheck,
     title: "KENSAI CORE",
-    tagline: "Rendimiento de Élite",
+    tagline: "Cuando la tecnología no se adopta",
     description:
-      "Optimización de activos digitales existentes para garantizar velocidad, SEO y accesibilidad multiplataforma.",
+      "Activos digitales lentos o inaccesibles generan abandono, fricción y pérdida directa de inversión.",
     benefit:
-      "Garantiza adopción real mediante experiencias sin fricción técnica ni instalaciones.",
-    cta: "Asegurar Rendimiento",
+      "Garantiza adopción real mediante rendimiento, SEO y accesibilidad sin fricción técnica ni instalaciones.",
+    cta: "Asegurar Adopción",
     onAction: () => console.warn("Calculating ROI"),
   },
 ];
+
+import { BsRocketTakeoff, BsCpu, BsBarChartSteps } from "react-icons/bs";
+
+export const HOME_INITIAL_CARDS: CardTextUI[] = [
+  {
+    title: "KENSAI CONFIG",
+    subtitle: "ACELERA EL CIERRE COMERCIAL",
+    description:
+      "Sustituimos renders estáticos por configuradores 3D de alta conversión. El cliente visualiza, decide y compra sin dudas técnicas.",
+    label: "Acelerar Ventas",
+    icon: BsRocketTakeoff,
+    blurIntensity: "md",
+    callToAction: () => window.location.href = "#portfolio-title", 
+  },
+  {
+    title: "KENSAI ONBOARDING",
+    subtitle: "REDUCE COSTOS OPERATIVOS",
+    description:
+      "Simuladores web que reducen el tiempo de entrenamiento en un 50%. Capacita a tu equipo sin detener la operación ni arriesgar activos.",
+    label: "Reducir Costos",
+    icon: BsCpu,
+    blurIntensity: "md",
+    callToAction: () => window.location.href = "#onboarding",
+  },
+  {
+    title: "KENSAI DATA",
+    subtitle: "MITIGA RIESGOS CRÍTICOS",
+    description:
+      "Visualización espacial de datos para detectar cuellos de botella antes de que afecten el EBITDA. Información para decidir, no solo para ver.",
+    label: "Ver Diagnóstico",
+    icon: BsBarChartSteps,
+    blurIntensity: "md",
+    callToAction: () => window.location.href = "#data",
+  },
+];
+

@@ -23,7 +23,7 @@ export default async function RootLayout({
 
   return (
     <html lang="es" data-theme={savedTheme} className="scroll-smooth">
-      <body className="antialiased bg-ui-background text-ui-foreground transition-colors duration-500">
+      <body className="antialiased bg-background text-foreground transition-colors duration-500">
         <EngineeringGrid />
         <main className="relative min-h-screen flex flex-col">{children}</main>
         <ThemeSyncLayer />

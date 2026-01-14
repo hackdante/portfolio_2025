@@ -1,34 +1,60 @@
 "use client";
 
-import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
 import { CardTextUI } from "./interface";
+import { 
+  CARD_CONTAINER_CLASSES, 
+  CARD_GLOW_CLASSES, 
+  CARD_BLUR_MAP, 
+  CARD_ICON_CONTAINER,
+  CARD_BUTTON_CLASSES 
+} from "./CardTextToken";
 
 export function CardText({
-  title = "Sin definir",
-  description = "Sin definir",
-  icon: Icon = HiOutlineQuestionMarkCircle,
+  title = "Premium Design",
+  subtitle = "Acabado de Cristal",
+  description = "Este contenedor utiliza un desenfoque de fondo y una sombra de gran radio para un aspecto moderno y orgánico.",
+  label = "Explorar",
+  icon: Icon,
+  blurIntensity = "md",
+  callToAction,
 }: CardTextUI) {
+  const blurClass = CARD_BLUR_MAP[blurIntensity];
+
   return (
-    <div className="group relative flex flex-col w-full p-6 rounded-2xl transition-all duration-500 hover:bg-ui-text-primary/[0.02] border border-transparent hover:border-ui-text-primary/5">
-      <div className="absolute inset-0 bg-linear-to-br from-ui-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl -z-10" />
-
-      <div className="flex justify-center md:justify-start mb-4">
-        <div className="relative p-3 rounded-xl bg-ui-text-primary/[0.03] group-hover:bg-ui-primary/10 transition-colors duration-500">
-          <Icon className="text-3xl text-ui-primary shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
+    <article className={`${CARD_CONTAINER_CLASSES} ${blurClass}`}>
+      <div className={CARD_GLOW_CLASSES} aria-hidden="true" />
+      
+      <div className="relative p-6 flex flex-col h-full">
+        <div className={CARD_ICON_CONTAINER}>
+          {Icon ? (
+            <Icon className="w-6 h-6" aria-hidden="true" />
+          ) : (
+            <span className="text-xl font-bold" aria-hidden="true">?</span>
+          )}
         </div>
-      </div>
 
-      <div className="space-y-2 text-center md:text-left">
-        <h3 className="text-sm md:text-xl text-ui-text-secondary leading-none font-semibold   transition-colors duration-300 group-hover:text-ui-text-primary">
-          {title}
-        </h3>
+        <header className="flex flex-col gap-1">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-ui-primary">
+            {title}
+          </span>
+          <h3 className="text-xl font-semibold text-foreground leading-tight">
+            {subtitle}
+          </h3>
+        </header>
 
-        <span className="text-lg md:text-md text-ui-text-primary font-light tracking-tight  leading-relaxed block">
+        <p className="mt-3 text-sm leading-relaxed text-ui-surface-60 grow">
           {description}
-        </span>
-      </div>
+        </p>
 
-      <div className="mt-6 w-0 group-hover:w-full h-1px bg-linear-to-r from-ui-primary to-transparent transition-all duration-700 ease-in-out" />
-    </div>
+        <footer className="mt-6">
+          <button 
+            onClick={callToAction}
+            className={CARD_BUTTON_CLASSES}
+          >
+            {label}
+          </button>
+        </footer>
+      </div>
+    </article>
   );
 }

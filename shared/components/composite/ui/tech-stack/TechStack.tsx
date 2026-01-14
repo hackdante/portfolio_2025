@@ -20,7 +20,6 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
     return value === "light" || value === "dark";
   };
 
-  // Solución: Lazy initialization para evitar el set-state en el efecto inicial
   const [currentTheme, setCurrentTheme] = useState<KensaiTheme>(() => {
     if (typeof document !== "undefined") {
       const themeAttr = document.documentElement.getAttribute("data-theme");
@@ -38,8 +37,6 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
 
   useEffect(() => {
     if (!isMounted) return;
-
-    // Solo nos suscribimos a cambios futuros
     const observer = new MutationObserver(updateTheme);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -137,7 +134,7 @@ export const TechStack: FC<TechStackUI> = ({ size = 40, columns }) => {
   return (
     <div
       ref={containerRef}
-      className="w-full relative overflow-hidden select-none transition-colors duration-500"
+      className="w-full relative overflow-hidden select-none transition-colors duration-500 py-8"
     >
       <div className="py-16 border-y border-ui-border-10">
         <div ref={sliderRef} className="flex gap-20 whitespace-nowrap w-max">

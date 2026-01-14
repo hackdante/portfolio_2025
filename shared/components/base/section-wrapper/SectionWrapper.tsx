@@ -5,16 +5,18 @@ import { SECTION_BG_STYLES } from "./SectionWrapperToken";
 
 export function SectionWrapper({
   children,
-  bgType,
-  bgColor,
+  bgType = "transparent",
+  bgColor, 
   id,
   withContainer = false,
+  containerRight = true,
 }: SectionWrapperUI) {
-  const currentType = bgType || "transparent";
-  const styles = SECTION_BG_STYLES[currentType];
-
-  const inlineStyles =
-    currentType === "default" && bgColor ? { backgroundColor: bgColor } : {};
+  
+  const styles = SECTION_BG_STYLES[bgType] || SECTION_BG_STYLES.transparent;
+  const isTailwindClass = bgColor?.startsWith("bg-");
+  const inlineStyles = !isTailwindClass && bgType === "default" && bgColor 
+    ? { backgroundColor: bgColor } 
+    : {};
 
   return (
     <section
@@ -26,22 +28,15 @@ export function SectionWrapper({
         overflow-hidden
         transition-colors 
         duration-500 
-       ease-(--ease-standard)
         ${styles.container}
+        ${isTailwindClass ? bgColor : ""} 
       `}
     >
       <div
         className={`
-          relative 
-          z-10 
-          flex 
-          flex-col 
-          items-center
-          w-full
-          ${withContainer 
-            ? "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" 
-            : "px-0"
-          }
+          relative z-10 flex flex-col w-full transition-all duration-500 items-center
+          ${withContainer ? "max-w-6xl px-4 sm:px-6 lg:px-8" : "px-0"}
+          ${containerRight ? "ml-auto md:w-[80%]" : "mx-auto"}
         `}
       >
         {children}

@@ -26,7 +26,6 @@ export const ThemeSwitcher = ({ size = "md" }: ThemeSwitcherUI) => {
     () => false
   );
 
-  // Solución: Lazy Initialization para evitar setState en el efecto de montaje
   const [currentTheme, setCurrentTheme] = useState<KensaiTheme>(() => {
     if (typeof document !== "undefined") {
       const themeAttr = document.documentElement.getAttribute("data-theme");
@@ -46,9 +45,9 @@ export const ThemeSwitcher = ({ size = "md" }: ThemeSwitcherUI) => {
     };
 
     const observer = new MutationObserver(handleDOMChange);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ["data-theme"] 
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
     });
 
     return () => observer.disconnect();
@@ -56,7 +55,7 @@ export const ThemeSwitcher = ({ size = "md" }: ThemeSwitcherUI) => {
 
   const toggleTheme = () => {
     const newTheme = currentTheme === "light" ? "dark" : "light";
-    
+
     document.documentElement.setAttribute("data-theme", newTheme);
     document.cookie = `kensai-theme=${newTheme}; path=/; max-age=31536000; SameSite=Lax`;
     setCurrentTheme(newTheme);
@@ -71,27 +70,50 @@ export const ThemeSwitcher = ({ size = "md" }: ThemeSwitcherUI) => {
 
   if (!isClient) {
     return (
-      <div className={`${sizeClasses[size]} rounded-full animate-pulse bg-ui-foreground/5`} />
+      <div
+        className={`${sizeClasses[size]} rounded-full animate-pulse bg-ui-foreground/5`}
+      />
     );
   }
 
   const isLight = currentTheme === "light";
 
   return (
-    <button
-      onClick={toggleTheme}
-      aria-label={`Cambiar a modo ${isLight ? "oscuro" : "claro"}`}
-      className={`
-        flex items-center justify-center rounded-full transition-all duration-500 group cursor-pointer
-        bg-ui-surface-8 border border-ui-border-10 hover:border-ui-accent/40
-        ${sizeClasses[size]}
-      `}
-    >
-      {isLight ? (
-        <FaMoon className="w-5 h-5 text-ui-foreground-muted transition-transform duration-500 group-hover:-rotate-12 group-hover:text-ui-accent" />
-      ) : (
-        <FaSun className="w-5 h-5 text-ui-foreground-muted transition-transform duration-500 group-hover:rotate-45 group-hover:text-ui-accent" />
-      )}
-    </button>
+    <div className="relative group inline-block">
+      <button
+        onClick={toggleTheme}
+        aria-label={`Cambiar a modo ${isLight ? "oscuro" : "claro"}`}
+        className={`
+      relative flex items-center justify-center transition-all duration-300
+      rounded-button cursor-pointer active:scale-95
+      border-2 border-black-20 dark:border-2 dark:border-white/20
+      shadow-md hover:shadow-xl hover:scale-105
+      dark:shadow-[0_0_15px_rgba(204,255,0,0.1)] 
+      dark:hover:shadow-[0_0_8px_rgba(204,255,0,0.3)]
+      bg-ui-bg
+      ${sizeClasses[size]}
+    `}
+      >
+        {isLight ? (
+          <FaMoon className="text-black/60 transition-transform duration-500 group-hover:-rotate-12 group-hover:text-primary" />
+        ) : (
+          <FaSun className="text-white transition-transform duration-500 group-hover:rotate-45 group-hover:text-accent" />
+        )}
+      </button>
+
+      {/* Tooltip con viñeta */}
+      <span
+        className="
+    absolute left-1/2 -translate-x-1/2 bottom-full mb-4 px-3 py-1.5
+    text-xs font-bold text-white bg-secondary rounded-lg
+    opacity-0 scale-90 pointer-events-none transition-all duration-200
+    group-hover:opacity-100 group-hover:scale-100
+    whitespace-nowrap z-50 shadow-lg
+  "
+      >
+        {isLight ? "Modo Oscuro" : "Modo Claro"}
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-secondary" />
+      </span>
+    </div>
   );
 };

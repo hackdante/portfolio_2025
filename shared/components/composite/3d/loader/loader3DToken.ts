@@ -6,6 +6,6 @@ export const LOADER_3D_TOKEN = {
     fill: "text-ui-primary transition-all duration-500 ease-out", 
   },
   content: "absolute flex flex-col items-center justify-center",
-  percentage: "text-xl font-bold font-mono text-ui-foreground",
-  label: "mt-4 text-[10px] uppercase tracking-[0.3em] text-ui-foreground/50 animate-pulse",
+  percentage: "text-xl font-bold font-mono text-foreground",
+  label: "mt-4 text-[10px] uppercase tracking-[0.3em] text-foreground/50 animate-pulse",
 };

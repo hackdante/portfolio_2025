@@ -6,8 +6,8 @@ export const GAME_BLOCK_TOKENS: GameBlockTokensUI = {
   HIT_ANIMATION_DURATION: 0.2,
   HIT_BOUNCE_DISTANCE: 20,
   COLORS: {
-    PROJECT: "var(--color-ui-primary)",
-    OBSTACLE: "var(--color-semantic-error)",
-    ACTIVATED: "var(--color-semantic-success)"
+    PROJECT: "var(--color-primary",
+    OBSTACLE: "var(--color-error)",
+    ACTIVATED: "var(--color-success)"
   }
 };

@@ -5,11 +5,12 @@ import {
 } from "@/shared/types";
 
 export const PLAYER_CONTROLLER_TOKENS: PlayerTokensUI = {
-  GRAVITY: 0.8,
+ GRAVITY: 0.6,             
   FRICTION: 0.15,
   WORLD_FLOOR_Y: 62,
+  WORLD_HEIGHT: 500,
   WORLD_WIDTH: 3000,
-  TERMINAL_VELOCITY: -12,
+  TERMINAL_VELOCITY: -10,   
   BODY_OFFSET_X: 15,
   BODY_OFFSET_Y: 25,
   GROUND_CHECK_PADDING: 20,

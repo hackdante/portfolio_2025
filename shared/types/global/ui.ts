@@ -15,4 +15,4 @@ export type StatusType =
   | "secondary"
   | "loading";
 export type ButtonActionType = "button" | "submit" | "reset";
-export type BackgroundType = "dark" | "accent" | "light" | "default";
+export type BackgroundType = "transparent" | "dark" | "accent" | "light" | "default";

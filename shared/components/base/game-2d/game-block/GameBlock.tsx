@@ -38,7 +38,7 @@ export const GameBlock = forwardRef<
       ref={containerRef}
       data-block-id={id}
       data-block-type={type}
-      className="absolute select-none overflow-hidden rounded-lg border-2 border-ui-border bg-ui-background"
+      className="absolute select-none overflow-hidden rounded-lg border-2 border-ui-border bg-background"
       style={{
         left: positionX,
         bottom: positionY,

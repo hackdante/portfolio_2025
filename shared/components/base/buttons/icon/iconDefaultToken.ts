@@ -26,18 +26,18 @@ export const TOOLTIP_ICON_ARROW_MAP: Record<TooltipPositionIconType, string> = {
 };
 
 export const STATUS_CLASS_MAP: Record<StatusType, string> = {
-  default: "bg-ui-border text-ui-foreground",
-  primary: "bg-ui-primary text-white shadow-sm hover:shadow-md",
-  secondary: "bg-ui-border text-ui-foreground hover:bg-ui-border/80",
+  default: "bg-ui-border text-foreground",
+  primary: "bg-primary text-white shadow-sm hover:shadow-md",
+  secondary: "bg-ui-border text-foreground hover:bg-ui-border/80",
   info: "bg-semantic-info text-white",
   success: "bg-semantic-success text-white",
   warning: "bg-semantic-warning text-white",
   error: "bg-semantic-error text-white",
   disable:
-    "bg-ui-border/40 text-ui-foreground/30 cursor-not-allowed opacity-60",
-  loading: "bg-ui-primary/50 text-white/50 cursor-wait animate-pulse",
-  hover: "bg-ui-primary-hover text-white",
-  active: "bg-ui-primary text-white scale-90",
+    "bg-ui-border/40 text-foreground/30 cursor-not-allowed opacity-60",
+  loading: "bg-primary/50 text-white/50 cursor-wait animate-pulse",
+  hover: "bg-primary-hover text-white",
+  active: "bg-primary text-white scale-90",
   focus:
-    "bg-ui-primary text-white ring-2 ring-ui-primary ring-offset-2 ring-offset-ui-background",
+    "bg-primary text-white ring-2 ring-ui-primary ring-offset-2 ring-offset-ui-background",
 };

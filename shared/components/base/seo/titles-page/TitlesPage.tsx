@@ -14,18 +14,12 @@ export function TitlesPage({
 
   return (
     <div className={styles.container}>
-      <div className="flex items-center gap-3 group mb-4">
+      <div className="flex items-center gap-3 group mb-2">
         <div className={styles.headIconContainer}>
           {Icon ? (
-            <Icon
-              className={isDark ? "text-ui-primary" : "text-ui-primary"}
-              size={22}
-            />
+            <Icon className={styles.headIcon} size={22} />
           ) : (
-            <HiOutlineLightBulb
-              className={isDark ? "text-ui-primary" : "text-ui-primary"}
-              size={22}
-            />
+            <HiOutlineLightBulb className={styles.headIcon} size={22} />
           )}
         </div>
         <span className={styles.headText}>{headText}</span>

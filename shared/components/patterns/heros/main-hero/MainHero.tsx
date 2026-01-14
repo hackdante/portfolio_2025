@@ -73,13 +73,13 @@ export function MainHero() {
   ];
 
   return (
-    <section className="relative w-full h-[300px] overflow-hidden bg-transparent">
-      <div className="absolute inset-0 z-0">
+    <section className="relative w-full h-[600px]">
+      <div className="absolute z-0">
         <MainScene3D animation={currentAnimation} />
       </div>
 
-      <div className="flex flex-col items-center w-full h-full z-10 pointer-events-none">
-        <div className="absolute bottom-4 pointer-events-auto">
+      <div className="flex flex-col items-center z-10 pointer-events-none">
+        <div className="absolute -top-[40px] pointer-events-auto">
           <SpeedDial
             menu={CHARACTER_ANIMATION_MENU}
             variant="radial"

@@ -9,15 +9,15 @@ export const BTN_SIZE_MAP: Record<SizesType, string> = {
 };
 
 export const BTN_VARIANT_MAP: Record<StatusType, string> = {
-  default: "bg-ui-primary text-white",
-  primary: "bg-ui-primary text-white shadow-sm",
-  secondary: "bg-ui-border text-ui-foreground",
+  default: "bg-primary text-white",
+  primary: "bg-primary text-white shadow-sm",
+  secondary: "bg-ui-border text-foreground",
   success: "bg-semantic-success text-white",
   info: "bg-semantic-info text-white",
   warning: "bg-semantic-warning text-white",
   error: "bg-semantic-error text-white",
   disable: "bg-ui-border text-neutral-400 opacity-40 shadow-none pointer-events-none",
-  loading: "bg-ui-primary/70 text-white/70 cursor-wait",
+  loading: "bg-primary/70 text-white/70 cursor-wait",
   hover: "hover:animate-pulse hover:scale-105", 
   active: "active:scale-95",
   focus: "focus-visible:ring-2 focus-visible:ring-ui-primary focus-visible:ring-offset-2",

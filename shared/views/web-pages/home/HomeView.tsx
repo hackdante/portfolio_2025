@@ -8,6 +8,7 @@ import {
 import { GameScene, MainHero } from "@/shared/components/patterns";
 import {
   BusinessGridCard,
+  MinCard,
   TechStack,
   ThemeSwitcher,
 } from "@/shared/components/composite";
@@ -20,11 +21,16 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
   return (
     <>
       <ScrollAnimator />
+
+      <div className="fixed bottom-0 left-0 z-50 w-[300px] h-[600px]">
+        <MainHero />
+      </div>
+
       <SectionWrapper id="main-logo">
         <div className="pt-10 px-4">
           <MainLogo size="lg" path={MAIN_LOGO_URL} opacity={0.8} />
         </div>
-        <div className="mt-3">
+        <div className="m-6">
           <ThemeSwitcher size="md" />
         </div>
       </SectionWrapper>
@@ -39,9 +45,8 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
           data-gsap="fade-in"
         />
       </SectionWrapper>
-
-      <SectionWrapper id="hero">
-        <MainHero />
+      <SectionWrapper id="main-cards">
+        <MinCard />
       </SectionWrapper>
 
       <SectionWrapper id="portfolio-title" bgColor="#050505" bgType="default">
@@ -56,16 +61,26 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
             data-gsap="reveal"
           />
         </div>
+        <div className="pb-10">
+          <BusinessGridCard />
+        </div>
       </SectionWrapper>
 
-      <SectionWrapper id="portfolio" bgColor="#050505" bgType="default">
+      <SectionWrapper id="game-title" bgType="accent">
         <div className="py-8">
-          <BusinessGridCard />
+          <TitlesPage
+            titleA={seoData["gamification"].title}
+            titleB={seoData["gamification"].subtitle}
+            description={seoData["gamification"].description}
+            headText={seoData["gamification"].header}
+            icon={seoData["gamification"].icon}
+            data-gsap="reveal"
+          />
         </div>
         <GameScene />
       </SectionWrapper>
 
-      <SectionWrapper id="stack-title" bgType="light">
+      <SectionWrapper id="stack-title" bgColor="bg-primary/20" bgType="default">
         <div className="py-8">
           <TitlesPage
             titleA={seoData["stack"].title}
@@ -78,7 +93,7 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
         </div>
       </SectionWrapper>
 
-      <SectionWrapper id="stack" bgType="light">
+      <SectionWrapper id="stack" bgColor="bg-primary/20" bgType="default">
         <TechStack size={48} />
       </SectionWrapper>
 
@@ -94,6 +109,7 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
           />
         </div>
       </SectionWrapper>
+
       <SectionWrapper id="main-footer" bgType="light">
         <FooterDefault />
       </SectionWrapper>

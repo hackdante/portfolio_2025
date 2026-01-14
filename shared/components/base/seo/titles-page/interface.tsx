@@ -14,6 +14,7 @@ export interface TitlesPageUI {
 export interface TitlesPageStylesUI {
  readonly container: string;
  readonly headIconContainer: string;
+ readonly headIcon: string;
  readonly headText: string;
  readonly titleA: string;
  readonly titleB: string;

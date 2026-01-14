@@ -65,17 +65,63 @@ Antes de contribuir, asegúrate de tener instalados:
 - `pnpm dev --turbo`: Desarrollo con Turbopack (más rápido).
 - `pnpm build`: Build de producción.
 - `pnpm start`: Servidor de producción local.
-- `pnpm lint`: Verificación de código con ESLint.
+- `pnpm lint`: Verificación de código con ESLint (sin warnings permitidos).
+- `pnpm typecheck`: Verificación de tipos TypeScript.
+- `pnpm prebuild`: Ejecuta lint y typecheck antes del build.
 
 ### Pre-commit Hooks
 El proyecto utiliza Husky para automatizar verificaciones antes de commits:
-- **TypeScript Check**: `pnpm tsc --noEmit` para verificar tipos.
+- **TypeScript Check**: `pnpm typecheck` para verificar tipos.
 - **Linting**: `pnpm lint` para asegurar calidad de código.
 
 Los hooks se configuran automáticamente con `pnpm prepare` tras instalar dependencias.
 
 ### Lint-staged
 Se usa lint-staged para ejecutar linters solo en archivos modificados durante el commit, optimizando el proceso de desarrollo.
+
+## Protocolo de Desarrollo
+
+Este proyecto sigue un **Protocolo de Control de Estado Estrictamente Definido** para asegurar coherencia arquitectónica y calidad técnica. El desarrollo se estructura en fases obligatorias:
+
+### Modo por Defecto (Dev Experto)
+- Actúa como partner técnico senior.
+- Da opinión experta, valida enfoques y analiza trade-offs.
+- No genera código salvo solicitud explícita.
+
+### Fases de Desarrollo
+Las fases se activan mediante comandos literales exactos:
+- `start Fase X`: Inicia una fase específica.
+- `continue Fase X`: Continúa una fase activa.
+- `close`: Cierra la fase actual.
+
+#### Fase 1 – Diagnóstico
+- Análisis detallado del requerimiento.
+- Advertencia activa de inconsistencias arquitectónicas.
+- Eliminación total de ambigüedades.
+- **No se genera código de ninguna forma.**
+- Espera aprobación del usuario antes de continuar.
+
+#### Fase 2 – Estructuración
+- Definición del mapa de archivos con estructura obligatoria.
+- Para componentes: carpeta en kebab-case con `index.ts`, `interface.ts`, `PascalCase.tsx`, `camelCaseToken.ts`.
+- Para hooks/utilidades: carpeta en kebab-case con archivos en camelCase.
+
+#### Fase 3 – Ejecución Incremental
+- Implementación de un solo archivo por iteración.
+- Orden: `interface.ts` → `camelCaseToken.ts` → `PascalCase.tsx`.
+- Aprobación del usuario requerida entre cada archivo.
+
+#### Fase 4 – Revisión
+- Evaluación de errores de compilación y coherencia.
+- El usuario decide commit o cierre.
+
+### Reglas Estrictas
+- **TypeScript 100% type-safe**: Prohibido `any`, `unknown`, `as`, `as const`.
+- **ESLint estricto**: No warnings permitidos, console solo `warn`/`error`.
+- **Nomenclatura estricta**: PascalCase para componentes, camelCase para demás.
+- **Imports absolutos**: Usa `@/` (prohibido en barrels internos).
+- **Accesibilidad WCAG 2.1**: Semántica HTML, ARIA cuando necesario.
+- **Server/Client explícito**: Declarar `use client`/`server` cuando requerido.
 
 ## Estructura del Proyecto Detallada
 
@@ -97,10 +143,13 @@ Se usa lint-staged para ejecutar linters solo en archivos modificados durante el
 ## Guías de Desarrollo
 
 ### Estilo de Código
-- Usa **TypeScript** estrictamente en todos los archivos nuevos.
-- Sigue las convenciones: PascalCase para componentes, camelCase para variables.
+- Usa **TypeScript estricto** en todos los archivos nuevos (prohibido `any`, `unknown`, `as`).
+- Sigue las convenciones: PascalCase para componentes, camelCase para variables y hooks.
 - Usa imports absolutos con `@/` (configurado en tsconfig.json).
 - Mantén componentes pequeños y enfocados en una responsabilidad.
+- **ESLint estricto**: No warnings, console solo `warn`/`error`, no comentarios prohibidos (`todo`, `fixme`, etc.).
+- **Accesibilidad WCAG 2.1**: Semántica HTML, ARIA, navegación por teclado.
+- Declarar explícitamente `use client` o `server` cuando requerido.
 
 ### Trabajo con Three.js
 - Usa React Three Fiber para integración con React.
@@ -177,6 +226,7 @@ Actualmente sin tests automatizados. Para contribuciones:
 - **Repositorio**: [https://github.com/hackdante/portfolio_2025](https://github.com/hackdante/portfolio_2025)
 - **Issues**: Para reportar bugs o solicitar features.
 - **Discussions**: Para preguntas generales.
+- **IA_PROMPT.md**: Documento técnico con el protocolo de desarrollo completo y reglas estrictas.
 
 ## Licencia
 

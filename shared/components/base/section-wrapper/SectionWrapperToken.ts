@@ -3,10 +3,10 @@ export const SECTION_BG_STYLES = {
     container: "bg-transparent",
   },
   dark: {
-    container: "bg-ui-background text-ui-foreground",
+    container: "bg-background text-foreground",
   },
   light: {
-    container: "bg-ui-background text-ui-foreground",
+    container: "bg-background text-foreground",
   },
   accent: {
     container: "bg-ui-accent text-ui-on-accent",

@@ -78,7 +78,7 @@ export function ExtendCard({
         </h3>
       </header>
 
-      <div className="flex items-center justify-center pointer-events-none my-8 transform transition-transform duration-700 z-10">
+      <div className="flex items-center justify-center pointer-events-none transform transition-transform duration-700 z-10">
         <div className="filter drop-shadow-[0_0_8px_rgba(60,139,245,0.5)]">
           {icon}
         </div>

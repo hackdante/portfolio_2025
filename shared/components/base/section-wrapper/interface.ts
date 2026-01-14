@@ -7,4 +7,5 @@ export interface SectionWrapperUI {
   readonly bgColor?: string;
   readonly id?: string;
   readonly withContainer?: boolean;
+  readonly containerRight?: boolean
 }

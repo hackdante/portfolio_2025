@@ -66,7 +66,7 @@ export function InteractionPopup({
         zIndex,
       }}
     >
-      <div className="relative w-full h-full overflow-hidden rounded-2xl border border-ui-border bg-ui-background shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] transition-colors duration-300">
+      <div className="relative w-full h-full overflow-hidden rounded-2xl border border-ui-border bg-background shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] transition-colors duration-300">
         <Image
           src={data.imag}
           alt={data.title}
@@ -78,10 +78,10 @@ export function InteractionPopup({
 
         <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/40 to-transparent opacity-90" />
 
-        <div className="absolute inset-0 translate-y-[85%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] bg-ui-background/80 backdrop-blur-md flex flex-col justify-between border-t border-ui-border">
+        <div className="absolute inset-0 translate-y-[85%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] bg-background/80 backdrop-blur-md flex flex-col justify-between border-t border-ui-border">
           <div
             ref={iconRef}
-            className="absolute -top-6 left-1/2 -translate-x-1/2 w-18 h-8 bg-ui-background border-t border-l border-r border-ui-border rounded-t-full flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300"
+            className="absolute -top-6 left-1/2 -translate-x-1/2 w-18 h-8 bg-background border-t border-l border-r border-ui-border rounded-t-full flex items-center justify-center group-hover:opacity-0 transition-opacity duration-300"
             style={{ zIndex: -2 }}
           >
             <MdMouse size={20} className="text-ui-primary text-xs mt-1" />
@@ -91,7 +91,7 @@ export function InteractionPopup({
             <h3 className="text-base font-normal text-ui-primary uppercase tracking-tight leading-none pt-2 pl-2 pr-2 mb-4">
               {data.title}
             </h3>
-            <p className="text-[15px] text-ui-foreground/90 leading-tight px-2">
+            <p className="text-[15px] text-foreground/90 leading-tight px-2">
               {data.description}
             </p>
           </div>
@@ -101,7 +101,7 @@ export function InteractionPopup({
               {data.stack.split(",").map((tech) => (
                 <span
                   key={tech.trim()}
-                  className="text-[12px] font-bold text-ui-primary bg-ui-primary/10 border border-ui-primary/20 px-1 py-0.5 rounded-sm uppercase"
+                  className="text-[12px] font-bold text-ui-primary bg-primary/10 border border-ui-primary/20 px-1 py-0.5 rounded-sm uppercase"
                 >
                   {tech.trim()}
                 </span>
@@ -112,7 +112,7 @@ export function InteractionPopup({
               href={data.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 bg-ui-primary hover:bg-ui-primary-hover text-white rounded-lg text-center transition-all duration-300 scale-90 group-hover:scale-100 active:scale-95 text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-ui-primary/20"
+              className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-center transition-all duration-300 scale-90 group-hover:scale-100 active:scale-95 text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-ui-primary/20"
             >
               Ver Proyecto
             </a>
@@ -121,7 +121,7 @@ export function InteractionPopup({
       </div>
 
       <div
-        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-ui-background border-r border-b border-ui-border rotate-45 transition-colors duration-300"
+        className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-background border-r border-b border-ui-border rotate-45 transition-colors duration-300"
         style={{ zIndex: -1 }}
       />
     </div>

@@ -11,6 +11,7 @@ export interface ContentMainUI {
 export interface HomeSeoUI {
   readonly hero: ContentMainUI;
   readonly portfolio: ContentMainUI;
+  readonly gamification: ContentMainUI;
   readonly stack: ContentMainUI;
   readonly authority: ContentMainUI;
 }

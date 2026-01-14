@@ -34,14 +34,7 @@ export interface AnimationConfigUI {
   readonly cherry: string;
 }
 
-
-export interface  PathImagesConfigUI {
- readonly sizeW: number;
- readonly sizeH: number;
- readonly duration: number;
- readonly pathA: string;
- readonly pathB: string;
- readonly pathC: string;
-  
+export interface GridContainerTokensUI {
+  readonly CONTAINER: string;
+  readonly GRID: string;
 }
-

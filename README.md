@@ -55,9 +55,12 @@ Un portafolio interactivo y dinámico desarrollado por KENSAI, liderado por Lean
 
 ### Scripts Disponibles
 - `pnpm dev`: Inicia servidor de desarrollo con Turbopack.
+- `pnpm lint`: Ejecuta ESLint para verificar código (sin warnings permitidos).
+- `pnpm typecheck`: Ejecuta verificación de tipos TypeScript.
+- `pnpm prebuild`: Ejecuta lint y typecheck antes del build.
 - `pnpm build`: Construye la aplicación para producción.
 - `pnpm start`: Inicia servidor de producción.
-- `pnpm lint`: Ejecuta ESLint para verificar código.
+- `pnpm prepare`: Configura Husky para pre-commits.
 
 ## 🐳 Docker
 

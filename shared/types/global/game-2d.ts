@@ -71,6 +71,7 @@ export interface PlayerTokensUI {
   readonly GRAVITY: number;
   readonly FRICTION: number;
   readonly WORLD_FLOOR_Y: number;
+  readonly WORLD_HEIGHT: number;
   readonly WORLD_WIDTH: number;
   readonly TERMINAL_VELOCITY: number;
   readonly BODY_OFFSET_X: number;
