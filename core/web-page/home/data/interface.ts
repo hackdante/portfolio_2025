@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 export interface AuthorUI {
   readonly name: string;
   readonly url?: string;
@@ -37,4 +39,23 @@ export interface HeroContentUI {
 export interface WebPageData {
   readonly metadata: WebMetaDataUI;
   readonly hero: HeroContentUI;
+}
+
+
+export interface HomeSeoTagsUI extends Metadata {
+
+  title: string;
+  description: string;
+  alternates: {
+    canonical: string;
+  };
+}
+
+export interface RobotsConfigUI {
+  rules: {
+    userAgent: string | string[];
+    allow?: string | string[];
+    disallow?: string | string[];
+  };
+  sitemap?: string | string[];
 }

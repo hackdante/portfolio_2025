@@ -13,6 +13,9 @@ import {
   BsCrosshair2,
   BsShieldCheck,
   BsJoystick,
+  BsRocketTakeoff,
+  BsCpu,
+  BsBarChartSteps,
 } from "react-icons/bs";
 
 import { CardTextUI } from "@/shared/components/base";
@@ -151,8 +154,6 @@ export const BUSINESS_SOLUTIONS_CARD: BusinessGridCardUI[] = [
   },
 ];
 
-import { BsRocketTakeoff, BsCpu, BsBarChartSteps } from "react-icons/bs";
-
 export const HOME_INITIAL_CARDS: CardTextUI[] = [
   {
     title: "KENSAI CONFIG",
@@ -162,7 +163,7 @@ export const HOME_INITIAL_CARDS: CardTextUI[] = [
     label: "Acelerar Ventas",
     icon: BsRocketTakeoff,
     blurIntensity: "md",
-    callToAction: () => window.location.href = "#portfolio-title", 
+    callToAction: () => (window.location.href = "#portfolio-title"),
   },
   {
     title: "KENSAI ONBOARDING",
@@ -172,7 +173,7 @@ export const HOME_INITIAL_CARDS: CardTextUI[] = [
     label: "Reducir Costos",
     icon: BsCpu,
     blurIntensity: "md",
-    callToAction: () => window.location.href = "#onboarding",
+    callToAction: () => (window.location.href = "#onboarding"),
   },
   {
     title: "KENSAI DATA",
@@ -182,7 +183,6 @@ export const HOME_INITIAL_CARDS: CardTextUI[] = [
     label: "Ver Diagnóstico",
     icon: BsBarChartSteps,
     blurIntensity: "md",
-    callToAction: () => window.location.href = "#data",
+    callToAction: () => (window.location.href = "#data"),
   },
 ];
-

@@ -1,4 +1,4 @@
-import { WebPageDataUI } from "./interface";
+import { HomeSeoTagsUI, WebPageDataUI } from "./interface";
 
 export const HOME_DATA: WebPageDataUI = {
   metadata: {
@@ -23,5 +23,68 @@ export const HOME_DATA: WebPageDataUI = {
     primaryAction: "Ver Proyectos",
     secondaryAction: "Core Platform"
   }
+};
+
+export const HOME_SEO_TAGS: HomeSeoTagsUI = {
+  metadataBase: new URL("https://kensai.engineering"),
+  title: "Kensai Experience | High-Fidelity Software Engineering",
+  description: "Ecosistema digital inmersivo desarrollado con Next.js 16, React 19 y Three.js. Soluciones de software de alta fidelidad y experiencias 3D avanzadas.",
+  keywords: [
+    "Software Architecture",
+    "Next.js 16",
+    "React 19",
+    "Three.js",
+    "GSAP",
+    "Creative Development",
+    "Kensai"
+  ],
+  authors: [{ name: "Kensai", url: "https://kensai.engineering" }],
+  alternates: {
+    canonical: "/",
+  },
+
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" }
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" }
+    ],
+  },
+  openGraph: {
+    title: "Kensai Experience",
+    description: "Ingeniería de software y experiencias web inmersivas.",
+    url: "https://kensai.engineering",
+    siteName: "Kensai Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "Kensai Experience Preview"
+      }
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kensai Experience",
+    description: "High-Fidelity Digital Ecosystem",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
