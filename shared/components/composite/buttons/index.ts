@@ -1,2 +1,3 @@
 export *from "./theme-switch"
 export * from "./speed-dial"
+export * from "./speech-balloon"

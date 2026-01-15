@@ -1,90 +1,87 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { 
   FaUserPlus, 
   FaPersonWalking, 
-  FaPersonRunning, 
-  FaArrowPointer, 
-  FaHandFist, 
   FaHandshake, 
   FaStar 
 } from "react-icons/fa6";
 
-import { SpeedDial } from "@/shared/components/composite";
-import { IconDefaultUI } from "@/shared/components/base";
-import { CharacterAnimationType } from "@/shared/types";
+import { SpeechBalloon } from "@/shared/components/composite";
 import { MainScene3D } from "@/shared/components/patterns";
+import { CharacterAnimationType } from "@/shared/types";
 
+import { 
+  SPEECH_BALLOON_TOKEN_DEFAULT, 
+  SPEECH_IDLE_MESSAGES_DEFAULT 
+} from "@/shared/components/composite";
+import { SpeechBalloonActionUI } from "@/shared/components/composite/buttons/speech-balloon/interface";
 
 export function MainHero() {
   const [currentAnimation, setCurrentAnimation] = useState<CharacterAnimationType>("000_Awake");
+  const [activeConfigIndex, setActiveConfigIndex] = useState<number | null>(null);
 
-  const CHARACTER_ANIMATION_MENU: Omit<IconDefaultUI, "size">[] = [
+  const SPEECH_ACTIONS = useMemo<SpeechBalloonActionUI[]>(() => [
     {
-      id: "Awake",
+      section: "intro",
       icon: FaUserPlus,
-      toolTip: "De pie",
+      message: "¡Hola! Soy tu guía en este portafolio.",
       type: "secondary",
       action: () => setCurrentAnimation("000_Awake"),
     },
     {
-      id: "Bow",
+      section: "greeting",
       icon: FaHandshake,
-      toolTip: "Saludar",
+      message: "¿Quieres ver un saludo?",
       type: "secondary",
       action: () => setCurrentAnimation("Bow"),
     },
     {
-      id: "Walking",
+      section: "explore",
       icon: FaPersonWalking,
-      toolTip: "Caminar",
+      message: "¡Acompáñame a explorar mis proyectos!",
       type: "secondary",
       action: () => setCurrentAnimation("Walking"),
     },
     {
-      id: "Runner",
-      icon: FaPersonRunning,
-      toolTip: "Correr",
-      type: "secondary",
-      action: () => setCurrentAnimation("Runner"),
-    },
-    {
-      id: "Moon_walk",
+      section: "skills",
       icon: FaStar,
-      toolTip: "Baile Pop",
+      message: "¡Mira este movimiento especial!",
       type: "secondary",
       action: () => setCurrentAnimation("Moon_walk"),
     },
-    {
-      id: "Jog_sign",
-      icon: FaArrowPointer,
-      toolTip: "Señalar",
-      type: "secondary",
-      action: () => setCurrentAnimation("Jog_sign"),
-    },
-    {
-      id: "Ouch_punch",
-      icon: FaHandFist,
-      toolTip: "Golpe",
-      type: "secondary",
-      action: () => setCurrentAnimation("Ouch_punch"),
-    },
-  ];
+  ], []);
+
+
+  const currentSpeechConfig = useMemo(() => 
+    activeConfigIndex !== null ? SPEECH_ACTIONS[activeConfigIndex] : undefined,
+    [activeConfigIndex, SPEECH_ACTIONS]
+  );
+
+
+  const handleBalloonClick = () => {
+    const nextIndex = activeConfigIndex === null ? 0 : (activeConfigIndex + 1) % SPEECH_ACTIONS.length;
+    setActiveConfigIndex(nextIndex);
+    SPEECH_ACTIONS[nextIndex].action?.();
+  };
 
   return (
-    <section className="relative w-full h-[600px]">
-      <div className="absolute z-0">
+    <section className="relative w-full h-[600px] ">
+      <div className="absolute inset-0 z-0">
         <MainScene3D animation={currentAnimation} />
       </div>
 
-      <div className="flex flex-col items-center z-10 pointer-events-none">
-        <div className="absolute -top-[40px] pointer-events-auto">
-          <SpeedDial
-            menu={CHARACTER_ANIMATION_MENU}
-            variant="radial"
-            direction="bottom"
-            id="menu-dial-hero"
+      <div className="relative z-10 flex flex-col items-center w-full h-full pointer-events-none">
+        <div className="absolute -top-18 pointer-events-auto">
+          <SpeechBalloon 
+            currentConfig={currentSpeechConfig ? {
+              ...currentSpeechConfig,
+              action: handleBalloonClick 
+            } : undefined}
+            tokens={SPEECH_BALLOON_TOKEN_DEFAULT}
+            idleMessages={SPEECH_IDLE_MESSAGES_DEFAULT}
+            position="top"
           />
         </div>
       </div>
