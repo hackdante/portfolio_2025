@@ -1,6 +1,6 @@
 export type ClientScreenSizeUI = { screenX: number; screenY: number } | null;
 export type ThemeModeType = "light" | "dark" | "system";
-export type SizesType = "sm" | "md" | "lg" | "xl";
+export type SizesType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export type StatusType =
   | "default"
   | "info"

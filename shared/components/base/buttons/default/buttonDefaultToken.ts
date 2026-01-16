@@ -2,10 +2,12 @@ import { StatusType, SizesType } from "@/shared/types";
 import { TooltipPositionType } from "./interface";
 
 export const BTN_SIZE_MAP: Record<SizesType, string> = {
-  sm: "h-8 px-4 text-[13px] rounded-full", 
+  xs: "h-8 px-4 text-[12px] rounded-full",
+  sm: "h-8 px-4 text-[13px] rounded-full",
   md: "h-10 px-6 text-[14px] rounded-full",
   lg: "h-12 px-6 text-[14px] rounded-full",
   xl: "h-14 px-8 text-[16px] rounded-full",
+  "2xl": "h-8 px-4 text-[20px] rounded-full",
 };
 
 export const BTN_VARIANT_MAP: Record<StatusType, string> = {
@@ -16,11 +18,13 @@ export const BTN_VARIANT_MAP: Record<StatusType, string> = {
   info: "bg-semantic-info text-white",
   warning: "bg-semantic-warning text-white",
   error: "bg-semantic-error text-white",
-  disable: "bg-ui-border text-neutral-400 opacity-40 shadow-none pointer-events-none",
+  disable:
+    "bg-ui-border text-neutral-400 opacity-40 shadow-none pointer-events-none",
   loading: "bg-primary/70 text-white/70 cursor-wait",
-  hover: "hover:animate-pulse hover:scale-105", 
+  hover: "hover:animate-pulse hover:scale-105",
   active: "active:scale-95",
-  focus: "focus-visible:ring-2 focus-visible:ring-ui-primary focus-visible:ring-offset-2",
+  focus:
+    "focus-visible:ring-2 focus-visible:ring-ui-primary focus-visible:ring-offset-2",
 };
 
 export const TOOLTIP_BASE_CLASSES = `

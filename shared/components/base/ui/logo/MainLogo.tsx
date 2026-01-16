@@ -6,10 +6,12 @@ import { useIsMounted } from "@/shared/hooks/life-cicle/mounted/useIsMounted";
 import { LogoWidthUI, MainLogoUI } from "./interface";
 
 const LOGO_WIDTHS: LogoWidthUI = {
+  xs: 100,
   sm: 120,
   md: 240,
   lg: 480,
   xl: 620,
+  "2xl": 720,
 };
 
 type KensaiTheme = "dark" | "light";
@@ -78,21 +80,28 @@ export function MainLogo({
           className={`object-contain h-auto transition-all duration-700 ease-in-out
             ${isDark ? "invert brightness-200" : "invert-0"}`}
           style={{
-       width: 'auto',
+            width: "auto",
             maxWidth: targetWidth,
             height: "auto",
-            opacity: currentOpacity
+            opacity: currentOpacity,
           }}
           draggable={false}
-          
         />
       ) : (
         <div
           className={`flex items-center justify-center border-2 border-dashed rounded-lg transition-all duration-700
-            ${isDark ? "border-white/10 bg-white/5" : "border-black/10 bg-black/5"}`}
+            ${
+              isDark
+                ? "border-white/10 bg-white/5"
+                : "border-black/10 bg-black/5"
+            }`}
           style={{ width: "100%", maxWidth: targetWidth, aspectRatio: "3/1" }}
         >
-          <span className={`text-sm font-medium ${isDark ? "text-white/40" : "text-black/40"}`}>
+          <span
+            className={`text-sm font-medium ${
+              isDark ? "text-white/40" : "text-black/40"
+            }`}
+          >
             Su logo aquí
           </span>
         </div>

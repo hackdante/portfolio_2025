@@ -13,7 +13,7 @@ export const SPEECH_BALLOON_TOKEN_DEFAULT: SpeechBalloonTokenUI = {
     idleDelay: 10000,
   },
   geometry: {
-    maxWidth: "220px",
+    maxWidth: "320px",
     borderRadius: "12px",
     padding: "0.85rem",
   }
@@ -28,5 +28,6 @@ export const SPEECH_IDLE_MESSAGES_DEFAULT: string[] = [
   "Menos renders estáticos, más activos rentables.",
   "El 3D decorativo es un gasto. Esto es una inversión.",
   "¿Listo para reducir tiempos de cierre?",
-  "Hablemos de ROI, no de estética."
+  "Hablemos de ROI, no de estética.",
+  "¿Necesitas ayuda?"
 ];

@@ -8,8 +8,10 @@ export interface MainLogoUI {
 }
 
 export interface LogoWidthUI {
- readonly sm: number;
- readonly md: number;
- readonly lg: number;
- readonly xl: number;
+  readonly xs: number;
+  readonly sm: number;
+  readonly md: number;
+  readonly lg: number;
+  readonly xl: number;
+  readonly "2xl": number;
 }

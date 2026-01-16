@@ -22,7 +22,7 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
     <>
       <ScrollAnimator />
 
-      <div className="fixed bottom-0 left-0 z-50 w-[300px] h-[600px]">
+      <div className="fixed bottom-0 left-0 z-20">
         <MainHero />
       </div>
 

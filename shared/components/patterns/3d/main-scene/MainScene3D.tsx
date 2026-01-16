@@ -19,7 +19,10 @@ export function MainScene3D({
   }
 
   return (
-  <div className="relative w-full h-[600px] outline-none focus:ring-2">
+    <div
+      className="relative w-[100px] h-[300px] md:w-[200px] md:h-[400px] lg:w-[300px] lg:h-[600px]
+    outline-none focus:ring-2"
+    >
       <Canvas
         shadows
         camera={{ position: [0, 0, 10], fov: 35 }}

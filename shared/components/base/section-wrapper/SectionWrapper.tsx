@@ -35,8 +35,8 @@ export function SectionWrapper({
       <div
         className={`
           relative z-10 flex flex-col w-full transition-all duration-500 items-center
-          ${withContainer ? "max-w-6xl px-4 sm:px-6 lg:px-8" : "px-0"}
-          ${containerRight ? "ml-auto md:w-[80%]" : "mx-auto"}
+          ${withContainer ? "max-w-6xl px-4 sm:px-6 lg:px-8" : "sm:px-5 md:px-10"}
+          ${containerRight ? "ml-auto sm-[100%] md:w-[100%] md:w-[80%] md:w-[80%] lg-auto md:w-[85%]" : "mx-auto"}
         `}
       >
         {children}
