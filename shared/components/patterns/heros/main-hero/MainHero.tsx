@@ -22,7 +22,7 @@ export function MainHero() {
   const [currentAnimation, setCurrentAnimation] =
     useState<CharacterAnimationType>("000_Awake");
   const [activeConfigIndex, setActiveConfigIndex] = useState<number | null>(
-    null
+    null,
   );
 
   const SPEECH_ACTIONS = useMemo<SpeechBalloonActionUI[]>(
@@ -56,7 +56,7 @@ export function MainHero() {
         action: () => setCurrentAnimation("Moon_walk"),
       },
     ],
-    []
+    [],
   );
 
   const currentSpeechConfig = useMemo(
@@ -64,7 +64,7 @@ export function MainHero() {
       activeConfigIndex !== null
         ? SPEECH_ACTIONS[activeConfigIndex]
         : undefined,
-    [activeConfigIndex, SPEECH_ACTIONS]
+    [activeConfigIndex, SPEECH_ACTIONS],
   );
 
   const handleBalloonClick = () => {
@@ -87,7 +87,7 @@ export function MainHero() {
         </div>
 
         <div className="relative z-10 flex flex-col items-center w-full h-full pointer-events-none">
-          <div className="absolute -top-18 xs:-top-60 sm:-top-35 md:-top-18 pointer-events-auto">
+          <div className="absolute -top-18 xxs:-top-35  xs:-top-37 sm:-top-35 md:-top-20 lg:-top-18 pointer-events-auto">
             <SpeechBalloon
               currentConfig={
                 currentSpeechConfig

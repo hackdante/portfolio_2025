@@ -27,7 +27,7 @@ export function BusinessGridCard() {
         },
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (

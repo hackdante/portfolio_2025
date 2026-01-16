@@ -1,17 +1,17 @@
-import { SizesType } from "@/shared/types/global";
+import { SizesType, SvgPathType } from "@/shared/types/global";
 
-export interface MainLogoUI {
-  readonly size?: SizesType;
-  readonly path?: string;
-  readonly altText?: string;
-  readonly opacity?: number;
+export interface MainLogoTokenUI {
+  readonly widths: Record<SizesType, string>;
+  readonly defaultColors: {
+    readonly light: string;
+    readonly dark: string;
+  };
 }
 
-export interface LogoWidthUI {
-  readonly xs: number;
-  readonly sm: number;
-  readonly md: number;
-  readonly lg: number;
-  readonly xl: number;
-  readonly "2xl": number;
+export interface MainLogoUI {
+  readonly path: SvgPathType;
+  readonly size?: SizesType;
+  readonly altText?: string;
+  readonly lightModeColor?: string;
+  readonly darkModeColor?: string;
 }

@@ -24,7 +24,7 @@ export function CardText({
     <article className={`${CARD_CONTAINER_CLASSES} ${blurClass}`}>
       <div className={CARD_GLOW_CLASSES} aria-hidden="true" />
       
-      <div className="relative p-6 flex flex-col h-full">
+      <div className="relative p-6 flex flex-col h-full w-full">
         <div className={CARD_ICON_CONTAINER}>
           {Icon ? (
             <Icon className="w-6 h-6" aria-hidden="true" />

@@ -4,8 +4,8 @@ export const SPEECH_BALLOON_TOKEN_DEFAULT: SpeechBalloonTokenUI = {
   colors: {
     background: "var(--color-black-87)",
     text: "var(--color-white)",
-    border: "var(--color-primary)",
-    accent: "var(--color-accent)",
+    border: "var(--color-black-87)",
+    accent: "var(---color-black-87)",
   },
   animation: {
     duration: 1,
@@ -13,21 +13,23 @@ export const SPEECH_BALLOON_TOKEN_DEFAULT: SpeechBalloonTokenUI = {
     idleDelay: 10000,
   },
   geometry: {
-    maxWidth: "320px",
+    maxWidth: "220px",
     borderRadius: "12px",
     padding: "0.85rem",
   }
 };
 
 export const SPEECH_IDLE_MESSAGES_DEFAULT: string[] = [
-  "...",
-  "mmmm...",
- "¿Dónde está el cuello de botella hoy?",
-  "La fricción comercial te está costando dinero.",
-  "¿Configurar, capacitar o decidir? Elige un frente.",
-  "Menos renders estáticos, más activos rentables.",
-  "El 3D decorativo es un gasto. Esto es una inversión.",
-  "¿Listo para reducir tiempos de cierre?",
-  "Hablemos de ROI, no de estética.",
-  "¿Necesitas ayuda?"
+"¿Cuánto te cuesta cada día de retraso?",
+  "El 3D sin métricas es solo un juguete.",
+  "La duda del cliente mata tu rentabilidad.",
+  "Tus manuales en PDF nadie los lee hoy.",
+  "Vende el doble sin fabricar el primero.",
+  "¿Pipeline estancado? Falta claridad visual.",
+  "Menos renders, más activos comerciales.",
+  "Tu competencia ya está automatizando ventas.",
+  "¿Buscas innovación o buscas facturación?",
+  "Optimiza el margen, no solo la estética.",
+  "Hablemos de ROI, deja el diseño de lado.",
+  "¿Listo para recortar tus ciclos de venta?"
 ];

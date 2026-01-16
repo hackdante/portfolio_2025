@@ -25,12 +25,13 @@ export const CARD_ICON_CONTAINER = `
   rounded-xl bg-ui-surface-12 text-ui-surface-60 mb-4
   group-hover:bg-primary/20 group-hover:text-ui-primary 
   transition-colors duration-300
+  shadow-md
 `;
 
 export const CARD_BUTTON_CLASSES = `
 rounded-full bg-primary px-6 py-2.5 text-sm font-bold 
   text-white
-  shadow-md shadow-ui-primary/20 
+  shadow-md 
   transition-all hover:scale-105 active:scale-95 
   focus-ring cursor-pointer
 `;

@@ -20,7 +20,7 @@ import {
 
 import { CardTextUI } from "@/shared/components/base";
 
-import { HomeSeoUI } from "./interface";
+import { CardServicesUI, HomeSeoUI } from "./interface";
 import { BusinessGridCardUI } from "@/shared/components/composite";
 
 export const HOME_FEATURES: readonly CardTextUI[] = [
@@ -104,40 +104,40 @@ export const BUSINESS_SOLUTIONS_CARD: BusinessGridCardUI[] = [
   {
     id: "onboarding",
     icon: HiOutlineAcademicCap,
-    title: "KENSAI ONBOARDING",
-    tagline: "Cuando capacitar cuesta demasiado tiempo y dinero",
+    title: "KENSAI OPS-TRAINING",
+    tagline: "Corta el costo de error operativo a la mitad",
     description:
-      "Procesos de formación largos generan errores operativos, baja retención de conocimiento y costos ocultos en RRHH.",
+      "Los manuales no detienen accidentes. Simuladores espaciales que garantizan que el operario sabe qué hacer antes de tocar la máquina real.",
     benefit:
-      "Reduce hasta un 50% el tiempo de entrenamiento y corta el desperdicio operativo desde el día uno.",
-    cta: "Eliminar Ineficiencias",
-    onAction: () => console.warn("Calculating ROI"),
+      "Aumenta la retención de entrenamiento al 90% y reduce paradas de planta por error humano.",
+    cta: "Eliminar Errores de Planta",
+    onAction: () => console.warn("Calculating Training ROI"),
   },
 
   {
     id: "data",
     icon: HiOutlineChartBar,
-    title: "KENSAI DATA",
-    tagline: "Cuando decidir tarde sale caro",
+    title: "KENSAI DIGITAL TWIN",
+    tagline: "Visualiza el riesgo antes de que cueste dinero",
     description:
-      "Dashboards pasivos no revelan dependencias, cuellos de botella ni riesgos críticos a tiempo.",
+      "Los datos en 2D ocultan dependencias críticas. Visualiza tu operación en tiempo real para detectar cuellos de botella antes de que afecten el EBITDA.",
     benefit:
-      "Permite detectar riesgos operativos y tomar decisiones ejecutivas antes de que impacten resultados.",
-    cta: "Reducir Riesgo",
-    onAction: () => console.warn("Calculating ROI"),
+      "Detección preventiva de riesgos y optimización de flujos operativos en tiempo real.",
+    cta: "Proteger mi Margen",
+    onAction: () => console.warn("Calculating Operational ROI"),
   },
 
   {
     id: "deployment",
     icon: HiOutlineRocketLaunch,
-    title: "KENSAI LAUNCH",
-    tagline: "Cuando lanzar lento quema capital",
+    title: "KENSAI VALIDATOR",
+    tagline: "Vende antes de fabricar",
     description:
-      "Desarrollos largos sin validación consumen presupuesto antes de demostrar retorno real.",
+      "Lanzar productos sin validación visual es quemar capital. Prototipado interactivo web para medir intención de compra real sin mover un solo gramo de materia prima.",
     benefit:
-      "Permite validar activos interactivos en ciclos cortos con métricas claras de impacto económico.",
-    cta: "Validar sin Desperdicio",
-    onAction: () => console.warn("Calculating ROI"),
+      "Valida el mercado en semanas, no meses, con métricas de interacción reales.",
+    cta: "Validar Mercado Ya",
+    onAction: () => console.warn("Calculating Launch ROI"),
   },
 
   {
@@ -184,5 +184,108 @@ export const HOME_INITIAL_CARDS: CardTextUI[] = [
     icon: BsBarChartSteps,
     blurIntensity: "md",
     callToAction: () => (window.location.href = "#data"),
+  },
+];
+
+export const CARD_SERVICES: CardServicesUI[] = [
+  {
+    title: "Modernización de Catálogos: De PDF Estático a Activo 3D",
+    description:
+      "Tus clientes ya no quieren leer folletos. Transforma tu catálogo de productos en una librería interactiva donde cada pieza se puede inspeccionar, despiezar y configurar en tiempo real desde el navegador.",
+    label: "Catálogos 3D",
+    cta: {
+      label: "Quieres reducir costos ahora?",
+      action: () => console.warn("Redirect to contact"),
+    },
+  },
+  {
+    title: "Showrooms Inmobiliarios: Venta en Preventa sin Pisos Piloto",
+    description:
+      "Elimina el costo de construcción de apartamentos modelo. Moderniza tu sala de ventas con recorridos virtuales ligeros que permiten cambiar acabados y mobiliario al instante, acelerando el cierre de promesas de compra.",
+    label: "Inmobiliaria Virtual",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Open contact modal"),
+    },
+  },
+  {
+    title: "Simuladores de Configuración: Personalización Masiva de Productos",
+    description:
+      "Permite que el usuario diseñe su propio producto (vehículos, maquinaria, mobiliario) con visualización instantánea de precios y materiales. Reduce el ciclo de consulta comercial y automatiza la preventa.",
+    label: "Configuradores",
+    cta: {
+      label: "Quieres reducir costos ahora?",
+      action: () => console.warn("Redirect to pricing"),
+    },
+  },
+  {
+    title: "Formación HSE 4.0: Entrenamiento en Entornos de Riesgo",
+    description:
+      "Moderniza la seguridad industrial con simulacros web de identificación de peligros. Tus empleados se enfrentan a escenarios críticos en un entorno controlado, reduciendo accidentes reales y costos de primas de seguros.",
+    label: "E-learning HSE",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Schedule demo"),
+    },
+  },
+  {
+    title: "Visualización de Big Data: Cuadros de Mando Espaciales",
+    description:
+      "Deja atrás los gráficos de barras planos. Moderniza tu toma de decisiones con dashboards 3D que permiten navegar por los datos de tu empresa geográficamente o por procesos, detectando cuellos de botella de forma intuitiva.",
+    label: "Data Viz 3D",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Contact sales"),
+    },
+  },
+  {
+    title: "Educación y EdTech: Laboratorios Virtuales Interactivos",
+    description:
+      "Moderniza la enseñanza de conceptos complejos. Crea laboratorios de química, física o ingeniería donde los estudiantes interactúan con elementos que en el mundo real serían costosos o peligrosos de manipular.",
+    label: "EdTech",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Request info"),
+    },
+  },
+  {
+    title: "E-commerce Espacial: La Tienda del Futuro en la Web",
+    description:
+      "Rompe la barrera de las fotos 2D. Implementa tiendas virtuales donde el usuario camina, descubre productos y los añade al carrito en una experiencia de compra fluida basada en Spatial Computing.",
+    label: "Spatial E-commerce",
+    cta: {
+      label: "Quieres reducir costos ahora?",
+      action: () => console.warn("Get started"),
+    },
+  },
+  {
+    title: "Gemelos Digitales de Procesos: Auditoría Remota 24/7",
+    description:
+      "Moderniza la supervisión de tus líneas de producción. Visualiza el flujo de trabajo y el rendimiento de cada operario o máquina mediante un gemelo digital que centraliza toda la información operativa en un solo lugar.",
+    label: "Digital Twins",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Audit request"),
+    },
+  },
+  {
+    title: "Arquitectura de Marca: Stand Virtual para Ferias Globales",
+    description:
+      "No limites tu presencia a un espacio físico de tres días. Moderniza tu branding con un stand permanente en la web que recibe visitas de todo el mundo, recolecta datos de clientes interesados y muestra tus innovaciones sin gastos de logística.",
+    label: "Brand Stands",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Book a stand"),
+    },
+  },
+  {
+    title: "Museografía y Cultura: Patrimonio Digitalizado e Interactivo",
+    description:
+      "Moderniza la conservación y exhibición de piezas históricas. Crea museos virtuales donde el usuario puede manipular objetos invaluables con un nivel de detalle microscópico, eliminando barreras geográficas para el público.",
+    label: "Cultural Heritage",
+    cta: {
+      label: "Llama y consulta",
+      action: () => console.warn("Digitalize assets"),
+    },
   },
 ];

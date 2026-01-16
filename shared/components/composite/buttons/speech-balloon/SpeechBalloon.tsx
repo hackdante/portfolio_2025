@@ -98,7 +98,7 @@ export function SpeechBalloon({
 
       <p
         ref={textRef}
-        className="text-[14] font-medium leading-tight select-none"
+        className="text-[14] font-stretch-normal text-center leading-tight select-none"
       />
 
       <span

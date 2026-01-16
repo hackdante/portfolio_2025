@@ -18,3 +18,4 @@ export type ButtonActionType = "button" | "submit" | "reset";
 export type BackgroundType = "transparent" | "dark" | "accent" | "light" | "default";
 export type TooltipPositionIconType = "top" | "bottom" | "left" | "right";
 export type PositionUI = "top" | "bottom" | "left" | "right";
+export type SvgPathType = `${string}.svg`;

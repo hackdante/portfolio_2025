@@ -15,3 +15,14 @@ export interface HomeSeoUI {
   readonly stack: ContentMainUI;
   readonly authority: ContentMainUI;
 }
+
+export interface CardServicesUI {
+  title: string;
+  description: string;
+  label: string; 
+  cta: {
+    label: string;
+    action: () => void;
+  };
+}
+

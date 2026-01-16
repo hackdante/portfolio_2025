@@ -1,14 +1,8 @@
 "use client";
 
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { SpinnerDefault } from "@/shared/components/base";
 
-
-const MainLogoLazy = lazy(() => 
-  import("@/shared/components/base").then((module) => ({ 
-    default: module.MainLogo 
-  }))
-);
 
 export function LogoContainer() {
   return (
@@ -24,7 +18,6 @@ export function LogoContainer() {
           </SpinnerDefault>
         }
       >
-        <MainLogoLazy />
       </Suspense>
     </div>
   );

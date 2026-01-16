@@ -28,7 +28,7 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
 
       <SectionWrapper id="main-logo">
         <div className="pt-10 px-4">
-          <MainLogo size="lg" path={MAIN_LOGO_URL} opacity={0.8} />
+          <MainLogo size="2xl" path={MAIN_LOGO_URL} />
         </div>
         <div className="m-6">
           <ThemeSwitcher size="md" />
@@ -61,13 +61,13 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
             data-gsap="reveal"
           />
         </div>
-        <div className="pb-10">
+        <div className="pb-10 xxs:mr-5">
           <BusinessGridCard />
         </div>
       </SectionWrapper>
 
       <SectionWrapper id="game-title" bgType="accent">
-        <div className="py-8">
+        <div className="pt-8">
           <TitlesPage
             titleA={seoData["gamification"].title}
             titleB={seoData["gamification"].subtitle}
@@ -77,7 +77,10 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
             data-gsap="reveal"
           />
         </div>
+      </SectionWrapper>
+      <SectionWrapper id="game-scene" bgType="accent">
         <GameScene />
+       
       </SectionWrapper>
 
       <SectionWrapper id="stack-title" bgColor="bg-primary/20" bgType="default">

@@ -24,6 +24,6 @@ export const GRID_ANIMATION_CONFIG: AnimationConfigUI = {
 };
 
 export const GRID_LAYOUT_TOKENS: GridContainerTokensUI = {
- CONTAINER: "w-full max-w-7xl mx-auto",
+ CONTAINER: "w-full max-w-7xl mx-auto xxs:mr-5",
   GRID: "flex flex-wrap justify-center gap-6"
 };

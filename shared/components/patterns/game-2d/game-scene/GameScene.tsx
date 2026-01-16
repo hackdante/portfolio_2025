@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Image from "next/image";
 import { PlayerController } from "@/shared/components/composite";
 import {
@@ -8,97 +8,97 @@ import {
   gameSceneOffsetToken,
   gameSceneAssetsToken,
 } from "./gameSceneToken";
-import { GameMaskStyleUI } from "./interface";
-
 
 export function GameScene() {
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize(); 
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = windowWidth <= 600;
-  
-  const layout = useMemo(() => {
-    const baseWidth = gameSceneToken.width;
-    const baseHeight = gameSceneToken.height; 
-    
-    const internalWidth = parseInt(gameSceneOffsetToken.width);
-    const internalHeight = isMobile ? 450 : parseInt(gameSceneOffsetToken.height);
-    const availableWidth = Math.min(windowWidth - 40, baseWidth); 
-    const currentScale = availableWidth / baseWidth;
-
-    return {
-      scale: currentScale,
-      containerWidth: baseWidth,
-      containerHeight: baseHeight,
-      gameWidth: internalWidth,
-      gameHeight: internalHeight,
-      totalHeight: isMobile ? baseHeight + 115 : baseHeight 
-    };
-  }, [windowWidth, isMobile]);
-
-
-  const maskWrapperStyle: GameMaskStyleUI = {
-    maskImage: `url(${gameSceneAssetsToken.screenMask})`,
-    WebkitMaskImage: `url(${gameSceneAssetsToken.screenMask})`,
-    maskMode: "luminance",
-    WebkitMaskMode: "luminance",
-    maskSize: "100% 100%",
-    WebkitMaskSize: "100% 100%",
-    maskRepeat: "no-repeat",
-    WebkitMaskRepeat: "no-repeat",
-  };
+  const scaleFactor = useMemo(() => {
+    if (!windowWidth) return 1;
+    // Restamos un padding total de 32px (16px por lado) para que no toque los bordes
+    const availableWidth = windowWidth - 32;
+    return Math.min(availableWidth / gameSceneToken.width, 1);
+  }, [windowWidth]);
 
   return (
-    <div className="flex items-center justify-center w-full min-h-[450px] p-4">
+    <div className="flex w-full flex-col items-center justify-start overflow-hidden p-4 xxs:mr-10">
+      <div className="flex flex-col items-center justify-center gap-3 py-6">
+        <p className="text-ui-text/70 text-sm font-medium tracking-wide uppercase">
+          Usa las flechas para moverte en el teclado
+        </p>
 
+        <div className="flex items-end gap-1">
+          <kbd className="flex h-10 w-10 items-center justify-center rounded-lg border-b-4 border-ui-border bg-white font-sans text-xl font-bold text-secondary shadow-sm transition-all active:mt-1 active:border-b-0">
+            ←
+          </kbd>
+
+          <kbd className="flex h-10 w-10 items-center justify-center rounded-lg border-b-4 border-ui-border bg-white font-sans text-xl font-bold text-secondary shadow-sm transition-all active:mt-1 active:border-b-0">
+            ↑
+          </kbd>
+
+          <kbd className="flex h-10 w-10 items-center justify-center rounded-lg border-b-4 border-ui-border bg-white font-sans text-xl font-bold text-secondary shadow-sm transition-all active:mt-1 active:border-b-0">
+            →
+          </kbd>
+        </div>
+      </div>
       <div
-        id={gameSceneToken.id}
-        className="relative overflow-visible transition-transform duration-300 ease-out"
         style={{
-          width: `${layout.containerWidth}px`,
-          height: `${layout.totalHeight}px`,
-          transform: `scale(${layout.scale})`,
-          transformOrigin: "center center",
-          backgroundColor: gameSceneToken.backgroundColor,
+          width: `${gameSceneToken.width * scaleFactor}px`,
+          height: `${gameSceneToken.height * scaleFactor}px`,
         }}
+        className="relative flex items-start justify-center transition-all duration-300"
       >
-
-        <div className="absolute inset-0 z-10" style={maskWrapperStyle}>
+        <div
+          id={gameSceneToken.id}
+          className="relative transition-transform duration-300 ease-out"
+          style={{
+            width: `${gameSceneToken.width}px`,
+            height: `${gameSceneToken.height}px`,
+            transform: `scale(${scaleFactor})`,
+            transformOrigin: "top left",
+            backgroundColor: gameSceneToken.backgroundColor,
+            position: "absolute",
+            left: "0",
+            top: "0",
+          }}
+        >
           <div
-            className="absolute overflow-hidden bg-slate-950"
+            className="absolute z-10 overflow-hidden bg-slate-950"
             style={{
               top: gameSceneOffsetToken.top,
               left: gameSceneOffsetToken.left,
-              width: `${layout.gameWidth}px`,
-              height: `${layout.gameHeight}px`,
+              width: gameSceneOffsetToken.width,
+              height: gameSceneOffsetToken.height,
+              maskImage: `url(${gameSceneAssetsToken.screenMask})`,
+              WebkitMaskImage: `url(${gameSceneAssetsToken.screenMask})`,
+              maskSize: "100% 100%",
             }}
           >
             <PlayerController
-              sceneWidth={layout.gameWidth}
-              sceneHeight={layout.gameHeight}
+              sceneWidth={parseInt(gameSceneOffsetToken.width)}
+              sceneHeight={parseInt(gameSceneOffsetToken.height)}
               initialX={100}
               initialY={100}
               moveSpeed={1.7}
               jumpForce={17}
             />
           </div>
-        </div>
 
-        <div className="absolute inset-0 z-20 pointer-events-none">
-          <Image
-            src={gameSceneAssetsToken.screenFrame}
-            alt="Physical Screen Frame"
-            fill
-            priority
-            sizes={`${gameSceneToken.width}px`}
-            className="object-contain"
-          />
+          <div className="absolute inset-0 z-20 pointer-events-none">
+            <Image
+              src={gameSceneAssetsToken.screenFrame}
+              alt="Physical Screen Frame"
+              fill
+              priority
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
     </div>

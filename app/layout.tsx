@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
-import type { Metadata, Viewport } from "next"; // Importación de tipos estrictos
-import { ThemeSyncLayer } from "@/components/base";
+import type { Metadata, Viewport } from "next";
 import { EngineeringGrid } from "@/shared/components/base";
 import { HOME_SEO_TAGS } from "@/core/web-page";
 import "./globals.css";
@@ -43,8 +42,6 @@ export default async function RootLayout({
       <body className="antialiased bg-background text-foreground transition-colors duration-500">
         <EngineeringGrid />
         <main className="relative min-h-screen flex flex-col">{children}</main>
-        <ThemeSyncLayer />
-
         <div id="kensai-portals" />
 
         <Script id="linkedin-insight" strategy="afterInteractive">
@@ -73,7 +70,7 @@ export default async function RootLayout({
             alt="Descripción de la imagen"
             width={1}
             height={1}
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             priority
           />
         </noscript>

@@ -39,6 +39,9 @@
 }
 
 @theme inline {
+  --breakpoint-xxs: 8rem;
+  --breakpoint-xs: 28rem;
+  --breakpoint-md: 52rem;
   --color-background: var(--ui-bg);
   --color-foreground: var(--ui-text);
   --color-foreground-87: var(--color-foreground-87);
