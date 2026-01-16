@@ -22,7 +22,7 @@ export interface BusinessGridCardUI {
   readonly description: string;
   readonly benefit: string;
   readonly cta: string;
-  readonly onAction: () => void;
+  readonly onAction?: () => void;
 }
 
 export interface AnimationConfigUI {

@@ -78,12 +78,13 @@ export function MainLogo({
           className={`object-contain h-auto transition-all duration-700 ease-in-out
             ${isDark ? "invert brightness-200" : "invert-0"}`}
           style={{
-            width: "100%",
+       width: 'auto',
             maxWidth: targetWidth,
             height: "auto",
             opacity: currentOpacity
           }}
           draggable={false}
+          
         />
       ) : (
         <div

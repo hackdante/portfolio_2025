@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "raw.githubusercontent.com",
       },
+      {
+        protocol: 'https',
+        hostname: 'px.ads.linkedin.com',
+        port: '',
+        pathname: '/collect/**', 
+      },
     ],
   },
 };

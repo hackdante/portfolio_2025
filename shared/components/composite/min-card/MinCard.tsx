@@ -1,9 +1,12 @@
 "use client";
 
 import { CardText } from "@/shared/components/base";
-import { HOME_INITIAL_CARDS } from "@/shared/constants";
+import { HOME_INITIAL_CARDS, HOME_WHATSAPP_ACTION } from "@/shared/constants";
+
+import { useWhatsApp } from "@/shared/hooks";
 
 export function MinCard() {
+  const { handleWhatsAppClick } = useWhatsApp(HOME_WHATSAPP_ACTION["home"]);
   return (
     <div className="mb-9 grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
       {HOME_INITIAL_CARDS.map((card, index) => (
@@ -15,7 +18,7 @@ export function MinCard() {
           label={card.label}
           icon={card.icon}
           blurIntensity={card.blurIntensity}
-          callToAction={card.callToAction}
+          callToAction={handleWhatsAppClick}
         />
       ))}
     </div>
