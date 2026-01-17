@@ -1,6 +1,6 @@
 "use client";
 
-import { MainLogoUI } from "./interface";
+import { MainLogoStylesUI, MainLogoUI } from "./interface";
 import { mainLogoToken } from "./mainLogoToken";
 
 export function MainLogo({
@@ -16,34 +16,35 @@ export function MainLogo({
   const colorLight = lightModeColor ?? mainLogoToken.defaultColors.light;
   const colorDark = darkModeColor ?? mainLogoToken.defaultColors.dark;
 
+  const containerStyles: MainLogoStylesUI = {
+    width: currentWidth,
+    aspectRatio: "3/1",
+    "--l-c-l": colorLight,
+    "--l-c-d": colorDark,
+    WebkitMaskImage: `url(${path})`,
+    maskImage: `url(${path})`,
+  };
+
   return (
     <div className="flex w-full items-center justify-center p-2">
       <div
         role="img"
         aria-label={altText}
         className="main-logo-render"
-        style={{
-          width: currentWidth,
-          aspectRatio: "3/1",
-          // Definición de variables CSS personalizadas
-          "--l-c-l": colorLight,
-          "--l-c-d": colorDark,
-          // Máscara simplificada
-          WebkitMaskImage: `url(${path})`,
-          maskImage: `url(${path})`,
-        } as React.CSSProperties} // Solo se permite si no hay otra forma de tipar variables custom en style
+        style={containerStyles}
       />
 
       <style jsx>{`
         .main-logo-render {
           background-color: var(--l-c-l);
           mask-repeat: no-repeat;
-          WebkitMaskRepeat: no-repeat;
+          -webkit-mask-repeat: no-repeat;
           mask-size: contain;
-          WebkitMaskSize: contain;
+          -webkit-mask-size: contain;
           mask-position: center;
-          WebkitMaskPosition: center;
+          -webkit-mask-position: center;
           transition: background-color 0.4s ease-in-out;
+          display: block;
         }
 
         :global([data-theme="dark"]) .main-logo-render {
