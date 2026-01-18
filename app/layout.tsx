@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { EngineeringGrid } from "@/shared/components/base";
-import { AnalyticsProvider } from "@/shared/components/composite";
 import { HOME_SEO_TAGS } from "@/core/web-page";
+import { AnalyticsProvider } from "@/shared/components/composite/seo";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -31,8 +31,8 @@ export default async function RootLayout({
   return (
     <html lang="es" data-theme={savedTheme} className="scroll-smooth">
       <body className="antialiased bg-background text-foreground transition-colors duration-500">
-        <AnalyticsProvider />
         <EngineeringGrid />
+        <AnalyticsProvider />
         <main className="relative min-h-screen flex flex-col">{children}</main>
         <div id="kensai-portals" />
       </body>
