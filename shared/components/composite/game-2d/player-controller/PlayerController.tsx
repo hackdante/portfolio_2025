@@ -25,7 +25,7 @@ export function PlayerController({
   initialX = 100,
   initialY = 100,
   moveSpeed = 3.5,
-  jumpForce = 12, // Valor recomendado para salto lento
+  jumpForce = 12,
   sceneWidth,
   sceneHeight
 }: Readonly<PlayerControllerProps>) {
@@ -71,16 +71,13 @@ export function PlayerController({
     const tick = (_: number, deltaTime: number) => {
       const p = physics.current;
       const T = PLAYER_CONTROLLER_TOKENS;
-      
-      // El ratio es la clave: deltaTime / 16.66ms (que es 60fps)
-      // En 144hz el ratio será ~0.4. En 60hz será ~1.0
+
       const ratio = Math.min(deltaTime / 16.66, 2.0); 
 
       if (jumpLockFrames.current > 0) {
         jumpLockFrames.current -= ratio; 
       }
 
-      // 1. MOVIMIENTO HORIZONTAL (Normalizado)
       let targetVx = 0;
       if (inputs.current.left) targetVx = -moveSpeed;
       if (inputs.current.right) targetVx = moveSpeed;

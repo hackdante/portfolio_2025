@@ -127,7 +127,7 @@ WEB_PAGE/
 
 El proyecto está desplegado en Vercel con Docker support:
 
-- **URL Principal**: [portfolio-2025-umber-xi.vercel.app](https://portfolio-2025-umber-xi.vercel.app)
+- **URL Principal**: [kensai.solutions](https://kensai.solutions)
 - **URL de Desarrollo**: [portfolio-2025-q0vj385f7-leandro-gonzalezs-projects.vercel.app](https://portfolio-2025-q0vj385f7-leandro-gonzalezs-projects.vercel.app)
 
 ### Configuración de Docker

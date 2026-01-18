@@ -44,6 +44,8 @@ export default async function RootLayout({
         <main className="relative min-h-screen flex flex-col">{children}</main>
         <div id="kensai-portals" />
 
+        
+
         <Script id="linkedin-insight" strategy="afterInteractive">
           {`
       _linkedin_partner_id = "8484818";

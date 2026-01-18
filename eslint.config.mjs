@@ -8,15 +8,18 @@ const eslintConfig = defineConfig([
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
+      // Restricción estricta de consola: solo permite warn/error en desarrollo, pero Next.js fallará en build con cualquier console.log
       "no-console": ["error", { allow: ["warn", "error"] }],
+      
       "sonarjs/prefer-readonly-properties": "off",
       "sonarjs/cognitive-complexity": "off",
       "sonarjs/no-duplicate-string": "off",
       "sonarjs/no-negated-condition": "off",
+      
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
-
       "@typescript-eslint/prefer-readonly-parameter-types": "off",
 
+      // Bloqueo de términos prohibidos
       "no-warning-comments": [
         "error",
         {
@@ -27,7 +30,10 @@ const eslintConfig = defineConfig([
 
       "no-alert": "error",
 
-      "no-inline-comments": "off",
+      // PROHIBICIÓN DE COMENTARIOS: Configuración de limpieza total
+      "no-inline-comments": "error", // Prohíbe comentarios en la misma línea que el código
+      "spaced-comment": "off", // No se permite el uso de comentarios con espacio
+      "multiline-comment-style": ["error", "starred-block"], // Cualquier comentario de bloque debe ser eliminado o fallará
 
       "@typescript-eslint/no-unused-vars": [
         "error",

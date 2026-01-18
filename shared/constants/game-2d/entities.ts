@@ -5,12 +5,12 @@ import {
 } from "@/shared/types";
 
 export const PLAYER_CONTROLLER_TOKENS: PlayerTokensUI = {
- GRAVITY: 0.6,             
+  GRAVITY: 0.6,
   FRICTION: 0.15,
   WORLD_FLOOR_Y: 62,
   WORLD_HEIGHT: 500,
   WORLD_WIDTH: 3000,
-  TERMINAL_VELOCITY: -10,   
+  TERMINAL_VELOCITY: -10,
   BODY_OFFSET_X: 15,
   BODY_OFFSET_Y: 25,
   GROUND_CHECK_PADDING: 20,
@@ -103,7 +103,7 @@ export const PROJECTS_PORTFOLIO: readonly PortfolioAssetsUI[] = [
     title: "KENSAI | R3F Experience",
     description:
       "Experiencia inmersiva 3D con alto rendimiento en SEO y animaciones fluidas mediante GSAP y Next.js.",
-    url: "https://portfolio-2025-umber-xi.vercel.app",
+    url: "https://kensai.solutions",
     stack:
       "React.js | Next.js | Typescript | React Fiber (R3F) | Three.js | GSAP | Vercel",
   },

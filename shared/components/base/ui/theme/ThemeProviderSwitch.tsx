@@ -22,7 +22,7 @@ export const ThemeProviderSwitch = ({
       storageKey={storageKey}
       disableTransitionOnChange={disableTransitionOnChange}
       themes={themes}
-      forcedTheme={undefined} // Permite que el servidor tome control inicial
+      forcedTheme={undefined}
     >
       <ThemeSync layer={storageKey} />
     </ThemeProvider>

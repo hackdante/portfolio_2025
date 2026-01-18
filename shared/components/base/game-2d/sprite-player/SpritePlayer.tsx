@@ -18,7 +18,6 @@ export function SpritePlayer(props: SpritePlayerUI) {
   const frameHeight = hasSheet ? sheet.height / sheet.rows : 90;
 
   useGSAP(() => {
-    // 1. Limpieza total de timelines previos
     if (tlRef.current) {
       tlRef.current.kill();
       tlRef.current = null;
@@ -28,14 +27,10 @@ export function SpritePlayer(props: SpritePlayerUI) {
 
     const { frames, fps, loop } = config;
     const playhead = { index: 0 };
-    
-    // 2. Cálculo de tiempo absoluto
-    // Esto asegura que si la animación debe durar 1 seg, dure 1 seg en 60Hz y 144Hz
     const animationDuration = frames.length / (fps || 12);
 
     tlRef.current = gsap.timeline({ 
       repeat: loop ? -1 : 0,
-      // Forzamos a que el timeline use segundos reales, no frames
       smoothChildTiming: true 
     });
 
@@ -44,7 +39,6 @@ export function SpritePlayer(props: SpritePlayerUI) {
       duration: animationDuration,
       ease: `steps(${frames.length - 1})`,
       onUpdate: () => {
-        // Usamos Math.floor para evitar saltos entre sub-frames en monitores de alta tasa
         const idx = Math.floor(playhead.index);
         const frameId = frames[idx];
         
@@ -62,15 +56,13 @@ export function SpritePlayer(props: SpritePlayerUI) {
     };
   }, [state, config, sheet, canAnimate, frameWidth, frameHeight]);
 
-  // 3. Sistema de Coordenadas Normalizado
-  // 500 es nuestro WORLD_HEIGHT. Restamos frameHeight para que Y=0 sea el suelo real.
+
   const containerStyle: React.CSSProperties = {
     width: `${frameWidth}px`,
     height: `${frameHeight}px`,
     left: 0,
     top: 0,
     position: "absolute",
-    // positionY es la altura desde el suelo. 500 - frameHeight - positionY lo sitúa correctamente
     transform: `translate3d(${positionX - frameWidth / 2}px, ${500 - frameHeight - positionY}px, 0) scaleX(${direction === "RIGHT" ? 1 : -1})`,
     willChange: "transform",
   };
@@ -94,7 +86,7 @@ export function SpritePlayer(props: SpritePlayerUI) {
           style={{
             backgroundImage: `url(${sheet.url})`,
             backgroundSize: `${sheet.width}px ${sheet.height}px`,
-            imageRendering: "pixelated", // Mantiene el estilo retro sin blur
+            imageRendering: "pixelated", 
           }}
         />
       ) : (
