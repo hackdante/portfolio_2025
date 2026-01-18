@@ -6,7 +6,6 @@ export interface GeneralSeoUI extends Metadata {
   readonly titleTemplate: string;
 }
 
-
 export interface OpenGraphUI {
   readonly type: "website" | "article";
   readonly locale: string;

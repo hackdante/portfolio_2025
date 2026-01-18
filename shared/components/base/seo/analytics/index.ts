@@ -1,2 +1,2 @@
-export * from "./interface"
-export * from "./AnalyticsProvider"
+export * from "./LinkedInInsightTag";
+export * from "./interface";

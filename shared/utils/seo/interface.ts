@@ -11,10 +11,6 @@ export interface GeneralSeoType extends Metadata {
   readonly titleTemplate: string;
 }
 
-/**
- * Interface for OpenGraph specific metadata.
- * Ensures strict typing for social media previews.
- */
 export interface OpenGraphType {
   readonly type: "website" | "article";
   readonly locale: string;
@@ -27,3 +23,19 @@ export interface OpenGraphType {
     readonly alt: string;
   }>;
 }
+
+export interface KensaiWindowUI extends Window {
+  gtag?: (
+    command: "event",
+    action: string,
+    params: {
+      event_category?: string;
+      event_label?: string;
+      value?: number;
+      non_interaction?: boolean;
+    }
+  ) => void;
+  lintrk?: (command: string, params: { conversion_id: string }) => void;
+}
+
+
