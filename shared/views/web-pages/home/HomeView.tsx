@@ -9,11 +9,13 @@ import { GameScene, MainHero } from "@/shared/components/patterns";
 import {
   BusinessGridCard,
   MinCard,
+  MiniCardContainer,
   TechStack,
   ThemeSwitcher,
 } from "@/shared/components/composite";
 import { HomeViewUI } from "./interface";
 import { ScrollAnimator } from "@/components/base";
+
 
 const MAIN_LOGO_URL = "/images/KENSAI_LOGO.svg";
 
@@ -112,6 +114,10 @@ export const HomeView = ({ seoData }: HomeViewUI) => {
           />
         </div>
       </SectionWrapper>
+        <SectionWrapper id="seo-tags">
+          <MiniCardContainer />
+
+        </SectionWrapper>
 
       <SectionWrapper id="main-footer" bgType="light">
         <FooterDefault />

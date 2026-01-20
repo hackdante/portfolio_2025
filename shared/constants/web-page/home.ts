@@ -17,11 +17,13 @@ import {
   BsCpu,
   BsBarChartSteps,
 } from "react-icons/bs";
+import { IoInformationCircle } from "react-icons/io5";
 
-import { CardTextUI } from "@/shared/components/base";
+import { CardTextUI, MiniCardUI } from "@/shared/components/base";
 
-import { CardServicesUI, HomeSeoUI } from "./interface";
+import { HomeSeoUI } from "./interface";
 import { BusinessGridCardUI } from "@/shared/components/composite";
+import { getWhatsAppUrl } from "@/shared/utils";
 
 export const HOME_FEATURES: readonly CardTextUI[] = [
   {
@@ -187,105 +189,135 @@ export const HOME_INITIAL_CARDS: CardTextUI[] = [
   },
 ];
 
-export const CARD_SERVICES: CardServicesUI[] = [
+export const CARD_SERVICES: MiniCardUI[] = [
   {
+    id: "modernizacion-catalogos-3d",
     title: "Modernización de Catálogos: De PDF Estático a Activo 3D",
     description:
-      "Tus clientes ya no quieren leer folletos. Transforma tu catálogo de productos en una librería interactiva donde cada pieza se puede inspeccionar, despiezar y configurar en tiempo real desde el navegador.",
-    label: "Catálogos 3D",
+      "Tus clientes ya no quieren leer folletos. Transforma tu catálogo de productos en una librería interactiva donde cada pieza se puede inspeccionar, despiezar y configurar en tiempo real.",
+    icon: IoInformationCircle,
     cta: {
       label: "Quieres reducir costos ahora?",
-      action: () => console.warn("Redirect to contact"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, me interesa modernizar mis catálogos a 3D.",
+      ),
     },
   },
   {
+    id: "showrooms-inmobiliarios-virtuales",
     title: "Showrooms Inmobiliarios: Venta en Preventa sin Pisos Piloto",
     description:
-      "Elimina el costo de construcción de apartamentos modelo. Moderniza tu sala de ventas con recorridos virtuales ligeros que permiten cambiar acabados y mobiliario al instante, acelerando el cierre de promesas de compra.",
-    label: "Inmobiliaria Virtual",
+      "Elimina el costo de construcción de apartamentos modelo. Moderniza tu sala de ventas con recorridos virtuales ligeros que permiten cambiar acabados y mobiliario al instante.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Open contact modal"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, quiero información sobre Showrooms Inmobiliarios.",
+      ),
     },
   },
   {
+    id: "simuladores-configuracion-productos",
     title: "Simuladores de Configuración: Personalización Masiva de Productos",
     description:
-      "Permite que el usuario diseñe su propio producto (vehículos, maquinaria, mobiliario) con visualización instantánea de precios y materiales. Reduce el ciclo de consulta comercial y automatiza la preventa.",
-    label: "Configuradores",
+      "Permite que el usuario diseñe su propio producto con visualización instantánea de precios y materiales. Reduce el ciclo de consulta comercial y automatiza la preventa.",
+    icon: IoInformationCircle,
     cta: {
       label: "Quieres reducir costos ahora?",
-      action: () => console.warn("Redirect to pricing"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, me interesa un simulador de configuración.",
+      ),
     },
   },
   {
+    id: "formacion-hse-industrial",
     title: "Formación HSE 4.0: Entrenamiento en Entornos de Riesgo",
     description:
-      "Moderniza la seguridad industrial con simulacros web de identificación de peligros. Tus empleados se enfrentan a escenarios críticos en un entorno controlado, reduciendo accidentes reales y costos de primas de seguros.",
-    label: "E-learning HSE",
+      "Moderniza la seguridad industrial con simulacros web de identificación de peligros. Reduce accidentes reales y costos de primas de seguros en entornos controlados.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Schedule demo"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, necesito modernizar mi formación HSE.",
+      ),
     },
   },
   {
+    id: "visualizacion-big-data-3d",
     title: "Visualización de Big Data: Cuadros de Mando Espaciales",
     description:
-      "Deja atrás los gráficos de barras planos. Moderniza tu toma de decisiones con dashboards 3D que permiten navegar por los datos de tu empresa geográficamente o por procesos, detectando cuellos de botella de forma intuitiva.",
-    label: "Data Viz 3D",
+      "Deja atrás los gráficos planos. Moderniza tu toma de decisiones con dashboards 3D que permiten navegar por los datos detectando cuellos de botella de forma intuitiva.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Contact sales"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, me interesan los Dashboards 3D para Big Data.",
+      ),
     },
   },
   {
+    id: "edtech-laboratorios-virtuales",
     title: "Educación y EdTech: Laboratorios Virtuales Interactivos",
     description:
-      "Moderniza la enseñanza de conceptos complejos. Crea laboratorios de química, física o ingeniería donde los estudiantes interactúan con elementos que en el mundo real serían costosos o peligrosos de manipular.",
-    label: "EdTech",
+      "Moderniza la enseñanza de conceptos complejos. Crea laboratorios donde los estudiantes interactúan con elementos que en el mundo real serían costosos o peligrosos.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Request info"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, información sobre Laboratorios Virtuales.",
+      ),
     },
   },
   {
+    id: "ecommerce-espacial-futuro",
     title: "E-commerce Espacial: La Tienda del Futuro en la Web",
     description:
-      "Rompe la barrera de las fotos 2D. Implementa tiendas virtuales donde el usuario camina, descubre productos y los añade al carrito en una experiencia de compra fluida basada en Spatial Computing.",
-    label: "Spatial E-commerce",
+      "Rompe la barrera de las fotos 2D. Implementa tiendas virtuales donde el usuario camina, descubre productos y los añade al carrito en una experiencia fluida.",
+    icon: IoInformationCircle,
     cta: {
       label: "Quieres reducir costos ahora?",
-      action: () => console.warn("Get started"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, quiero llevar mi E-commerce al espacio 3D.",
+      ),
     },
   },
   {
+    id: "gemelos-digitales-procesos",
     title: "Gemelos Digitales de Procesos: Auditoría Remota 24/7",
     description:
-      "Moderniza la supervisión de tus líneas de producción. Visualiza el flujo de trabajo y el rendimiento de cada operario o máquina mediante un gemelo digital que centraliza toda la información operativa en un solo lugar.",
-    label: "Digital Twins",
+      "Moderniza la supervisión de tus líneas de producción. Visualiza el flujo de trabajo y el rendimiento de cada operario mediante un gemelo digital centralizado.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Audit request"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, me interesa implementar Gemelos Digitales.",
+      ),
     },
   },
   {
+    id: "arquitectura-marca-stands",
     title: "Arquitectura de Marca: Stand Virtual para Ferias Globales",
     description:
-      "No limites tu presencia a un espacio físico de tres días. Moderniza tu branding con un stand permanente en la web que recibe visitas de todo el mundo, recolecta datos de clientes interesados y muestra tus innovaciones sin gastos de logística.",
-    label: "Brand Stands",
+      "Moderniza tu branding con un stand permanente en la web que recibe visitas de todo el mundo y recolecta datos sin gastos de logística.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Book a stand"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, necesito un Stand Virtual para mi marca.",
+      ),
     },
   },
   {
+    id: "museografia-patrimonio-digital",
     title: "Museografía y Cultura: Patrimonio Digitalizado e Interactivo",
     description:
-      "Moderniza la conservación y exhibición de piezas históricas. Crea museos virtuales donde el usuario puede manipular objetos invaluables con un nivel de detalle microscópico, eliminando barreras geográficas para el público.",
-    label: "Cultural Heritage",
+      "Moderniza la conservación de piezas históricas. Crea museos virtuales donde el usuario puede manipular objetos invaluables con detalle microscópico.",
+    icon: IoInformationCircle,
     cta: {
       label: "Llama y consulta",
-      action: () => console.warn("Digitalize assets"),
+      href: getWhatsAppUrl(
+        "Hola KENSAI, me interesa la digitalización de patrimonio.",
+      ),
     },
   },
 ];
