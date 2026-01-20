@@ -72,19 +72,21 @@ export const HOME_SEO_DATA: HomeSeoUI = {
     icon: BsJoystick,
   },
   stack: {
-    title: "AHORRO OPERATIVO",
-    subtitle: "KENSAI ONBOARDING",
-    header: "REDUZCA EL TIEMPO DE ENTRENAMIENTO EN UN 50%.",
-    description:
-      "Elimine costos de instructores y detenciones de planta. Nuestras plataformas garantizan retención de conocimiento inmediata y eliminan el error humano desde el día uno.",
-    icon: BsCrosshair2,
-  },
-  authority: {
     title: "DESPLIEGUE",
     subtitle: "SIN BARRERAS TÉCNICAS",
     header: "TECNOLOGÍA WEB: SIN INSTALACIONES, SIN EXCUSAS.",
     description:
       "Arquitectura de carga instantánea que elimina la fricción de IT. Compatible con cualquier dispositivo móvil, garantizando que su fuerza de ventas tenga la herramienta disponible en cualquier lugar.",
+
+    icon: BsCrosshair2,
+  },
+  authority: {
+    title: "AHORRO OPERATIVO",
+    subtitle: "KENSAI ONBOARDING",
+    header: "REDUZCA EL TIEMPO DE ENTRENAMIENTO EN UN 50%.",
+    description:
+      "Elimine costos de instructores y detenciones de planta. Nuestras plataformas garantizan retención de conocimiento inmediata y eliminan el error humano desde el día uno.",
+
     icon: BsShieldCheck,
   },
 };
