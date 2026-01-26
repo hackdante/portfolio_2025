@@ -9,7 +9,7 @@ export const GalleryGrid = ({ portfolioList }: GalleryGridUI) => {
   return (
     <div className="flex flex-wrap gap-10 items-center justify-center">
       {portfolioList.map((item, index) => (
-        <CardV1 key={index} cardInfoV1={item} />
+        <CardV1 key={index} cardInfoV1={item}  />
       ))}
     </div>
   );
